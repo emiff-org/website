@@ -8,12 +8,13 @@
 }
 
 .cards > ul > li {
-  border: 1px solid #dadada;
+  /* border: 1px solid #dadada; */
   background-color: var(--background-color);
 }
 
 .cards .cards-card-body {
   margin: 16px;
+  justify-content: center;
 }
 
 .cards .cards-card-image {
@@ -24,4 +25,10 @@
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+}
+
+.cards.fullsize > ul > li img {
+  width: 100%;
+  aspect-ratio: auto; /* adjusted for festival history card sizes */
+  object-fit: fill;
 }

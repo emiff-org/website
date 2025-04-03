@@ -28,7 +28,7 @@ indices:
         select: head > meta[name="topics"]
         values: attribute(el, "content")
       category:
-        select: head > meta[name="category2"]
+        select: head > meta[name="category"]
         values: attribute(el, "content")
       image:
         select: head > meta[property="og:image"]
@@ -72,7 +72,7 @@ indices:
         select: head > meta[name="topics"]
         values: attribute(el, "content")
       category:
-        select: head > meta[name="category2"]
+        select: head > meta[name="category"]
         values: attribute(el, "content")
       classification:
         select: head > meta[name="classification"]

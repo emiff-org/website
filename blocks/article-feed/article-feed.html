@@ -1,0 +1,25 @@
+<template>
+  <ul>
+    <div data-fly-repeat.article="fetchArticles" data-fly-unwrap>
+      <li data-fly-test.featured="isFeaturedArticle" class="article-card featured" data-fly-include="article-body">
+      </li>
+      <li data-fly-not="featured" class="article" data-fly-include="article-body"></li>
+    </div>
+  </ul>
+</template>
+
+<template data-fly-name="article-body">
+  <div class="article-img"><img src="${ article.image }"></div>
+  <div class="article-body">
+    <div>
+      <a data-fly-attributes="articleLinkAttrs">
+        <h2>${ article.title }</h2>
+      </a>
+    </div>
+    <div>
+      <a data-fly-attributes="articleLinkAttrs">
+        <p>${ article.description }</p>
+      </a>
+    </div>
+  </div>
+</template>

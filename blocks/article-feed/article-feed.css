@@ -1,0 +1,52 @@
+.article-feed > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 24px;
+  list-style-type: none;
+}
+
+.article-feed > ul > li {
+  /* border: 1px solid #dadada; */
+  background-color: var(--background-color);
+}
+
+.article {
+  /* border: 1px solid #dadada; */
+  display: grid;
+  grid-template-columns: minmax( auto, 247px );
+  grid-template-rows: auto;
+  grid-gap: 24px;
+}
+
+.article .article-head {
+  height: auto;
+  grid-column: 2;
+  /* margin: 16px; */
+  justify-content: center;
+}
+
+.article .article-body {
+  grid-column: 2;
+}
+
+.article .article-img {
+  grid-column: 1;
+  display: grid;
+  line-height: 0;
+}
+
+.article > ul > li img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.article.fullsize > ul > li img {
+  width: 100%;
+  aspect-ratio: auto; /* adjusted for festival history card sizes */
+  object-fit: fill;
+}

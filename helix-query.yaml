@@ -48,7 +48,7 @@ indices:
   lang-en-news:
     include:
       - '/news/**'
-    target: /news/query-news
+    target: /query-news
     properties:
       title:
         select: head > meta[property="og:title"]

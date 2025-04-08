@@ -20,5 +20,6 @@ export default async function decorate(block) {
       href: context.article.path,
       title: context.article.title,
     }),
-  })
+  });
 }
+

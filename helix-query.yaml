@@ -45,6 +45,38 @@ indices:
       robots:
         select: head > meta[name="robots"]
         value: attribute(el, "content")
+  lang-en-news:
+    include:
+      - '/news/**'
+    target: /news/query-news
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      description:
+        select: head > meta[name="description"]
+        value: attribute(el, "content")
+      type:
+        select: head > meta[name="type"]
+        value: attribute(el, "content")
+      topics:
+        select: head > meta[name="topics"]
+        values: attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: attribute(el, "content")
+      lastModified:
+        select: none
+        value: parseTimestamp(headers["last-modified"])
+      publicationDate:
+        select: head > meta[name="published-time"]
+        value: parseTimestamp(attribute(el, "content"))
+      template:
+        select: head > meta[name="template"]
+        value: attribute(el, "content")
+      robots:
+        select: head > meta[name="robots"]
+        value: attribute(el, "content")
   lang-es:
     include:
       - '/*'

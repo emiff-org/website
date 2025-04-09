@@ -1,7 +1,7 @@
 import { getLocale } from './i18n-utils.js';
 
 export const INDEX_ALL = 'query-index';
-export const INDEX_NEWS = 'query-news';
+export const INDEX_NEWS = 'query-index';
 
 /**
  * Retrieves the path for a specified index, optionally including a country-specific prefix.

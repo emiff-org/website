@@ -45,41 +45,40 @@ indices:
       robots:
         select: head > meta[name="robots"]
         value: attribute(el, "content")
-  lang-en-news:
+
+  locations-en:
     include:
-      - '/news/**'
-    target: /query-news
+      - /festival/locations/**
+    target: /query-index-locations
     properties:
       title:
         select: head > meta[property="og:title"]
         value: attribute(el, "content")
-      description:
-        select: head > meta[name="description"]
+      type:
+        select: head > meta[name="type"]
+        value: attribute(el, "content")
+      address:
+        select: head > meta[name="address"]
+        value: attribute(el, "content")
+      map:
+        select: head > meta[name="map"]
+        value: attribute(el, "content")
+      events:
+        select: head > meta[name="events"]
+        value: attribute(el, "content")
+      website:
+        select: head > meta[name="website"]
         value: attribute(el, "content")
       type:
         select: head > meta[name="type"]
         value: attribute(el, "content")
-      topics:
-        select: head > meta[name="topics"]
-        values: attribute(el, "content")
-      category:
-        select: head > meta[name="category"]
-        values: attribute(el, "content")
-      image:
-        select: head > meta[property="og:image"]
-        value: attribute(el, "content")
       lastModified:
         select: none
         value: parseTimestamp(headers["last-modified"])
-      publicationDate:
-        select: head > meta[name="published-time"]
-        value: parseTimestamp(attribute(el, "content"))
-      template:
-        select: head > meta[name="template"]
+      image:
+        select: head > meta[property="og:image"]
         value: attribute(el, "content")
-      robots:
-        select: head > meta[name="robots"]
-        value: attribute(el, "content")
+
   lang-es:
     include:
       - '/*'

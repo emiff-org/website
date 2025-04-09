@@ -45,6 +45,40 @@ indices:
       robots:
         select: head > meta[name="robots"]
         value: attribute(el, "content")
+
+  locations-en:
+    include:
+      - /festival/locations/**
+    target: /query-index-locations
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      type:
+        select: head > meta[name="type"]
+        value: attribute(el, "content")
+      address:
+        select: head > meta[name="address"]
+        value: attribute(el, "content")
+      map:
+        select: head > meta[name="map"]
+        value: attribute(el, "content")
+      events:
+        select: head > meta[name="events"]
+        value: attribute(el, "content")
+      website:
+        select: head > meta[name="website"]
+        value: attribute(el, "content")
+      type:
+        select: head > meta[name="type"]
+        value: attribute(el, "content")
+      lastModified:
+        select: none
+        value: parseTimestamp(headers["last-modified"])
+      image:
+        select: head > meta[property="og:image"]
+        value: attribute(el, "content")
+
   lang-es:
     include:
       - '/*'

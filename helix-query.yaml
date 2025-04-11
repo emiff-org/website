@@ -45,11 +45,17 @@ indices:
       robots:
         select: head > meta[name="robots"]
         value: attribute(el, "content")
-
   locations-en:
     include:
       - '/festival/locations/**'
-    target: /query-index-locations
+    exclude:
+      - '/site-howto/**'
+      - '/nav'
+      - '/footer'
+      - '/es/**'
+      - '**/fragments/**'
+      - '**/templates'
+    target: /query-locations
     properties:
       title:
         select: head > meta[property="og:title"]
@@ -78,7 +84,6 @@ indices:
       image:
         select: head > meta[property="og:image"]
         value: attribute(el, "content")
-
   lang-es:
     include:
       - '/*'

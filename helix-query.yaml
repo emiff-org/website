@@ -48,7 +48,7 @@ indices:
 
   locations-en:
     include:
-      - /festival/locations/**
+      - '/festival/locations/**'
     target: /query-index-locations
     properties:
       title:

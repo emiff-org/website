@@ -25,7 +25,6 @@
 .article .article-head {
   height: auto;
   grid-column: 2;
-  /* margin: 16px; */
   justify-content: center;
 }
 

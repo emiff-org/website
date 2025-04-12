@@ -1,4 +1,4 @@
-version: 1
+version: 2
 
 indices:
   default:
@@ -34,7 +34,7 @@ indices:
   locations:
     target: /locations-index
     include:
-      - /festival/locations/**
+      - '/festival/locations/**'
     properties:
       title:
         select: head > meta[property="og:title"]

@@ -1,130 +1,66 @@
 version: 1
+
 indices:
-  lang-en:
-    include:
-      - '/*'
-      - '/news/**'
-      - '/press/**'
-      - '/festival/**'
-    exclude:
-      - '/site-howto/**'
-      - '/nav'
-      - '/footer'
-      - '/es/**'
-      - '**/fragments/**'
-      - '**/templates'
+  default:
     target: /query-index
+    exclude:
+      - '**/site-howto'
+      - '**/templates'
     properties:
       title:
         select: head > meta[property="og:title"]
-        value: attribute(el, "content")
-      description:
-        select: head > meta[name="description"]
-        value: attribute(el, "content")
-      type:
-        select: head > meta[name="type"]
-        value: attribute(el, "content")
-      topics:
-        select: head > meta[name="topics"]
-        values: attribute(el, "content")
-      category:
-        select: head > meta[name="category"]
-        values: attribute(el, "content")
+        value: |
+          attribute(el, 'content')
       image:
         select: head > meta[property="og:image"]
-        value: attribute(el, "content")
+        value: |
+          match(attribute(el, 'content'), 'https:\/\/[^/]+(\/.*)')
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, 'content')
       lastModified:
         select: none
-        value: parseTimestamp(headers["last-modified"])
-      publicationDate:
-        select: head > meta[name="published-time"]
-        value: parseTimestamp(attribute(el, "content"))
-      template:
-        select: head > meta[name="template"]
-        value: attribute(el, "content")
+        value: |
+          parseTimestamp(headers['last-modified'], 'ddd, DD MMM YYYY hh:mm:ss GMT')
       robots:
         select: head > meta[name="robots"]
-        value: attribute(el, "content")
-  locations-en:
+        value: |
+          attribute(el, 'content')
+      publicationDate:
+        select: head > meta[name="publication-date"]
+        value: |
+          attribute(el, 'content')
+  locations:
+    target: /locations-index
     include:
-      - '/festival/locations/**'
-    exclude:
-      - '/site-howto/**'
-      - '/nav'
-      - '/footer'
-      - '/es/**'
-      - '**/fragments/**'
-      - '**/templates'
-    target: /query-locations
+      - /festival/locations/**
     properties:
       title:
         select: head > meta[property="og:title"]
-        value: attribute(el, "content")
-      type:
-        select: head > meta[name="type"]
-        value: attribute(el, "content")
-      address:
-        select: head > meta[name="address"]
-        value: attribute(el, "content")
-      map:
-        select: head > meta[name="map"]
-        value: attribute(el, "content")
+        value: |
+          attribute(el, 'content')
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, 'content'), 'https:\/\/[^/]+(\/.*)')
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, 'content')
       events:
         select: head > meta[name="events"]
-        value: attribute(el, "content")
-      website:
-        select: head > meta[name="website"]
-        value: attribute(el, "content")
-      type:
-        select: head > meta[name="type"]
-        value: attribute(el, "content")
+        value: |
+          attribute(el, 'content')
       lastModified:
         select: none
-        value: parseTimestamp(headers["last-modified"])
-      image:
-        select: head > meta[property="og:image"]
-        value: attribute(el, "content")
-  lang-es:
-    include:
-      - '/*'
-      - '/es/news/**'
-      - '/es/press/**'
-      - '/es/festival/**'
-    exclude:
-      - '/site-howto/**'
-      - '/nav'
-      - '/footer'
-      - '**/fragments/**'
-      - '**/templates'
-    target: /es/query-index
-    properties:
-      title:
-        select: head > meta[property="og:title"]
-        value: attribute(el, "content")
-      description:
-        select: head > meta[name="description"]
-        value: attribute(el, "content")
-      type:
-        select: head > meta[name="type"]
-        value: attribute(el, "content")
-      topics:
-        select: head > meta[name="topics"]
-        values: attribute(el, "content")
-      category:
-        select: head > meta[name="category"]
-        values: attribute(el, "content")
-      image:
-        select: head > meta[property="og:image"]
-        value: attribute(el, "content")
-      lastModified:
-        select: none
-        value: parseTimestamp(headers["last-modified"])
-      publicationDate:
-        select: head > meta[name="published-time"]
-        value: parseTimestamp(attribute(el, "content"))
-      template:
-        select: head > meta[name="template"]
-        value: attribute(el, "content")
+        value: |
+          parseTimestamp(headers['last-modified'], 'ddd, DD MMM YYYY hh:mm:ss GMT')
       robots:
         select: head > meta[name="robots"]
-        value: attribute(el, "content")
+        value: |
+          attribute(el, 'content')
+      content:
+        select: main
+        value: |
+          textContent(el)

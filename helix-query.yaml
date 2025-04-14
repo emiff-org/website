@@ -42,7 +42,7 @@ indices:
   locations:
     target: /locations-index
     include:
-      - '/festival/locations/**'
+      - '/festival/locations/*'
     properties:
       title:
         select: head > meta[property="og:title"]
@@ -52,12 +52,16 @@ indices:
         select: head > meta[property="og:image"]
         value: |
           match(attribute(el, 'content'), 'https:\/\/[^/]+(\/.*)')
-      description:
-        select: head > meta[name="description"]
-        value: |
-          attribute(el, 'content')
       events:
         select: head > meta[name="events"]
+        value: |
+          attribute(el, 'content')
+      map:
+        select: head > meta[name="map"]
+        value: |
+          attribute(el, 'content')
+      website:
+        select: head > meta[name="website"]
         value: |
           attribute(el, 'content')
       lastModified:
@@ -68,7 +72,3 @@ indices:
         select: head > meta[name="robots"]
         value: |
           attribute(el, 'content')
-      content:
-        select: main
-        value: |
-          textContent(el)

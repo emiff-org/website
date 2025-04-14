@@ -1,6 +1,6 @@
 import { renderBlock } from '../../scripts/faintly.js';
 import { readBlockConfig } from '../../scripts/aem.js';
-import { getIndexPath, INDEX_NEWS } from '../../scripts/index-utils.js';
+import { getIndexPath, INDEX_ALL } from '../../scripts/index-utils.js';
 import ffetch from '../../scripts/ffetch.js';
 
 function fetchArticlesFactory(block) {
@@ -9,7 +9,7 @@ function fetchArticlesFactory(block) {
     const limit = parseInt(config?.limit ?? '', 10) || undefined;
     const type = config?.type?.trim().toLowerCase();
 
-    const rawEntries = await ffetch(getIndexPath(INDEX_NEWS)).all();
+    const rawEntries = await ffetch(getIndexPath(INDEX_ALL)).all();
     const entries = rawEntries
       .filter((entry) => entry.type.toLowerCase() === type)
       .sort((a, b) => {

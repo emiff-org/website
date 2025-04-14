@@ -9,6 +9,10 @@
   list-style-type: none;
 }
 
+.article-feed.wide > ul {
+  grid-template-columns: 1fr;
+}
+
 .article-feed > ul > li {
   /* border: 1px solid #dadada; */
   background-color: var(--background-color);

@@ -42,14 +42,3 @@
   line-height: 0;
 }
 
-.article > ul > li img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
-
-.article.fullsize > ul > li img {
-  width: 100%;
-  aspect-ratio: auto; /* adjusted for festival history card sizes */
-  object-fit: fill;
-}

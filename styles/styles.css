@@ -13,10 +13,17 @@
 :root {
   /* colors */
   --background-color: white;
+  --brand-color: #dc1b70;;
+  --brandlight-color: #ffe6f1;
+  --highlight1-color: #efd202;
+  --highlight2-color: #efe6a6;
+  --grey-color: #aaaaaa;
+  --greylight-color: #eeeeee;
   --light-color: #efd202;
+  --border-color: #eeeeee;
   --dark-color: #dd1b72;
   --text-color: #131313;
-  --link-color: #131313;
+  --link-color: #000000;
   --link-hover-color: #a7155a;
 
   /* fonts */
@@ -38,6 +45,7 @@
 
   /* nav height */
   --nav-height: 64px;
+  --navmenu-height: 300px;
 }
 
 /* fallback fonts */
@@ -172,9 +180,9 @@ button {
   display: inline-block;
   max-width: 100%;
   margin: 12px 0;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
   border-radius: 0.2em;
-  border-color: var(--dark-color);
+  border-color: var(--brand-color);
   padding: 0.5em 1.2em;
   font-family: var(--body-font-family);
   font-style: normal;
@@ -194,7 +202,7 @@ a.button:hover,
 a.button:focus,
 button:hover,
 button:focus {
-  background-color: var(--light-color);
+  background-color: var(--brandlight-color);
   cursor: pointer;
 }
 
@@ -252,7 +260,7 @@ main > .section:first-of-type {
 /* section metadata */
 main .section.light,
 main .section.highlight {
-  background-color: var(--light-color);
+  background-color: var(--brandlight-color);
   margin: 0;
   padding: 40px 0;
 }

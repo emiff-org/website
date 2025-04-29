@@ -1,6 +1,6 @@
 /* header and nav layout */
 header .nav-wrapper {
-  background-color: var(--light-color);
+  background-color: var(--background-color);
   width: 100%;
   z-index: 2;
   position: fixed;
@@ -198,63 +198,43 @@ header nav .nav-sections ul > li > ul > li {
     cursor: pointer;
   }
 
-  header nav .nav-sections .nav-drop::after {
-    content: '';
-    display: inline-block;
-    position: absolute;
-    top: 0.5em;
-    right: 2px;
-    transform: rotate(135deg);
-    width: 6px;
-    height: 6px;
-    border: 2px solid currentcolor;
-    border-radius: 0 1px 0 0;
-    border-width: 2px 2px 0 0;
-  }
-
-  header nav .nav-sections .nav-drop[aria-expanded='true']::after {
-    top: unset;
-    bottom: 0.5em;
-    transform: rotate(315deg);
+  header nav .nav-sections .default-content-wrapper {
+    display: flex;
   }
 
   header nav .nav-sections ul {
     display: flex;
+    /* flex: 1; */
     gap: 24px;
     margin: 0;
+    width: 70%;
+  }
+  
+  header nav .nav-sections ul > * {
+    flex: 1;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li {
-    flex: 0 1 auto;
     position: relative;
+    border-bottom: 0.1rem solid var(--border-color);
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul {
     display: none;
-    position: relative;
+    position: absolute;
+    top: 100%;
+    left: -16px;
+    background: transparent;
+    padding: 1rem;
+    display: none;
+    z-index: 1001;
+    opacity: 0;
+    transition: opacity 0.1s ease;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul {
     display: block;
-    position: absolute;
-    left: -24px;
-    width: 200px;
-    top: 150%;
-    padding: 16px;
-    background-color: var(--light-color);
-    white-space: initial;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: 16px;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid var(--light-color);
+    opacity: 1;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
@@ -265,4 +245,43 @@ header nav .nav-sections ul > li > ul > li {
 /* tools */
 header nav .nav-tools {
   grid-area: tools;
+}
+
+header nav .nav-tools a.button:any-link {
+  border: 0;
+  background-color: var(--background-color);
+}
+
+/* navigation background */
+header .nav-background {
+  display: none;
+}
+
+@media (width >= 900px) {
+  header .nav-background {
+    display: block;
+    position: absolute;
+    background-color: var(--background-color);
+    width: 100vw;
+    height: var(--navmenu-height);
+    top: var(--nav-height);
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease;
+  }
+  
+  header .nav-background.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    border-bottom: 0.2rem solid var(--brand-color);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .05);
+  }
+
+  header .nav-background img {
+    opacity: 0.2;
+    padding-top: 3rem;
+    padding-left: 5rem;
+    width: 20%;
+  }
 }

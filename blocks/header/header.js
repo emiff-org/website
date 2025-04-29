@@ -1,5 +1,6 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
+import { getLocale } from '../../scripts/i18n-utils.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -110,7 +111,9 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 export default async function decorate(block) {
   // load nav as fragment
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+  let language = getLocale();
+  if (language !== '') language = '/' + language;
+  const navPath = navMeta ? new URL(navMeta, window.location).pathname : language + '/nav';
   const fragment = await loadFragment(navPath);
 
   // decorate nav DOM
@@ -132,19 +135,36 @@ export default async function decorate(block) {
     brandLink.closest('.button-container').className = '';
   }
 
+  // top level nav items
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
     navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-      if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-      navSection.addEventListener('click', () => {
+      navSection.addEventListener('mouseenter', () => {
         if (isDesktop.matches) {
-          const expanded = navSection.getAttribute('aria-expanded') === 'true';
-          toggleAllNavSections(navSections);
-          navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          toggleAllNavSections(navSections, true);
+          document.querySelector('header .nav-background')?.classList.add('is-visible');
         }
       });
     });
   }
+
+  // navigation background
+  const navBackground = document.createElement('div');
+  navBackground.classList.add('nav-background');
+  navBackground.addEventListener('mouseleave', () => {
+    if (isDesktop.matches) {
+      toggleAllNavSections(navSections, false);
+      document.querySelector('header .nav-background')?.classList.remove('is-visible');
+    }
+  });
+
+  const navLogo = document.createElement('div');
+  navLogo.classList.add('nav-logo');
+  const imgLogo = document.createElement('img');
+  imgLogo.src = '/icons/brand.webp';
+  imgLogo.alt = 'Brand Logo';
+  navLogo.append(imgLogo);
+  navBackground.append(navLogo);
 
   // hamburger for mobile
   const hamburger = document.createElement('div');
@@ -162,5 +182,6 @@ export default async function decorate(block) {
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
+  navWrapper.append(navBackground);
   block.append(navWrapper);
 }

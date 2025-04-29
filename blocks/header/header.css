@@ -204,7 +204,6 @@ header nav .nav-sections ul > li > ul > li {
 
   header nav .nav-sections ul {
     display: flex;
-    /* flex: 1; */
     gap: 24px;
     margin: 0;
     width: 70%;
@@ -226,7 +225,6 @@ header nav .nav-sections ul > li > ul > li {
     left: -16px;
     background: transparent;
     padding: 1rem;
-    display: none;
     z-index: 1001;
     opacity: 0;
     transition: opacity 0.1s ease;
@@ -275,7 +273,7 @@ header .nav-background {
     opacity: 1;
     pointer-events: auto;
     border-bottom: 0.2rem solid var(--brand-color);
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .05);
+    box-shadow: 0 4px 4px 0 rgb(0 0 0 / 5%);
   }
 
   header .nav-background img {

@@ -17,13 +17,13 @@
   --brandlight-color: #ffe6f1;
   --highlight1-color: #efd202;
   --highlight2-color: #efe6a6;
-  --grey-color: #aaaaaa;
-  --greylight-color: #eeeeee;
+  --grey-color: #aaa;
+  --greylight-color: #eee;
   --light-color: #efd202;
-  --border-color: #eeeeee;
+  --border-color: #eee;
   --dark-color: #dd1b72;
   --text-color: #131313;
-  --link-color: #000000;
+  --link-color: #000;
   --link-hover-color: #a7155a;
 
   /* fonts */

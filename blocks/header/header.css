@@ -4,6 +4,8 @@ header .nav-wrapper {
   width: 100%;
   z-index: 2;
   position: fixed;
+  box-shadow: 0 4px 4px 0 rgb(0 0 0 / 5%);
+
 }
 
 header nav {
@@ -215,7 +217,23 @@ header nav .nav-sections ul > li > ul > li {
 
   header nav .nav-sections .default-content-wrapper > ul > li {
     position: relative;
-    border-bottom: 0.1rem solid var(--border-color);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background-color: var(--border-color);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-out;
+  }
+  
+  header nav .nav-sections .default-content-wrapper > ul > li:hover::after {
+    transform: scaleX(1);
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul {

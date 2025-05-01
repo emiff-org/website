@@ -173,7 +173,7 @@ export default async function decorate(block) {
         if (li) li.classList.add('active'); // menu entry
         entry.classList.add('active'); // top nav entry
       }
-    })
+    });
   });
 
   // navigation background

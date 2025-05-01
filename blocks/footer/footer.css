@@ -27,6 +27,6 @@ footer a:hover {
 
 @media (width >= 900px) {
   footer .footer > div {
-    padding: 32px 32px;
+    padding: 32px;
   }
 }

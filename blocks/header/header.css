@@ -173,7 +173,7 @@ header nav .nav-sections ul {
 
 header nav .nav-sections ul > li {
   font-weight: 500;
-  border: 0px;
+  border: 0;
 }
 
 header nav .nav-sections ul > li.active {

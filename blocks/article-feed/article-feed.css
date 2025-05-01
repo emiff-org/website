@@ -3,10 +3,16 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr;
   grid-gap: 24px;
   list-style-type: none;
+}
+
+@media (width >= 900px) {
+  .article-feed > ul {
+    grid-template-columns: 1fr 1fr; /* one column on mobile */
+  }
 }
 
 .article-feed.wide > ul {
@@ -21,9 +27,16 @@
 .article {
   /* border: 1px solid #dadada; */
   display: grid;
-  grid-template-columns: minmax( auto, 247px );
+  grid-template-columns: 1fr;
   grid-template-rows: auto;
-  grid-gap: 24px;
+  grid-gap: 0px;
+}
+
+@media (width >= 900px) {
+  .article {
+    grid-template-columns: minmax( auto, 247px );
+    grid-gap: 24px;
+  }
 }
 
 .article .article-head {

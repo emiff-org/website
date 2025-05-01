@@ -105,11 +105,26 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 }
 
 /**
+ * Highlights the active navigation link based on the current URL path.
+ * Usage: Should be called after the header nav has been fully loaded into the DOM.
+ */
+export function highlightActiveNav() {
+  const currentPath = window.location.pathname.replace(/\/$/, ''); // Normalize trailing slash
+  document.querySelectorAll('sectionheader nav .nav-sections a').forEach((link) => {
+    const linkPath = new URL(link.href).pathname.replace(/\/$/, '');
+    if (linkPath === currentPath) {
+      const li = link.closest('li');
+      if (li) li.classList.add('active');
+    }
+  });
+}
+
+/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
-  // load nav as fragment
+  // load localised nav as fragment
   const navMeta = getMetadata('nav');
   let language = getLocale();
   if (language !== '') language = `/${language}`;
@@ -147,6 +162,19 @@ export default async function decorate(block) {
       });
     });
   }
+
+  // highlight active nav items
+  const currentPath = window.location.pathname.replace(/\/$/, ''); // Normalize trailing slash
+  navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((entry) => {
+    entry.querySelectorAll(':scope ul > li a').forEach((link) => {
+      const linkPath = new URL(link.href).pathname.replace(/\/$/, '');
+      if (linkPath === currentPath) {
+        const li = link.closest('li');
+        if (li) li.classList.add('active'); // menu entry
+        entry.classList.add('active'); // top nav entry
+      }
+    })
+  });
 
   // navigation background
   const navBackground = document.createElement('div');

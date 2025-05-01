@@ -1,23 +1,29 @@
 <template>
-  <ul>
     <div data-fly-repeat.article="fetchArticles" data-fly-unwrap>
-      <li data-fly-test.featured="isFeaturedArticle" class="article featured" data-fly-include="article-body">
-      </li>
-      <li data-fly-not="featured" class="article" data-fly-include="article-body"></li>
+      <div 
+        data-fly-test.featured="isFeaturedArticle" 
+        data-fly-include="article-body">
+        class="article featured" 
+      </div>
+      <div
+        data-fly-not="featured" 
+        data-fly-include="article-body">
+        class="article" 
+      </div>
     </div>
-  </ul>
 </template>
 
 <template data-fly-name="article-body">
-  <div class="article-img"><img src="${ article.image }"></div>
+  <div class="article-subtitle">
+    <span>Mention by ${ article.publication }</span>
+  </div>
   <div class="article-body">
     <div>
-      <a data-fly-attributes="articleLinkAttrs">
-        <h3>${ article.title }</h3>
-      </a>
-    </div>
-    <div>
-      <p>${ article.description }</p>
+      <h3>
+        <a data-fly-attributes="articleLinkAttrs" href="${ article.url}">
+          ${ article.title } (${ article.publicationDate })
+        </a>
+      </h3>
     </div>
   </div>
 </template>

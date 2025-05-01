@@ -1,10 +1,11 @@
 footer {
-  background-color: var(--brand-color);
+  background-color: var(--background-color);
   color: white;
   font-size: var(--body-font-size-xs);
 }
 
 footer .footer > div {
+  color: var(--brand-color);
   margin: auto;
   max-width: 1200px;
   padding: 40px 24px 24px;
@@ -15,7 +16,7 @@ footer .footer p {
 }
 
 footer a:any-link {
-  color: white;
+  color: var(--brand-color);
   text-decoration: none;
   overflow-wrap: break-word;
 }

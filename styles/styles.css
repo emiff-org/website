@@ -2,12 +2,12 @@
   /* colors */
   --background-color: white;
   --brand-color: #dc1b70;;
-  --brandlight-color: #ffe6f1;
+  --brandlight-color: #fff2f6;
   --highlight1-color: #efd202;
   --highlight2-color: #efe6a6;
   --grey-color: #aaa;
   --greylight-color: #eee;
-  --light-color: #efd202;
+  --light-color: #fff2f6;
   --border-color: #eee;
   --dark-color: #dd1b72;
   --text-color: #131313;
@@ -117,6 +117,15 @@ h6 {
   font-weight: 600;
   line-height: 1.25;
   scroll-margin: 40px;
+}
+
+h1 > a:any-link,
+h2 > a:any-link,
+h3 > a:any-link,
+h4 > a:any-link,
+h5 > a:any-link,
+h6 > a:any-link {
+  color: var(--brand-color);
 }
 
 h1 { font-size: var(--heading-font-size-xxl); }

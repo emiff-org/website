@@ -2,7 +2,7 @@
 
 /** Montserrat Thin **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 100;
   font-style: normal;
   src: url("../fonts/Montserrat-Thin.woff2") format("woff2"),
@@ -11,7 +11,7 @@
 
 /** Montserrat Thin-Italic **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 100;
   font-style: italic;
   src: url("../fonts/Montserrat-ThinItalic.woff2") format("woff2"),
@@ -20,7 +20,7 @@
 
 /** Montserrat ExtraLight **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 200;
   font-style: normal;
   src: url("../fonts/Montserrat-ExtraLight.woff2") format("woff2"),
@@ -29,7 +29,7 @@
 
 /** Montserrat ExtraLight-Italic **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 200;
   font-style: italic;
   src: url("../fonts/Montserrat-ExtraLightItalic.woff2") format("woff2"),
@@ -38,7 +38,7 @@
 
 /** Montserrat Light **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 300;
   font-style: normal;
   src: url("../fonts/Montserrat-Light.woff2") format("woff2"),
@@ -47,7 +47,7 @@
 
 /** Montserrat Light-Italic **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 300;
   font-style: italic;
   src: url("../fonts/Montserrat-LightItalic.woff2") format("woff2"),
@@ -56,7 +56,7 @@
 
 /** Montserrat Regular **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 400;
   font-style: normal;
   src: url("../fonts/Montserrat-Regular.woff2") format("woff2"),
@@ -65,7 +65,7 @@
 
 /** Montserrat Regular-Italic **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 400;
   font-style: italic;
   src: url("../fonts/Montserrat-Italic.woff2") format("woff2"),
@@ -74,7 +74,7 @@
 
 /** Montserrat Medium **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 500;
   font-style: normal;
   src: url("../fonts/Montserrat-Medium.woff2") format("woff2"),
@@ -83,7 +83,7 @@
 
 /** Montserrat Medium-Italic **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 500;
   font-style: italic;
   src: url("../fonts/Montserrat-MediumItalic.woff2") format("woff2"),
@@ -92,7 +92,7 @@
 
 /** Montserrat SemiBold **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 600;
   font-style: normal;
   src: url("../fonts/Montserrat-SemiBold.woff2") format("woff2"),
@@ -101,7 +101,7 @@
 
 /** Montserrat SemiBold-Italic **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 600;
   font-style: italic;
   src: url("../fonts/Montserrat-SemiBoldItalic.woff2") format("woff2"),
@@ -110,7 +110,7 @@
 
 /** Montserrat Bold **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 700;
   font-style: normal;
   src: url("../fonts/Montserrat-Bold.woff2") format("woff2"),
@@ -119,7 +119,7 @@
 
 /** Montserrat Bold-Italic **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 700;
   font-style: italic;
   src: url("../fonts/Montserrat-BoldItalic.woff2") format("woff2"),
@@ -128,7 +128,7 @@
 
 /** Montserrat ExtraBold **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 800;
   font-style: normal;
   src: url("../fonts/Montserrat-ExtraBold.woff2") format("woff2"),
@@ -137,7 +137,7 @@
 
 /** Montserrat ExtraBold-Italic **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 800;
   font-style: italic;
   src: url("../fonts/Montserrat-ExtraBoldItalic.woff2") format("woff2"),
@@ -146,7 +146,7 @@
 
 /** Montserrat Black **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 900;
   font-style: normal;
   src: url("../fonts/Montserrat-Black.woff2") format("woff2"),
@@ -155,7 +155,7 @@
 
 /** Montserrat Black-Italic **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 900;
   font-style: italic;
   src: url("../fonts/Montserrat-BlackItalic.woff2") format("woff2"),
@@ -319,7 +319,7 @@
 
 /** Montserrat Alternates Black-Italic **/
 @font-face {
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 900;
   font-style: italic;
   src: url("../fonts/MontserratAlternates-BlackItalic.woff2") format("woff2"),

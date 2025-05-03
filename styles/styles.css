@@ -266,10 +266,6 @@ main > .section:first-of-type {
 }
 
 /* section metadata */
-main .section {
-  padding: 40px 0;
-}
-/* section metadata */
 main .section.light,
 main .section.highlight {
   background-color: var(--brandlight-color);

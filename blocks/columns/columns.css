@@ -9,6 +9,7 @@
 
 .columns > div > div {
   order: 1;
+  margin-bottom: auto;
 }
 
 .columns > div > .columns-img-col {

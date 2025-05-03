@@ -30,4 +30,20 @@
     flex: 1;
     order: unset;
   }
+
+  .columns.two-by-one > div > div:first-child {
+    flex: 2;
+  }
+
+  .columns.two-by-one > div > div:last-child {
+    flex: 1;
+  }
+
+  .columns.one-by-two > div > div:first-child {
+    flex: 1;
+  }
+
+  .columns.one-by-two > div > div:last-child {
+    flex: 2;
+  }
 }

@@ -3,7 +3,7 @@ import { getLocale } from './i18n-utils.js';
 const INDEX_PATHS = {
   INDEX_ALL: 'query-index',
   INDEX_NEWS: 'query-index',
-  INDEX_MENTIONS: 'press/in-the-news',
+  INDEX_MENTIONS: 'news/in-the-news',
 };
 
 /**

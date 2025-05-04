@@ -15,7 +15,7 @@
   --link-hover-color: #a7155a;
 
   /* fonts */
-  --body-font-family: montserrat, sans-serif;
+  --body-font-family: dmsans, sans-serif;
   --heading-font-family: barlowcondensed, sans-serif;
 
   /* body sizes */
@@ -261,7 +261,7 @@ main > .section:first-of-type {
 
 @media (width >= 900px) {
   main > .section > div {
-    padding: 32px;
+    padding: 32px 32px 0px 32px;
   }
 }
 

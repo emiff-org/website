@@ -47,4 +47,20 @@
   .columns.one-by-two > div > div:last-child {
     flex: 2;
   }
+
+  .columns.three-by-one > div > div:first-child {
+    flex: 3;
+  }
+
+  .columns.three-by-one > div > div:last-child {
+    flex: 1;
+  }
+
+  .columns.one-by-three > div > div:first-child {
+    flex: 1;
+  }
+
+  .columns.one-by-three > div > div:last-child {
+    flex: 3;
+  }
 }

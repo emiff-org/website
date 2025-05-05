@@ -8,11 +8,17 @@
   margin-bottom: 8px;
 }
 
-.gallery img {
+.gallery .gallery-button {
+  all: unset; /* removes default button styles */
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
+
+.gallery .gallery-button img {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 0;
 }
 
 @media (width >= 900px) {

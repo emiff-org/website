@@ -11,17 +11,16 @@ export async function createModalContent(element) {
   fragment.appendChild(
     createOptimizedPicture(element.dataset.image, element.dataset.description, false),
   );
+  const div = document.createElement('div');
+  div.classList.add('modal-text');
+  const context = document.createElement('p');
+  context.textContent = `${element.dataset.people} at the ${element.dataset.event} (${element.dataset.date})`;
+  div.appendChild(context);
   const description = document.createElement('p');
   description.textContent = element.dataset.description;
-  fragment.appendChild(description);
-  const date = document.createElement('p');
-  date.textContent = `Date: ${element.dataset.date}`;
-  fragment.appendChild(date);
-  const event = document.createElement('p');
-  event.textContent = `Event: ${element.dataset.event}`;
-  fragment.appendChild(event);
+  div.appendChild(description);
 
-  fragment.append(fragment);
+  fragment.append(div);
   return fragment;
 }
 
@@ -42,6 +41,7 @@ export default async function decorate(block) {
     button.dataset.description = photo.Description;
     button.dataset.event = photo.Event;
     button.dataset.date = photo.Date;
+    button.dataset.people = photo.People;
     button.dataset.image = photo.Image.toLowerCase();
     button.appendChild(
       createOptimizedPicture(

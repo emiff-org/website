@@ -39,10 +39,40 @@ body.modal-open {
   }
   
   .modal dialog .modal-content {
-    /* max-height: calc(100dvh - (2 * var(--header-height)) - 64px); */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 32px;
     padding-top: 0;
+    height: 100%;
   }
+}
+
+.modal dialog .modal-content p {
+  display: inline-block;
+}
+
+.modal dialog .modal-content picture  {
+  height: auto;
+  max-height: 80vh;
+  display: block;
+}
+
+.modal dialog .modal-content picture img {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.modal dialog .modal-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* horizontal centering, optional */
+  text-align: center;
 }
 
 .modal .close-button {

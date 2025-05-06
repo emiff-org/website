@@ -279,7 +279,6 @@ header nav .nav-tools {
   height: 22px;
   display: flex;
   padding-bottom: 18px;
-  /* align-items: center; */
 }
 
 header nav .nav-tools a.button:any-link {

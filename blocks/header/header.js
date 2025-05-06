@@ -186,6 +186,7 @@ export default async function decorate(block) {
     }
   });
 
+  // brand logo
   const navLogo = document.createElement('div');
   navLogo.classList.add('nav-logo');
   const imgLogo = document.createElement('img');
@@ -201,7 +202,7 @@ export default async function decorate(block) {
       <span class="nav-hamburger-icon"></span>
     </button>`;
   hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
-  nav.prepend(hamburger);
+  nav.append(hamburger);
   nav.setAttribute('aria-expanded', 'false');
   // prevent mobile nav behavior on window resize
   toggleMenu(nav, navSections, isDesktop.matches);

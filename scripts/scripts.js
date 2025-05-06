@@ -29,6 +29,24 @@ function buildHeroBlock(main) {
 }
 
 /**
+ * Registers handler for modal block to open modal on elements with class js-modal-trigger.
+ * @param {Element} main The container element
+ */
+function autolinkModals(doc) {
+  doc.addEventListener('click', async (e) => {
+    const origin = e.target.closest('button.js-modal-trigger');
+    if (origin && origin.dataset.date) {
+      e.preventDefault();
+      const { createModalContent } = await import(`${window.hlx.codeBasePath}/blocks/gallery/gallery.js`);
+      const modalContent = await createModalContent(origin);
+      const { createModal } = await import(`${window.hlx.codeBasePath}/blocks/modal/modal.js`);
+      const { showModal } = await createModal(modalContent.childNodes);
+      showModal();
+    }
+  });
+}
+
+/**
  * load fonts.css and set a session storage flag
  */
 async function loadFonts() {
@@ -96,6 +114,8 @@ async function loadEager(doc) {
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
+  autolinkModals(doc);
+
   const main = doc.querySelector('main');
   await loadSections(main);
 

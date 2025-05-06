@@ -1,0 +1,33 @@
+.gallery {
+  column-count: 2;
+  column-gap: 8px;
+}
+
+.gallery .gallery-photo {
+  break-inside: avoid;
+  margin-bottom: 8px;
+}
+
+.gallery .gallery-button {
+  all: unset; /* removes default button styles */
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
+
+.gallery .gallery-button img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (width >= 900px) {
+  .gallery {
+    column-count: 3;
+    column-gap: 16px;
+  }
+
+  .gallery > .gallery-photo {
+    margin-bottom: 16px;
+  }
+}

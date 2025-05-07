@@ -51,7 +51,13 @@ export default async function decorate(block) {
         [{ width: '350' }],
       ),
     );
+    const divOverlay = document.createElement('div');
+    divOverlay.classList.add('gallery-overlay');
+    divOverlay.textContent = photo.People;
+    button.appendChild(divOverlay);
+
     div.appendChild(button);
+
     block.append(div);
   });
 }

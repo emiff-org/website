@@ -30,11 +30,11 @@ export default async function decorate(block) {
   const eventFilter = config?.event?.trim().toLowerCase();
 
   let photos = await ffetch(index).all();
-  
+
   // filter by events if specified
-  photos = photos.filter((photo) => {
-    return !eventFilter || (photo.Event && photo.Event.toLowerCase().includes(eventFilter));
-  })
+  photos = photos.filter(
+    (photo) => !eventFilter || (photo.Event && photo.Event.toLowerCase().includes(eventFilter)),
+  );
 
   block.textContent = ''; // remove block config from DOM
 

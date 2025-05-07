@@ -144,6 +144,13 @@ export default async function decorate(block) {
   });
 
   const navBrand = nav.querySelector('.nav-brand');
+  navBrand.addEventListener('mouseenter', () => {
+    if (isDesktop.matches) {
+      toggleAllNavSections(navSections, true);
+      document.querySelector('header .nav-background')?.classList.add('is-visible');
+    }
+  });
+
   const brandLink = navBrand.querySelector('.button');
   if (brandLink) {
     brandLink.className = '';
@@ -186,7 +193,7 @@ export default async function decorate(block) {
     }
   });
 
-  // brand logo
+  // brand logo on nav background
   const navLogo = document.createElement('div');
   navLogo.classList.add('nav-logo');
   const imgLogo = document.createElement('img');

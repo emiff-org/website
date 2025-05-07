@@ -27,8 +27,14 @@ export async function createModalContent(element) {
 export default async function decorate(block) {
   const config = readBlockConfig(block);
   const index = config?.index?.trim();
+  const eventFilter = config?.event?.trim().toLowerCase();
 
-  const photos = await ffetch(index).all();
+  let photos = await ffetch(index).all();
+  
+  // filter by events if specified
+  photos = photos.filter((photo) => {
+    return !eventFilter || (photo.Event && photo.Event.toLowerCase().includes(eventFilter));
+  })
 
   block.textContent = ''; // remove block config from DOM
 

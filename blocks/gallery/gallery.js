@@ -27,8 +27,14 @@ export async function createModalContent(element) {
 export default async function decorate(block) {
   const config = readBlockConfig(block);
   const index = config?.index?.trim();
+  const eventFilter = config?.event?.trim().toLowerCase();
 
-  const photos = await ffetch(index).all();
+  let photos = await ffetch(index).all();
+
+  // filter by events if specified
+  photos = photos.filter(
+    (photo) => !eventFilter || (photo.Event && photo.Event.toLowerCase().includes(eventFilter)),
+  );
 
   block.textContent = ''; // remove block config from DOM
 
@@ -51,7 +57,13 @@ export default async function decorate(block) {
         [{ width: '350' }],
       ),
     );
+    const divOverlay = document.createElement('div');
+    divOverlay.classList.add('gallery-overlay');
+    divOverlay.textContent = photo.People;
+    button.appendChild(divOverlay);
+
     div.appendChild(button);
+
     block.append(div);
   });
 }

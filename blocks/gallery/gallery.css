@@ -4,21 +4,10 @@
 }
 
 .gallery .gallery-photo {
+  position: relative;
   break-inside: avoid;
   margin-bottom: 8px;
-}
-
-.gallery .gallery-button {
-  all: unset; /* removes default button styles */
-  display: block;
-  width: 100%;
-  cursor: pointer;
-}
-
-.gallery .gallery-button img {
-  width: 100%;
-  height: auto;
-  display: block;
+  overflow: hidden;
 }
 
 @media (width >= 900px) {
@@ -30,4 +19,34 @@
   .gallery > .gallery-photo {
     margin-bottom: 16px;
   }
+}
+
+.gallery .gallery-button {
+  all: unset;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
+
+.gallery .gallery-overlay {
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1rem;
+  background: var(--overlay-color);
+  color: var(--textlight-color);
+  opacity: 0;
+  transition: opacity 0.15s ease-in 0.05s;
+}
+
+.gallery .gallery-button:hover .gallery-overlay {
+  opacity: 1;
+}
+
+.gallery .gallery-button img {
+  width: 100%;
+  height: auto;
+  display: block;
 }

@@ -1,17 +1,19 @@
 :root {
   /* colors */
   --background-color: white;
-  --brand-color: #dc1b70;
+  --brand-color: rgb(221 28 114);
   --brandlight-color: #fff2f6;
   --highlight1-color: #efd202;
   --highlight2-color: #efe6a6;
+  --dark-color: #131313;
   --grey-color: #aaa;
   --greylight-color: #eee;
   --light-color: #fff2f6;
   --border-color: #eee;
-  --dark-color: #dd1b72;
-  --text-color: #131313;
-  --link-color: #000;
+  --overlay-color: linear-gradient(to bottom, rgba(0 0 0, 0%) 0%, rgba(0 0 0, 10%) 2%, rgba(0 0 0, 40%) 100%);
+  --text-color: var(--dark-color);
+  --textlight-color: var(--brandlight-color);
+  --link-color: var(--dark-color);
   --link-hover-color: #a7155a;
 
   /* fonts */

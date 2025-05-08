@@ -1,0 +1,38 @@
+.section .feed-wrapper {
+  padding: 0;
+}
+
+.feed-item {
+  display: block;
+}
+
+.feed-item {
+  padding: 1rem 0;
+  margin: 0;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--background-color);
+}
+
+.feed-item-subtitle {
+  margin: 0;
+}
+
+.feed-item-title {
+  margin-top: 0;
+}
+
+.feed-item-body {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 0;
+}
+
+.feed-item .feed-item-img {
+  grid-column: 1;
+  display: grid;
+  line-height: 0;
+}

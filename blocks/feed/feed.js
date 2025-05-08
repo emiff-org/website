@@ -73,10 +73,18 @@ export default async function decorate(block) {
 
     const selectWrapper = document.createElement('div');
     selectWrapper.classList.add('custom-select-wrapper');
+    selectWrapper.style.display = 'flex';
+    selectWrapper.style.alignItems = 'center';
+    selectWrapper.style.gap = '10px';
+
+    const label = document.createElement('label');
+    label.textContent = 'Category';
+    label.classList.add('custom-select-label');
+    selectWrapper.prepend(label);
 
     const select = document.createElement('div');
     select.classList.add('custom-select');
-    select.textContent = 'Category';
+    select.textContent = 'All';
 
     const optionsWrapper = document.createElement('div');
     optionsWrapper.classList.add('custom-options');

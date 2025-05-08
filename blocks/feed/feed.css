@@ -41,6 +41,12 @@
   margin-bottom: 1rem;
 }
 
+.custom-select-label {
+  display: block;
+  font-size: var(--heading-font-size-m);
+  color: #333;
+}
+
 /* Custom Select */
 .custom-select {
   display: flex;
@@ -49,7 +55,7 @@
   border: none;
   padding: 10px;
   cursor: pointer;
-  font-size: var(--heading-font-size-m);
+  font-size: var(--heading-font-size-s);
   color: #333;
 }
 

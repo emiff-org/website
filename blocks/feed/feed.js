@@ -62,7 +62,9 @@ function renderItems(itemsToRender, divWrapper) {
 }
 
 function createCustomSelect(filter, rawItems, items, onSelect) {
-  const uniqueFilterValues = [...new Set(rawItems.map((item) => item[filter.toLowerCase()]).filter(Boolean))];
+  const uniqueFilterValues = [...new Set(
+    rawItems.map((item) => item[filter.toLowerCase()]).filter(Boolean),
+  )];
 
   const selectWrapper = document.createElement('div');
   selectWrapper.classList.add('custom-select-wrapper');
@@ -132,7 +134,7 @@ export default async function decorate(block) {
       filter,
       rawItems,
       items,
-      (filteredItems) => renderItems(filteredItems, divWrapper)
+      (filteredItems) => renderItems(filteredItems, divWrapper),
     );
     block.append(selectWrapper);
   }

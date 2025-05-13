@@ -34,8 +34,8 @@
   --heading-font-size-xs: 12px;
     
   /* nav height */
-  --nav-height: 70px;
-  --navmenu-height: 330px;
+  --nav-height: 80px;
+  --navmenu-height: 280px;
 }
 
 /* fallback fonts */
@@ -90,7 +90,6 @@ body.appear {
 
 main {
   flex: 1; /* stretch to push footer down */
-  padding-top: var(--nav-height);
 }
 
 header {

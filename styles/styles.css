@@ -272,11 +272,11 @@ main > .section:first-of-type {
 
 /* section metadata */
 main .section.highlight {
-  background-color: var(--highlight-color);
+  background-color: var(--highlight1-color);
   padding: 2rem 0;
 }
 
 main .section.highlight-red {
-  background-color: var(--highlight1-color);
+  background-color: var(--highlight2-color);
   padding: 2rem 0;
 }

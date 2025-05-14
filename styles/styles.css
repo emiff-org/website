@@ -140,9 +140,6 @@ h5 > a:any-link,
 h6 > a:any-link {
   color: var(--brand-color);
 }
-body h1:first-of-type {
-  margin-bottom: 3rem;
-}
 
 h1 { font-size: var(--heading-font-size-xxl); }
 h2 { font-size: var(--heading-font-size-xl); }
@@ -150,6 +147,10 @@ h3 { font-size: var(--heading-font-size-l); }
 h4 { font-size: var(--heading-font-size-m); }
 h5 { font-size: var(--heading-font-size-s); }
 h6 { font-size: var(--heading-font-size-xs); }
+
+body h1:first-of-type {
+  margin-bottom: 3rem;
+}
 
 p,
 dl,

@@ -148,12 +148,12 @@
 }
 
 main > .section > div.carousel-wrapper {
-  padding: 0px 0px;
+  padding: 0;
 }
 
 @media (width >= 600px) {
   main > .section > div.carousel-wrapper {
-    padding: 0px 0px;
+    padding: 0;
   }
 
   .carousel .carousel-navigation-buttons {

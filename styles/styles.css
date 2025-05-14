@@ -4,7 +4,7 @@
   --brand-color: rgb(221 28 114);
   --brandlight-color: rgb(251 221 14);
   --highlight1-color: var(--brandlight-color);
-  --highlight2-color: #efe6a6;
+  --highlight2-color: var(--brand-color);
   --dark-color: #131313;
   --grey-color: #aaa;
   --greylight-color: #eee;
@@ -272,6 +272,11 @@ main > .section:first-of-type {
 
 /* section metadata */
 main .section.highlight {
-  background-color: var(--brandlight-color);
+  background-color: var(--highlight-color);
+  padding: 2rem 0;
+}
+
+main .section.highlight-red {
+  background-color: var(--highlight1-color);
   padding: 2rem 0;
 }

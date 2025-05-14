@@ -1,11 +1,10 @@
 footer {
-  background-color: var(--background-color);
-  color: white;
-  font-size: var(--body-font-size-xs);
+  background-color: var(--brand-color);
+  font-size: var(--body-font-size-s);
 }
 
 footer .footer > div {
-  color: var(--brand-color);
+  color: var(--textlight-color);
   margin: auto;
   max-width: 1200px;
   padding: 40px 24px 24px;
@@ -16,14 +15,26 @@ footer .footer p {
 }
 
 footer a:any-link {
-  color: var(--brand-color);
+  color: var(--brandlight-color);
   text-decoration: none;
   overflow-wrap: break-word;
 }
 
 footer a:hover {
-  color: var(--brandlight-color);
+  color: var(--text-color);
   text-decoration: underline;
+}
+
+footer span.icon {
+  padding-right: 0.5rem;
+}
+
+footer span.icon svg {
+  display: inline-block;
+  height: 28px;
+  width: 28px;
+  padding-right: 0.5rem;
+  fill: var(--light-color);
 }
 
 @media (width >= 900px) {

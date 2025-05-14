@@ -320,7 +320,7 @@ header .nav-background {
     display: block;
     position: absolute;
     background-color: var(--background-color);
-    width: 100vw;
+    width: 100%;
     height: var(--navmenu-height);
     top: var(--nav-height);
     z-index: 1000;

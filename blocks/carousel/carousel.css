@@ -147,7 +147,8 @@
   left: calc(50% - 2px);
 }
 
-main > .section > div.carousel-wrapper {
+main > .section > div.carousel-wrapper,
+main > .section.highlight.carousel-container {
   padding: 0;
 }
 

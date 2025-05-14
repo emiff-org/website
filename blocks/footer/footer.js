@@ -3,7 +3,7 @@ import { loadFragment } from '../fragment/fragment.js';
 
 /**
  * Inlines an external SVG by replacing the <img> tag with the inline <svg>
- * @param {HTMLImageElement} img 
+ * @param {HTMLImageElement} img
  */
 async function inlineSvg(img) {
   try {
@@ -25,7 +25,7 @@ async function inlineSvg(img) {
 
     img.replaceWith(svgElement);
   } catch (err) {
-    console.warn('SVG inlining failed:', img.src, err);
+    console.warn('SVG inlining failed:', img.src, err); // eslint-disable-line no-console
   }
 }
 

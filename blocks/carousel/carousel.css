@@ -1,4 +1,4 @@
-.carousel .carousel-slides-container {
+.carousel.block {
   position: relative;
 }
 
@@ -28,6 +28,7 @@
   align-items: flex-start;
   justify-content: center;
   position: relative;
+  aspect-ratio: 4/3;
   width: 100%;
   min-height: min(50vw, calc(100dvh - var(--header-height)));
 }
@@ -55,10 +56,21 @@
   z-index: 1;
   margin: 68px;
   padding: 16px;
-  color: white;
-  background-color: rgba(19 19 19 / 75%);
+  color: var(--textlight-color);
   position: relative;
   width: var(--slide-content-width, auto);
+}
+
+.carousel .carousel-slide .carousel-slide-content a {
+  color: var(--textlight-color);
+}
+
+  /* Bottom slide indicators */
+.carousel nav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 
 .carousel .carousel-slide-indicators {
@@ -67,7 +79,6 @@
   justify-content: center;
   gap: 6px 12px;
   padding: 12px;
-  background-color: var(--light-color);
   line-height: 0;
 }
 
@@ -77,14 +88,14 @@
   margin: 0;
   padding: 0;
   border-radius: 50%;
-  background-color: #dadada;
+  background-color: rgba(19 19 19 / 0%);
   transition: background-color 0.2s;
 }
 
 .carousel .carousel-slide-indicator button:disabled,
 .carousel .carousel-slide-indicator button:hover,
 .carousel .carousel-slide-indicator button:focus-visible {
-  background-color: var(--text-color);
+  background-color: rgba(251 221 14 / 75%);
 }
 
 .carousel .carousel-navigation-buttons {
@@ -107,13 +118,14 @@
   margin: 0;
   border-radius: 50%;
   padding: 0;
-  background-color: rgba(19 19 19 / 25%);
+  color: var(--brand-color);
+  background-color: rgba(19 19 19 / 0%);
   transition: background-color 0.2s;
 }
 
 .carousel .carousel-navigation-buttons button:hover,
 .carousel .carousel-navigation-buttons button:focus-visible {
-  background-color: rgba(19 19 19 / 75%);
+  background-color: rgba(251 221 14 / 75%);
 }
 
 .carousel .carousel-navigation-buttons button::after {
@@ -135,7 +147,15 @@
   left: calc(50% - 2px);
 }
 
+main > .section > div.carousel-wrapper {
+  padding: 0;
+}
+
 @media (width >= 600px) {
+  main > .section > div.carousel-wrapper {
+    padding: 0;
+  }
+
   .carousel .carousel-navigation-buttons {
     left: 24px;
     right: 24px;

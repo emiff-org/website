@@ -285,3 +285,32 @@ main .section.highlight-red {
   background-color: var(--highlight2-color);
   padding: 2rem 0;
 }
+
+main .section.brand-background {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate; /* ensures z-index layering inside only affects this block */
+}
+
+main .section.brand-background::before {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: 0;
+  width: 80%;
+  height: 80%;
+  background-image: url('/icons/brand.webp');
+  background-repeat: no-repeat;
+  background-size: contain; /* or cover for full-bleed effect */
+  background-position: bottom left;
+  opacity: 0.3; /* subtle */
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(1px);
+}
+
+main .section.brand-background.background-right::before {
+  background-position: bottom right;
+  left: unset;
+  right: 0;
+}

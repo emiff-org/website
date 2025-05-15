@@ -1,0 +1,21 @@
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 2rem 0;
+  border: none;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid var(--brand-color);
+}
+
+.divider-text span {
+  padding: 0 1rem;
+  color: var(--text-color);
+  font-size: var(--body-font-size-s);
+  white-space: nowrap;
+}

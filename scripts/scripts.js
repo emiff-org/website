@@ -13,6 +13,8 @@ import {
   loadCSS,
 } from './aem.js';
 
+import { addLinkAltFromImageText } from './scripts-ext.js';
+
 /**
  * Builds hero block and prepends to main in a new section.
  * @param {Element} main The container element
@@ -83,6 +85,9 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+
+  // extension point for custom DOM enhancements
+  addLinkAltFromImageText(main);
 }
 
 /**

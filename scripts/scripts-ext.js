@@ -16,20 +16,21 @@ export function addImgAltText(main) {
 
     const next = img.nextSibling;
     if (
-      next?.nodeType === Node.TEXT_NODE &&
-      next.textContent.trim()
+      next?.nodeType === Node.TEXT_NODE
+      && next.textContent.trim()
     ) {
       img.alt = next.textContent.trim();
       next.remove(); // Optional: clean up caption visually
     }
   });
 }
+
 /**
- * Checks for all images that are links without text 
+ * Checks for all images that are links without text
  * and adds the alt text of the image as aria-label to the link.
  * Also resolves odd EDS artefact of empty but spammy link titles.
  * @param {Element} main The root container (usually <main>)
- **/
+ */
 export function addLinkAltFromImageText(main) {
   main.querySelectorAll('a').forEach((link) => {
     const img = link.querySelector('img');

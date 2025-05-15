@@ -3,7 +3,7 @@ export default function decorate(block) {
   block.classList.add('divider');
 
   if (hasText) {
-    block.classList.add('divider--text');
+    block.classList.add('divider-text');
     const span = document.createElement('span');
     span.textContent = block.textContent.trim();
     block.textContent = '';

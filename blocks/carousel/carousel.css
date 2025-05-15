@@ -65,6 +65,10 @@
   color: var(--textlight-color);
 }
 
+.carousel .carousel-slide .carousel-slide-content h2 {
+  font-size: var(--heading-font-size-xxl);
+}
+
   /* Bottom slide indicators */
 .carousel nav {
   position: absolute;

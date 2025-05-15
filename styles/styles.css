@@ -276,6 +276,11 @@ main .section.highlight {
   padding: 2rem 0;
 }
 
+main .section.highlight:last-child {
+  background-color: var(--highlight1-color);
+  margin-bottom: 0;
+}
+
 main .section.highlight-red {
   background-color: var(--highlight2-color);
   padding: 2rem 0;

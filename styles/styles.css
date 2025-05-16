@@ -209,13 +209,15 @@ button {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: background-color 0.1s ease, color 0.1s ease;
 }
 
 a.button:hover,
 a.button:focus,
 button:hover,
 button:focus {
-  background-color: var(--brandlight-color);
+  background-color: var(--brand-color);
+  color: var(--textlight-color);
   cursor: pointer;
 }
 
@@ -301,16 +303,16 @@ main .section.brand-background::before {
   height: 80%;
   background-image: url('/icons/brand.webp');
   background-repeat: no-repeat;
-  background-size: contain; /* or cover for full-bleed effect */
-  background-position: bottom left;
-  opacity: 0.3; /* subtle */
+  background-size: contain;
+  background-position: bottom center;
+  max-width: 1200px;
+  opacity: 0.4;
   z-index: -1;
   pointer-events: none;
-  filter: blur(1px);
 }
 
 main .section.brand-background.background-right::before {
-  background-position: bottom right;
+  background-position: bottom center;
   left: unset;
   right: 0;
 }

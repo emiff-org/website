@@ -54,6 +54,10 @@ header nav a:any-link {
   color: currentcolor;
 }
 
+header nav a:hover {
+  color: var(--brand-color);
+}
+
 /* hamburger */
 header nav .nav-hamburger {
   grid-area: hamburger;
@@ -210,7 +214,6 @@ header nav .nav-sections ul {
 }
 
 header nav .nav-sections ul > li {
-  font-weight: 500;
   border: 0;
 }
 

@@ -1,13 +1,20 @@
 div.sponsors {
   background-color: var(--grey-color);
-  font-size: var(--body-font-size-s);
+  font-size: var(--body-font-size-xs);
   border-top: 2px solid var(--brand-color);
+}
+
+div.sponsors > div {
+  color: var(--textlight-color);
+  margin: auto;
+  max-width: 1200px;
+  padding: 40px 24px 24px;
 }
 
 div.sponsors .section > div {
   max-width: 1200px;
   margin: auto;
-  padding: 24px 24px;
+  padding: 24px;
 }
 
 div.sponsors .section p {
@@ -19,16 +26,14 @@ div.sponsors .section .columns-wrapper {
   padding: 0;
 }
 
-div.sponsors > div {
-  color: var(--textlight-color);
-  margin: auto;
-  max-width: 1200px;
-  padding: 40px 24px 24px;
-}
-
 @media (width >= 900px) {
   div.sponsors > div {
     padding: 32px;
+  }
+
+  div.sponsors .columns > div:nth-child(2),
+  div.sponsors .columns > div:nth-child(4) {
+    margin-left: 2rem;
   }
 }
 

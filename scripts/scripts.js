@@ -133,7 +133,7 @@ async function loadLazy(doc) {
   loadHeader(doc.querySelector('header'));
 
   // load sponsors block
-  const sponsors = document.createElement('div')
+  const sponsors = document.createElement('div');
   loadSponsors(sponsors);
   main.after(sponsors);
   // end load sponsors block

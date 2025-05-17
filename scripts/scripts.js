@@ -2,6 +2,7 @@ import {
   buildBlock,
   loadHeader,
   loadFooter,
+  loadSponsors,
   decorateButtons,
   decorateIcons,
   decorateSections,
@@ -128,7 +129,15 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
+  // extension point for site global fragments
   loadHeader(doc.querySelector('header'));
+
+  // load sponsors block
+  const sponsors = document.createElement('div')
+  loadSponsors(sponsors);
+  main.after(sponsors);
+  // end load sponsors block
+
   loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);

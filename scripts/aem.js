@@ -655,6 +655,18 @@ async function loadFooter(footer) {
 }
 
 /**
+ * Loads a block named 'sponsors' into sponsors
+ * @param sponsors sponsors element
+ * @returns {Promise}
+ */
+async function loadSponsors(sponsors) {
+  const sponsorsBlock = buildBlock('sponsors', '');
+  sponsors.append(sponsorsBlock);
+  decorateBlock(sponsorsBlock);
+  return loadBlock(sponsorsBlock);
+}
+
+/**
  * Wait for Image.
  * @param {Element} section section element
  */
@@ -724,6 +736,7 @@ export {
   loadCSS,
   loadFooter,
   loadHeader,
+  loadSponsors, // extension for sponsors block
   loadScript,
   loadSection,
   loadSections,

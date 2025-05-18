@@ -48,6 +48,10 @@ indices:
         select: head > meta[property="og:title"]
         value: |
           attribute(el, 'content')
+      type:
+        select: head > meta[name="type"]
+        value: |
+          attribute(el, 'content')
       image:
         select: head > meta[property="og:image"]
         value: |

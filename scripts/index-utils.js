@@ -4,6 +4,7 @@ const INDEX_PATHS = {
   INDEX_ALL: 'query-index',
   INDEX_NEWS: 'query-index',
   INDEX_MENTIONS: 'news/in-the-news',
+  INDEX_LOCATIONS: 'locations-index',
 };
 
 /**

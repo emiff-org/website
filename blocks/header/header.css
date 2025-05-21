@@ -172,6 +172,10 @@ header nav .nav-tools a.button:any-link {
   padding: 0;
 }
 
+header nav .nav-tools .icon {
+  padding-left: 1rem;
+}
+
 @media (width >= 900px) {
   header nav .nav-tools {
     align-items: center;

@@ -18,8 +18,74 @@ async function fetchItems(config) {
     .slice(0, Number.isNaN(limit) ? undefined : limit);
 }
 
-function renderItems(itemsToRender, divWrapper) {
-  divWrapper.innerHTML = ''; // Clear previous items
+function renderCardItems(itemsToRender, container) {
+  const ul = document.createElement('ul');
+
+  itemsToRender.forEach((loc) => {
+    const li = document.createElement('li');
+
+    // Image section
+    const imageDiv = document.createElement('div');
+    imageDiv.className = 'cards-card-image';
+
+    const pImage = document.createElement('p');
+    const aImage = document.createElement('a');
+    aImage.href = loc.path;
+    aImage.setAttribute('aria-label', loc.title);
+    aImage.title = '';
+
+    const picture = document.createElement('picture');
+    const img = document.createElement('img');
+    img.loading = 'lazy';
+    img.alt = loc.title;
+    img.src = loc.image;
+
+    picture.appendChild(img);
+    aImage.appendChild(picture);
+    pImage.appendChild(aImage);
+    imageDiv.appendChild(pImage);
+
+    // Text content section
+    const bodyDiv = document.createElement('div');
+    bodyDiv.className = 'cards-card-body';
+
+    if (loc.events) {
+      const pSub = document.createElement('p');
+      pSub.className = 'cards-card-subtitle';
+      pSub.textContent = loc.events;
+      bodyDiv.appendChild(pSub);
+    }
+
+    const h3 = document.createElement('h3');
+    h3.id = loc.title.toLowerCase().replace(/\s+/g, '-');
+    const aTitle = document.createElement('a');
+    aTitle.href = loc.path;
+    aTitle.title = loc.title;
+    aTitle.textContent = loc.title;
+    h3.appendChild(aTitle);
+    bodyDiv.appendChild(h3);
+
+    if (loc.description) {
+      const pDescr = document.createElement('p');
+      loc.description.split(',').forEach((part, idx) => {
+        if (idx > 0) pDescr.appendChild(document.createElement('br'));
+        pDescr.appendChild(document.createTextNode(part.trim()));
+      });
+      bodyDiv.appendChild(pDescr);
+    }
+
+    li.appendChild(imageDiv);
+    li.appendChild(bodyDiv);
+    ul.appendChild(li);
+  });
+
+  container.innerHTML = ''; // Clear previous content
+  container.appendChild(ul);
+  return container;
+}
+
+function renderListItems(itemsToRender, container) {
+  container.innerHTML = ''; // Clear previous items
 
   itemsToRender.forEach((item) => {
     const div = document.createElement('div');
@@ -57,8 +123,22 @@ function renderItems(itemsToRender, divWrapper) {
       pDescr.textContent = item.description;
       div.append(pDescr);
     }
-    divWrapper.append(div);
+    container.append(div);
   });
+  return container;
+}
+
+function renderItems(items, layout) {
+  const container = document.createElement('div');
+
+  if (layout === 'cards') {
+    container.classList.add('cards', 'block');
+    renderCardItems(items, container);
+  } else {
+    container.classList.add('feed');
+    renderListItems(items, container);
+  }
+  return container;
 }
 
 function createCustomSelect(filter, rawItems, items, onSelect) {
@@ -120,25 +200,22 @@ function createCustomSelect(filter, rawItems, items, onSelect) {
 export default async function decorate(block) {
   const config = readBlockConfig(block);
   const filter = config?.filter?.trim();
+  const layout = config?.layout?.trim().toLowerCase();
 
   const items = await fetchItems(config);
   const rawItems = await ffetch(getIndexPath(`INDEX_${config?.index?.trim().toUpperCase()}`)).all();
 
   block.textContent = '';
 
-  const divWrapper = document.createElement('div');
-  divWrapper.classList.add('feed');
-
   if (filter) {
     const selectWrapper = createCustomSelect(
       filter,
       rawItems,
       items,
-      (filteredItems) => renderItems(filteredItems, divWrapper),
+      (filteredItems) => renderItems(filteredItems, layout),
     );
     block.append(selectWrapper);
   }
 
-  renderItems(items, divWrapper);
-  block.append(divWrapper);
+  block.append(renderItems(items, layout));
 }

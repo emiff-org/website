@@ -145,13 +145,6 @@ export default async function decorate(block) {
 
   const navBrand = nav.querySelector('.nav-brand');
   const navSections = nav.querySelector('.nav-sections');
-  navBrand.addEventListener('mouseenter', () => {
-    if (isDesktop.matches) {
-      toggleAllNavSections(navSections, true);
-      document.querySelector('header .nav-background')?.classList.add('is-visible');
-    }
-  });
-
   const brandLink = navBrand.querySelector('.button');
   if (brandLink) {
     brandLink.className = '';
@@ -161,10 +154,21 @@ export default async function decorate(block) {
   // top level nav items
   if (navSections) {
     navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
+      let timeoutId;
+
       navSection.addEventListener('mouseenter', () => {
         if (isDesktop.matches) {
-          toggleAllNavSections(navSections, true);
-          document.querySelector('header .nav-background')?.classList.add('is-visible');
+          timeoutId = setTimeout(() => {
+            toggleAllNavSections(navSections, true);
+            document.querySelector('header .nav-background')?.classList.add('is-visible');
+          }, 300);
+        }
+      });
+      navSection.addEventListener('mouseleave', () => {
+        if (isDesktop.matches) {
+          clearTimeout(timeoutId);
+          toggleAllNavSections(navSections, false);
+          document.querySelector('header .nav-background')?.classList.remove('is-visible');
         }
       });
     });

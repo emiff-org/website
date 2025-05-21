@@ -3,6 +3,7 @@
   /* display: grid;
   grid-template-columns: auto 1fr;
   gap: 1ch; */
+  background-color: inherit;
   align-items: center;
 }
 
@@ -15,6 +16,7 @@
   border-radius: 4px;
   border: 1px solid var(--brand-color);
   outline-color: var(--brand-color);
+  outline-style: none;
   background-color: var(--background-color);
   color: var(--text-color);
   /* font-size: var(--body-font-size-s); */

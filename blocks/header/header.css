@@ -15,7 +15,7 @@ header nav {
     'brand tools hamburger' var(--nav-height)
     'sections sections sections' 1fr / 1fr auto auto;
   align-items: center;
-  gap: 0 24px;
+  gap: 0 16px;
   margin: auto;
   max-width: 1248px;
   height: var(--nav-height);
@@ -173,7 +173,7 @@ header nav .nav-tools a.button:any-link {
 }
 
 header nav .nav-tools .icon {
-  padding-left: 1rem;
+  padding-left: 16px;
 }
 
 @media (width >= 900px) {

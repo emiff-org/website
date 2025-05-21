@@ -1,7 +1,8 @@
 import {
-  createOptimizedPicture,
+  // createOptimizedPicture,
   decorateIcons,
   fetchPlaceholders,
+  readBlockConfig,
 } from '../../scripts/aem.js';
 
 const searchParams = new URLSearchParams(window.location.search);
@@ -121,13 +122,12 @@ function renderResult(result, searchTerms, titleTag) {
   return li;
 }
 
-function clearSearchResults(block) {
-  const searchResults = block.querySelector('.search-results');
-  searchResults.innerHTML = '';
+function getResultsContainer() {
+  return document.querySelector('.search-results');
 }
 
 function clearSearch(block) {
-  clearSearchResults(block);
+  block.innerHTML = '';
   if (window.history.replaceState) {
     const url = new URL(window.location.href);
     url.search = '';
@@ -137,21 +137,20 @@ function clearSearch(block) {
 }
 
 async function renderResults(block, config, filteredData, searchTerms) {
-  clearSearchResults(block);
-  const searchResults = block.querySelector('.search-results');
-  const headingTag = searchResults.dataset.h;
+  block.innerHTML = '';
+  const headingTag = block.dataset.h;
 
   if (filteredData.length) {
-    searchResults.classList.remove('no-results');
+    block.classList.remove('no-results');
     filteredData.forEach((result) => {
       const li = renderResult(result, searchTerms, 'h3');
-      searchResults.append(li);
+      block.append(li);
     });
   } else {
     const noResultsMessage = document.createElement('li');
-    searchResults.classList.add('no-results');
+    block.classList.add('no-results');
     noResultsMessage.textContent = config.placeholders.searchNoResults || 'No results found.';
-    searchResults.append(noResultsMessage);
+    block.append(noResultsMessage);
   }
 }
 
@@ -204,7 +203,7 @@ async function handleSearch(e, block, config) {
     window.history.replaceState({}, '', url.toString());
   }
 
-  if (searchValue.length < 3) {
+  if (config.mode === 'results' && searchValue.length < 3) {
     clearSearch(block);
     return;
   }
@@ -212,7 +211,9 @@ async function handleSearch(e, block, config) {
 
   const data = await fetchData(config.source);
   const filteredData = filterData(searchTerms, data);
-  await renderResults(block, config, filteredData, searchTerms);
+  
+  // query the results container outside of current block
+  await renderResults(getResultsContainer(), config, filteredData, searchTerms);
 }
 
 function searchResultsContainer(block) {
@@ -235,16 +236,16 @@ function searchInput(block, config) {
     handleSearch(e, block, config);
   });
 
-  input.addEventListener('keyup', (e) => { if (e.code === 'Escape') { clearSearch(block); } });
+  input.addEventListener('keyup', (e) => { if (e.code === 'Escape') { clearSearch(getResultsContainer()); } });
 
   return input;
 }
 
-function searchIcon() {
-  const icon = document.createElement('span');
-  icon.classList.add('icon', 'icon-search');
-  return icon;
-}
+// function searchIcon() {
+//   const icon = document.createElement('span');
+//   icon.classList.add('icon', 'icon-search');
+//   return icon;
+// }
 
 function searchBox(block, config) {
   const box = document.createElement('div');
@@ -258,18 +259,23 @@ function searchBox(block, config) {
 }
 
 export default async function decorate(block) {
+  const config = readBlockConfig(block);
+  const mode = config?.mode?.trim().toLowerCase();
+
   const placeholders = await fetchPlaceholders();
   const source = block.querySelector('a[href]') ? block.querySelector('a[href]').href : '/query-index.json';
   block.innerHTML = '';
-  block.append(
-    searchBox(block, { source, placeholders }),
-    searchResultsContainer(block),
-  );
+  if (mode === 'input') {
+    block.append(searchBox(block, { source, placeholders, mode }));
 
-  if (searchParams.get('q')) {
-    const input = block.querySelector('input');
-    input.value = searchParams.get('q');
-    input.dispatchEvent(new Event('input'));
+    if (searchParams.get('q')) {
+      const input = block.querySelector('input');
+      input.value = searchParams.get('q');
+      input.dispatchEvent(new Event('input'));
+    }
+  }
+  else if (mode === 'results') {
+    block.append(searchResultsContainer(block));
   }
 
   decorateIcons(block);

@@ -12,9 +12,16 @@
   margin-bottom: auto;
 }
 
+/* Sponsors section */
+.columns.img-size-m img {
+  max-height: 200px;
+  object-fit: contain;
+  padding-bottom: 1rem;
+}
+
 .columns > div > .columns-img-col {
   order: 0;
-  height: 200px; /* Or whatever fits your design */
+  height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,13 +29,6 @@
 
 .columns > div > .columns-img-col img {
   display: block;
-}
-
-/* Sponsors section */
-.columns.img-size-m img {
-  max-height: 200px;
-  object-fit: contain;
-  padding-bottom: 1rem;
 }
 
 @media (width >= 900px) {

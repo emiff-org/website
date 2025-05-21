@@ -138,7 +138,6 @@ function clearSearch(block) {
 
 async function renderResults(block, config, filteredData, searchTerms) {
   block.innerHTML = '';
-  const headingTag = block.dataset.h;
 
   if (filteredData.length) {
     block.classList.remove('no-results');
@@ -211,7 +210,7 @@ async function handleSearch(e, block, config) {
 
   const data = await fetchData(config.source);
   const filteredData = filterData(searchTerms, data);
-  
+
   // query the results container outside of current block
   await renderResults(getResultsContainer(), config, filteredData, searchTerms);
 }
@@ -273,8 +272,7 @@ export default async function decorate(block) {
       input.value = searchParams.get('q');
       input.dispatchEvent(new Event('input'));
     }
-  }
-  else if (mode === 'results') {
+  } else if (mode === 'results') {
     block.append(searchResultsContainer(block));
   }
 

@@ -19,7 +19,6 @@
   outline-style: none;
   background-color: var(--background-color);
   color: var(--text-color);
-  /* font-size: var(--body-font-size-s); */
 }
 
 /* search results */
@@ -53,18 +52,9 @@
   padding: 0 16px;
 }
 
-.search ul.search-results > li .search-result-title {
-  /* font-size: var(--body-font-size-m);
-  font-weight: normal; */
-}
-
 .search ul.search-results > li .search-result-title a {
   color: currentcolor;
   text-decoration: none;
-}
-
-.search ul.search-results > li p {
-  /* font-size: var(--body-font-size-s); */
 }
 
 .search ul.search-results > li .search-result-image {
@@ -90,7 +80,6 @@
 /* minimal variant */
 .search.minimal ul.search-results {
   display: block;
-  /* padding-left: 34px; */
 }
 
 .search.minimal ul.search-results > li {

@@ -6,7 +6,7 @@
   --highlight1-color: var(--brandlight-color);
   --highlight2-color: var(--brand-color);
   --dark-color: #131313;
-  --grey-color: #aaa;
+  --grey-color: #eee;
   --greylight-color: #eee;
   --light-color: #fff2f6;
   --border-color: #eee;
@@ -315,4 +315,9 @@ main .section.brand-background.background-right::before {
   background-position: bottom center;
   left: unset;
   right: 0;
+}
+
+main .section.sponsors {
+  background-color: var(--background-color);
+  padding: 2rem 0;
 }

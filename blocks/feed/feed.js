@@ -18,17 +18,6 @@ async function fetchItems(config) {
     .slice(0, Number.isNaN(limit) ? undefined : limit);
 }
 
-function renderItems(items, layout) {
-  const container = document.createElement('div');
-  if (layout === 'cards') {
-    container.classList.add('cards', 'block');
-    return renderCardItems(items, container);
-  } else {
-    container.classList.add('feed');
-    return renderListItems(items, container);
-  }
-}
-
 function renderCardItems(itemsToRender, container) {
   const ul = document.createElement('ul');
 
@@ -78,7 +67,7 @@ function renderCardItems(itemsToRender, container) {
 
     if (loc.description) {
       const pDescr = document.createElement('p');
-      loc.description.split(',').forEach((part, idx, arr) => {
+      loc.description.split(',').forEach((part, idx) => {
         if (idx > 0) pDescr.appendChild(document.createElement('br'));
         pDescr.appendChild(document.createTextNode(part.trim()));
       });
@@ -136,6 +125,19 @@ function renderListItems(itemsToRender, container) {
     }
     container.append(div);
   });
+  return container;
+}
+
+function renderItems(items, layout) {
+  const container = document.createElement('div');
+
+  if (layout === 'cards') {
+    container.classList.add('cards', 'block');
+    renderCardItems(items, container);
+  } else {
+    container.classList.add('feed');
+    renderListItems(items, container);
+  }
   return container;
 }
 
@@ -210,7 +212,7 @@ export default async function decorate(block) {
       filter,
       rawItems,
       items,
-      (filteredItems) => renderItems(filteredItems, divWrapper),
+      (filteredItems) => renderItems(filteredItems, layout),
     );
     block.append(selectWrapper);
   }

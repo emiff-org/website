@@ -16,11 +16,13 @@
 .columns.img-size-m img {
   max-height: 200px;
   object-fit: contain;
-  padding-bottom: 1rem;
 }
 
 .columns > div > .columns-img-col {
   order: 0;
+}
+
+.columns.img-size-m > div > .columns-img-col {
   height: 200px;
   display: flex;
   align-items: center;

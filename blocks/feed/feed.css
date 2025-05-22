@@ -8,6 +8,10 @@
   background-color: var(--background-color);
 }
 
+.feed-item:last-child {
+  border-bottom: none;
+}
+
 .feed-item-subtitle {
   margin: 0;
 }

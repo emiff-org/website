@@ -156,7 +156,7 @@ export default async function decorate(block) {
     navSections.querySelectorAll(':scope .default-content-wrapper > ul:first-of-type > li').forEach((navSection) => {
       // Extract just the text directly inside the <li> (not including child <ul>)
       const labelNode = Array.from(navSection.childNodes).find(
-        (node) => node.nodeType === Node.TEXT_NODE && node.textContent.trim()
+        (node) => node.nodeType === Node.TEXT_NODE && node.textContent.trim(),
       );
 
       const span = document.createElement('span');
@@ -208,7 +208,12 @@ export default async function decorate(block) {
 
     const toElement = event.relatedTarget;
     const navWrapper = document.querySelector('.nav-sections');
-    if (!toElement || !navWrapper.contains(toElement)) {
+    
+    // avoid events from child elements and dropdown menus
+    if (event.target === navBackground
+      && toElement
+      && !navWrapper.contains(toElement)
+      && !navBackground.contains(toElement)) {
       toggleAllNavSections(navSections, false);
       navBackground.classList.remove('is-visible');
     }

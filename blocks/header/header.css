@@ -278,6 +278,11 @@ header nav .nav-sections ul > li > ul > li.active {
     position: relative;
   }
 
+  header nav .nav-sections .default-content-wrapper > ul > li .nav-label {
+    display: block;
+    width: 100%;
+  }
+
   header nav .nav-sections .default-content-wrapper > ul > li::after {
     content: '';
     position: absolute;

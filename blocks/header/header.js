@@ -153,22 +153,35 @@ export default async function decorate(block) {
 
   // top level nav items
   if (navSections) {
-    navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-      let timeoutId;
+    navSections.querySelectorAll(':scope .default-content-wrapper > ul:first-of-type > li').forEach((navSection) => {
+      // Extract just the text directly inside the <li> (not including child <ul>)
+      const labelNode = Array.from(navSection.childNodes).find(
+        (node) => node.nodeType === Node.TEXT_NODE && node.textContent.trim(),
+      );
 
-      navSection.addEventListener('mouseenter', () => {
+      const span = document.createElement('span');
+      span.classList.add('nav-label');
+      span.textContent = labelNode.textContent.trim();
+      navSection.replaceChild(span, labelNode);
+
+      let timeoutId;
+      let isTimeoutPending = false;
+
+      span.addEventListener('mouseenter', () => {
         if (isDesktop.matches) {
+          isTimeoutPending = true;
           timeoutId = setTimeout(() => {
+            isTimeoutPending = false;
             toggleAllNavSections(navSections, true);
             document.querySelector('header .nav-background')?.classList.add('is-visible');
           }, 300);
         }
       });
-      navSection.addEventListener('mouseleave', () => {
-        if (isDesktop.matches) {
+      span.addEventListener('mouseleave', () => {
+        if (isDesktop.matches && isTimeoutPending) {
           clearTimeout(timeoutId);
-          toggleAllNavSections(navSections, false);
-          document.querySelector('header .nav-background')?.classList.remove('is-visible');
+          // toggleAllNavSections(navSections, false);
+          // document.querySelector('header .nav-background')?.classList.remove('is-visible');
         }
       });
     });
@@ -190,10 +203,19 @@ export default async function decorate(block) {
   // navigation background
   const navBackground = document.createElement('div');
   navBackground.classList.add('nav-background');
-  navBackground.addEventListener('mouseleave', () => {
-    if (isDesktop.matches) {
+  navBackground.addEventListener('mouseout', (event) => {
+    if (!isDesktop.matches) return;
+
+    const toElement = event.relatedTarget;
+    const navWrapper = document.querySelector('.nav-sections');
+
+    // avoid events from child elements and dropdown menus
+    if (event.target === navBackground
+      && toElement
+      && !navWrapper.contains(toElement)
+      && !navBackground.contains(toElement)) {
       toggleAllNavSections(navSections, false);
-      document.querySelector('header .nav-background')?.classList.remove('is-visible');
+      navBackground.classList.remove('is-visible');
     }
   });
 

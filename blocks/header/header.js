@@ -208,7 +208,7 @@ export default async function decorate(block) {
 
     const toElement = event.relatedTarget;
     const navWrapper = document.querySelector('.nav-sections');
-    
+
     // avoid events from child elements and dropdown menus
     if (event.target === navBackground
       && toElement

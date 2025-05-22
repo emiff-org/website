@@ -90,6 +90,11 @@
   background-color: var(--background-color);
 }
 
+.search.minimal ul.search-results > li:last-child {
+  border-bottom: none;
+}
+
+
 .search.minimal ul.search-results > li .search-result-title,
 .search.minimal ul.search-results > li p {
   padding: unset;

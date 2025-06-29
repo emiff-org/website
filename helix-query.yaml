@@ -8,9 +8,9 @@ indices:
       - '**/templates'
     properties:
       title:
-        select: head > meta[property="og:title"]
+        select: main h1:first-of-type
         value: |
-          attribute(el, 'content')
+          textContent(el)
       image:
         select: head > meta[property="og:image"]
         value: |
@@ -45,9 +45,9 @@ indices:
       - '/festival/locations/*'
     properties:
       title:
-        select: head > meta[property="og:title"]
+        select: main h1:first-of-type
         value: |
-          attribute(el, 'content')
+          textContent(el)
       type:
         select: head > meta[name="type"]
         value: |
@@ -76,15 +76,15 @@ indices:
         select: head > meta[name="robots"]
         value: |
           attribute(el, 'content')
-  program:
-    target: /program/program-index
+  entries:
+    target: /program/entries-index
     include:
-      - '/program/movies/*'
+      - '/program/entries/*'
     properties:
       title:
-        select: head > meta[property="og:title"]
+        select: main h1:first-of-type
         value: |
-          attribute(el, 'content')
+          textContent(el)
       image:
         select: head > meta[property="og:image"]
         value: |
@@ -101,6 +101,10 @@ indices:
         select: head > meta[name="section"]
         value: |
           attribute(el, 'content')
+      subsection:
+        select: head > meta[name="subsection"]
+        value: |
+          attribute(el, 'content')
       languages:
         select: head > meta[name="languages"]
         value: |
@@ -109,4 +113,3 @@ indices:
         select: head > meta[name="premier-status"]
         value: |
           attribute(el, 'content')
-

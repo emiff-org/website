@@ -8,6 +8,7 @@ const INDEX_PATHS = {
   INDEX_ENTRIES: 'program/entries-index',
   INDEX_PROGRAM: 'program/program-index',
   INDEX_BLOCKS: 'program/blocks-index',
+  INDEX_EVENTS: 'program/events-index',
 };
 
 /**

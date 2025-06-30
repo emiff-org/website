@@ -6,24 +6,34 @@ async function fetchItems(config) {
   // const type = config?.type?.trim().toLowerCase();
   const limit = parseInt(config?.limit ?? '', 10) || undefined;
 
-  const [programData, entriesData, blocksData, locationsData] = await Promise.all([
+  const [programData, entriesData, blocksData, eventsData, locationsData] = await Promise.all([
     ffetch(getIndexPath('INDEX_PROGRAM')).all(),
     ffetch(getIndexPath('INDEX_ENTRIES')).all(),
     ffetch(getIndexPath('INDEX_BLOCKS')).all(),
+    ffetch(getIndexPath('INDEX_EVENTS')).all(),
     ffetch(getIndexPath('INDEX_LOCATIONS')).all(),
   ]);
 
   const merged = programData.map((item) => {
-    const entry = entriesData.find((e) => e.title === item.title);
-    const block = blocksData.find((e) => e.title === item.title);
-    const location = locationsData.find((l) => l.title === item.location);
+    const entry = entriesData.find(
+      (e) => e.title.toLowerCase() === item.title.toLowerCase(),
+    );
+    const block = blocksData.find(
+      (e) => e.title.toLowerCase() === item.title.toLowerCase(),
+    );
+    const event = eventsData.find(
+      (e) => e.title.toLowerCase() === item.title.toLowerCase(),
+    );
+    const location = locationsData.find(
+      (l) => l.title.toLowerCase() === item.location.toLowerCase(),
+    );
 
     return {
       ...item,
-      title: entry?.title || block?.title || '',
-      type: entry?.type || block?.type || '',
+      title: entry?.title || block?.title || event?.title || 'Entry not found!',
+      type: entry?.type || block?.type || event?.type || '',
       genre: entry?.genre || '',
-      languages: entry?.languages || '',
+      languages: entry?.languages || block?.languages || event?.languages || '',
       section: entry?.section || '',
       locationMap: location?.map || '',
     };
@@ -32,8 +42,8 @@ async function fetchItems(config) {
   return merged
     // .filter((item) => item.type.toLowerCase() === type)
     .sort((a, b) => {
-      const dateA = parseInt(a.publicationDate || '0', 10);
-      const dateB = parseInt(b.publicationDate || '0', 10);
+      const dateA = parseInt(a.date || '0', 10);
+      const dateB = parseInt(b.date || '0', 10);
       return dateB - dateA; // descending
     })
     .slice(0, Number.isNaN(limit) ? undefined : limit);

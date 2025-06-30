@@ -149,3 +149,28 @@ indices:
         select: head > meta[name="languages"]
         value: |
           attribute(el, 'content')
+  events:
+    target: /program/events-index
+    include:
+      - '/program/events/*'
+    properties:
+      type:
+        select: head > meta[name="type"]
+        value: |
+          attribute(el, 'content')
+      title:
+        select: main h1:first-of-type
+        value: |
+          textContent(el)
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, 'content'), 'https:\/\/[^/]+(\/.*)')
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, 'content')
+      languages:
+        select: head > meta[name="languages"]
+        value: |
+          attribute(el, 'content')

@@ -191,22 +191,9 @@ function renderListItems(itemsToRender, container) {
   return container;
 }
 
-function renderItems(items, layout) {
-  const container = document.createElement('div');
-
-  if (layout === 'cards') {
-    container.classList.add('cards', 'block');
-    renderCardItems(items, container);
-  } else {
-    container.classList.add('feed');
-    renderListItems(items, container);
-  }
-  return container;
-}
-
-function createCustomSelect(filter, rawItems, items, onSelect) {
+function createCustomSelect(filter, items, onSelect) {
   const uniqueFilterValues = [...new Set(
-    rawItems.map((item) => item[filter.toLowerCase()]).filter(Boolean),
+    items.map((item) => item[filter.toLowerCase()]).filter(Boolean),
   )];
 
   const selectWrapper = document.createElement('div');
@@ -260,25 +247,71 @@ function createCustomSelect(filter, rawItems, items, onSelect) {
   return selectWrapper;
 }
 
+function getFilterMap(container = document) {
+  const filterMap = {};
+
+  container.querySelectorAll('.custom-select-wrapper').forEach((wrapper) => {
+    const key = wrapper.querySelector('.custom-select-label')?.textContent?.trim()
+      .toLowerCase();
+    const value = wrapper.querySelector('.custom-select')?.textContent?.trim()
+      .toLowerCase();
+    if (key && value) {
+      filterMap[key.toLowerCase()] = value;
+    }
+  });
+  return filterMap;
+}
+
+function renderItems(container, items, layout) {
+  if (layout === 'cards') {
+    container.classList.add('cards', 'block');
+    renderCardItems(items, container);
+  } else {
+    container.classList.add('feed');
+    renderListItems(items, container);
+  }
+  return container;
+}
+
+function renderFeed(items, layout) {
+  const feedBlock = document.querySelector('div.program-feed');
+  const oldBlock = feedBlock.querySelector('div.feed') || document.querySelector('div.cards');
+  if (oldBlock) oldBlock.remove();
+
+  const activeFilters = getFilterMap();
+  console.log('Active Filters:', activeFilters);
+  console.log('Example Item:', items[0]);
+  const filteredItems = items.filter((item) => {
+    return Object.entries(activeFilters).every(([key, value]) => {
+      if (value === 'all') return true;
+      const itemValue = item[key]?.toString().toLowerCase().trim();
+      const filterValue = value.toString().toLowerCase().trim();
+      return itemValue === filterValue;
+    });
+  });
+
+  const feedEl = document.createElement('div');
+  const container = renderItems(feedEl, filteredItems, layout);
+  feedBlock.append(container);
+}
+
 export default async function decorate(block) {
   const config = readBlockConfig(block);
   const filter = config?.filter?.trim();
+  const filterArray = filter ? filter.split(',').map(val => val.trim()) : [];
   const layout = config?.layout?.trim().toLowerCase();
 
   const items = await fetchItems(config);
-  const rawItems = await ffetch(getIndexPath(`INDEX_${config?.index?.trim().toUpperCase()}`)).all();
 
   block.textContent = '';
 
-  if (filter) {
+  filterArray.forEach((filter) => {
     const selectWrapper = createCustomSelect(
       filter,
-      rawItems,
       items,
-      (filteredItems) => renderItems(filteredItems, layout),
+      (filteredItems) => renderFeed(filteredItems, layout),
     );
     block.append(selectWrapper);
-  }
-
-  block.append(renderItems(items, layout));
+  })
+  renderFeed(items, layout);
 }

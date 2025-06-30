@@ -130,7 +130,7 @@ indices:
         select: head > meta[name="description"]
         value: |
           attribute(el, 'content')
-      description:
+      type:
         select: head > meta[name="type"]
         value: |
           attribute(el, 'content')

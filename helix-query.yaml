@@ -6,6 +6,10 @@ indices:
       - '**/site-howto'
       - '**/templates'
     properties:
+      type:
+        select: head > meta[name="type"]
+        value: |
+          attribute(el, 'content')
       title:
         select: main h1:first-of-type
         value: |
@@ -16,10 +20,6 @@ indices:
           match(attribute(el, 'content'), 'https:\/\/[^/]+(\/.*)')
       description:
         select: head > meta[name="description"]
-        value: |
-          attribute(el, 'content')
-      type:
-        select: head > meta[name="type"]
         value: |
           attribute(el, 'content')
       category:
@@ -43,14 +43,14 @@ indices:
     include:
       - '/festival/locations/*'
     properties:
-      title:
-        select: main h1:first-of-type
-        value: |
-          textContent(el)
       type:
         select: head > meta[name="type"]
         value: |
           attribute(el, 'content')
+      title:
+        select: main h1:first-of-type
+        value: |
+          textContent(el)
       image:
         select: head > meta[property="og:image"]
         value: |
@@ -80,6 +80,10 @@ indices:
     include:
       - '/program/entries/*'
     properties:
+      type:
+        select: head > meta[name="type"]
+        value: |
+          attribute(el, 'content')
       title:
         select: main h1:first-of-type
         value: |
@@ -117,6 +121,10 @@ indices:
     include:
       - '/program/blocks/*'
     properties:
+      type:
+        select: head > meta[name="type"]
+        value: |
+          attribute(el, 'content')
       title:
         select: main h1:first-of-type
         value: |
@@ -127,10 +135,6 @@ indices:
           match(attribute(el, 'content'), 'https:\/\/[^/]+(\/.*)')
       description:
         select: head > meta[name="description"]
-        value: |
-          attribute(el, 'content')
-      type:
-        select: head > meta[name="type"]
         value: |
           attribute(el, 'content')
       section:

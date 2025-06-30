@@ -39,6 +39,7 @@ async function fetchItems(config) {
       languages: entry?.languages || block?.languages || event?.languages || '',
       section: entry?.section || '',
       locationMap: location?.map || '',
+      locationPath: location?.path || '',
     };
   });
 
@@ -154,8 +155,13 @@ function renderListItems(itemsToRender, container) {
     }
     if (item.location) {
       const pDescr = document.createElement('p');
+      pDescr.textContent = 'Location: ';
+      const pTitle = document.createElement('a');
+      pTitle.href = item.locationPath;
+      pTitle.title = item.location;
+      pTitle.textContent = item.location;
+      pDescr.appendChild(pTitle);
       pDescr.classList.add('feed-item-body');
-      pDescr.textContent = `Location: ${item.location}`;
       div.append(pDescr);
     }
     if (item.description) {

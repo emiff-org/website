@@ -39,7 +39,6 @@ indices:
         select: head > meta[name="publication-date"]
         value: |
           attribute(el, 'content')
-
   locations:
     target: /locations-index
     include:
@@ -77,7 +76,6 @@ indices:
         select: head > meta[name="robots"]
         value: |
           attribute(el, 'content')
-
   entries:
     target: /program/entries-index
     include:
@@ -115,7 +113,6 @@ indices:
         select: head > meta[name="premier-status"]
         value: |
           attribute(el, 'content')
-
   blocks:
     target: /program/blocks-index
     include:
@@ -131,6 +128,10 @@ indices:
           match(attribute(el, 'content'), 'https:\/\/[^/]+(\/.*)')
       description:
         select: head > meta[name="description"]
+        value: |
+          attribute(el, 'content')
+      description:
+        select: head > meta[name="type"]
         value: |
           attribute(el, 'content')
       section:

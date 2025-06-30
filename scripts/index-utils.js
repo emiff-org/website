@@ -5,6 +5,9 @@ const INDEX_PATHS = {
   INDEX_NEWS: 'query-index',
   INDEX_MENTIONS: 'news/in-the-news',
   INDEX_LOCATIONS: 'locations-index',
+  INDEX_ENTRIES: 'program/entries-index',
+  INDEX_PROGRAM: 'program/program-index',
+  INDEX_BLOCKS: 'program/blocks-index',
 };
 
 /**

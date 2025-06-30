@@ -1,0 +1,110 @@
+@import url('/blocks/cards/cards.css');
+
+.feed-item {
+  display: block;
+  padding: 1rem 0;
+  margin: 0;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--background-color);
+}
+
+.feed-item:last-child {
+  border-bottom: none;
+}
+
+.feed-item-subtitle {
+  margin: 0;
+}
+
+.feed-item-title {
+  margin-top: 0;
+}
+
+.feed-item-body {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 0;
+}
+
+.feed-item .feed-item-img {
+  grid-column: 1;
+  display: grid;
+  line-height: 0;
+}
+
+/* Custom Select Wrapper */
+.custom-select-wrapper {
+  position: relative;
+  width: 200px;
+  margin-bottom: 1rem;
+}
+
+.custom-select-label {
+  display: block;
+  font-size: var(--heading-font-size-m);
+  color: #333;
+}
+
+/* Custom Select */
+.custom-select {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: var(--heading-font-size-s);
+  color: #333;
+}
+
+.custom-select:hover {
+  color: #555;
+}
+
+/* Icon for open/close */
+.custom-select::after {
+  content: '\25BC'; /* Downward arrow */
+  font-size: 12px;
+  margin-left: 10px;
+  transition: transform 0.3s ease;
+}
+
+.custom-select.open::after {
+  transform: rotate(180deg); /* Rotate arrow when open */
+}
+
+/* Custom Options Wrapper */
+.custom-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 10%);
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* Custom Option */
+.custom-option {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+}
+
+.custom-option:hover {
+  background-color: #f0f0f0;
+}
+
+/* Hide options when not active */
+.custom-options[style*="display: none"] {
+  display: none !important;
+}

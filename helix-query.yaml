@@ -76,7 +76,7 @@ indices:
         value: |
           attribute(el, 'content')
   entries:
-    target: /program/entries-index
+    target: /entries-index
     include:
       - '/program/entries/*'
     properties:
@@ -113,7 +113,7 @@ indices:
         value: |
           attribute(el, 'content')
   blocks:
-    target: /program/blocks-index
+    target: /blocks-index
     include:
       - '/program/blocks/*'
     properties:

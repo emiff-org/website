@@ -199,6 +199,51 @@ function renderListItems(itemsToRender, container) {
   return container;
 }
 
+function getFilterMap(container = document) {
+  const filterMap = {};
+
+  container.querySelectorAll('.custom-select-wrapper').forEach((wrapper) => {
+    const key = wrapper.querySelector('.custom-select-label')?.textContent?.trim()
+      .toLowerCase();
+    const value = wrapper.querySelector('.custom-select')?.textContent?.trim()
+      .toLowerCase();
+    if (key && value) {
+      filterMap[key.toLowerCase()] = value;
+    }
+  });
+  return filterMap;
+}
+
+function renderItems(container, items, layout) {
+  if (layout === 'cards') {
+    container.classList.add('cards', 'block', 'feed');
+    renderCardItems(items, container);
+  } else {
+    container.classList.add('feed');
+    renderListItems(items, container);
+  }
+  return container;
+}
+
+function renderFeed(items, layout) {
+  const activeFilters = getFilterMap();
+  const filteredItems = items.filter((item) => Object.entries(activeFilters)
+    .every(([key, value]) => {
+      if (value.toLowerCase() === 'all') return true;
+      const itemValue = item[key]?.toString().toLowerCase().trim();
+      const filterValue = value.toString().toLowerCase().trim();
+      return itemValue === filterValue;
+    }));
+
+  const feedBlock = document.querySelector('div.program-feed');
+  const oldBlock = feedBlock.querySelector('div.feed') || document.querySelector('div.cards');
+  if (oldBlock) oldBlock.remove();
+
+  const feedEl = document.createElement('div');
+  const container = renderItems(feedEl, filteredItems, layout);
+  feedBlock.append(container);
+}
+
 function createCustomSelect(filter, items, onSelect) {
   const uniqueFilterValues = [...new Set(
     items.map((item) => item[filter.toLowerCase()]).filter(Boolean),
@@ -266,60 +311,14 @@ function renderControls(filters, items, layout) {
       (filteredItems) => renderFeed(filteredItems, layout),
     );
     container.append(selectWrapper);
-  })
-  return container;
-}
-
-function getFilterMap(container = document) {
-  const filterMap = {};
-
-  container.querySelectorAll('.custom-select-wrapper').forEach((wrapper) => {
-    const key = wrapper.querySelector('.custom-select-label')?.textContent?.trim()
-      .toLowerCase();
-    const value = wrapper.querySelector('.custom-select')?.textContent?.trim()
-      .toLowerCase();
-    if (key && value) {
-      filterMap[key.toLowerCase()] = value;
-    }
   });
-  return filterMap;
-}
-
-function renderItems(container, items, layout) {
-  if (layout === 'cards') {
-    container.classList.add('cards', 'block', 'feed');
-    renderCardItems(items, container);
-  } else {
-    container.classList.add('feed');
-    renderListItems(items, container);
-  }
   return container;
-}
-
-function renderFeed(items, layout) {
-  const activeFilters = getFilterMap();
-  const filteredItems = items.filter((item) => {
-    return Object.entries(activeFilters).every(([key, value]) => {
-      if (value.toLowerCase() === 'all') return true;
-      const itemValue = item[key]?.toString().toLowerCase().trim();
-      const filterValue = value.toString().toLowerCase().trim();
-      return itemValue === filterValue;
-    });
-  });
-
-  const feedBlock = document.querySelector('div.program-feed');
-  const oldBlock = feedBlock.querySelector('div.feed') || document.querySelector('div.cards');
-  if (oldBlock) oldBlock.remove();
-
-  const feedEl = document.createElement('div');
-  const container = renderItems(feedEl, filteredItems, layout);
-  feedBlock.append(container);
 }
 
 export default async function decorate(block) {
   const config = readBlockConfig(block);
   const filter = config?.filter?.trim();
-  const filterArray = filter ? filter.split(',').map(val => val.trim()) : [];
+  const filterArray = filter ? filter.split(',').map((val) => val.trim()) : [];
   const layout = config?.layout?.trim().toLowerCase();
   const items = await fetchItems(config);
 

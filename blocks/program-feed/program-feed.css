@@ -41,7 +41,6 @@
 .custom-select-flex {
   display: flex;
   position: relative;
-  /* width: 200px; */
   border-bottom: 2px solid var(--brand-color);
 }
 

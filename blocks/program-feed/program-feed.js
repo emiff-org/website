@@ -3,7 +3,7 @@ import { readBlockConfig } from '../../scripts/aem.js';
 import ffetch from '../../scripts/ffetch.js';
 
 async function fetchItems(config) {
-  const type = config?.type?.trim().toLowerCase();
+  // const type = config?.type?.trim().toLowerCase();
   const limit = parseInt(config?.limit ?? '', 10) || undefined;
 
   const [programData, entriesData, blocksData, locationsData] = await Promise.all([
@@ -13,13 +13,15 @@ async function fetchItems(config) {
     ffetch(getIndexPath('INDEX_LOCATIONS')).all(),
   ]);
 
-  const merged = programData.map(item => {
-    const entry = entriesData.find(e => e.title === item.title);
-    const location = locationsData.find(l => l.title === item.location);
+  const merged = programData.map((item) => {
+    const entry = entriesData.find((e) => e.title === item.title);
+    const block = blocksData.find((e) => e.title === item.title);
+    const location = locationsData.find((l) => l.title === item.location);
 
     return {
       ...item,
-      title: entry?.title || '',
+      title: entry?.title || block?.title || '',
+      type: entry?.type || block?.type || '',
       genre: entry?.genre || '',
       languages: entry?.languages || '',
       section: entry?.section || '',
@@ -247,19 +249,19 @@ export default async function decorate(block) {
   const layout = config?.layout?.trim().toLowerCase();
 
   const items = await fetchItems(config);
-  // const rawItems = await ffetch(getIndexPath(`INDEX_${config?.index?.trim().toUpperCase()}`)).all();
+  const rawItems = await ffetch(getIndexPath(`INDEX_${config?.index?.trim().toUpperCase()}`)).all();
 
   block.textContent = '';
 
-  // if (filter) {
-  //   const selectWrapper = createCustomSelect(
-  //     filter,
-  //     rawItems,
-  //     items,
-  //     (filteredItems) => renderItems(filteredItems, layout),
-  //   );
-  //   block.append(selectWrapper);
-  // }
+  if (filter) {
+    const selectWrapper = createCustomSelect(
+      filter,
+      rawItems,
+      items,
+      (filteredItems) => renderItems(filteredItems, layout),
+    );
+    block.append(selectWrapper);
+  }
 
   block.append(renderItems(items, layout));
 }

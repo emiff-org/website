@@ -3,7 +3,7 @@ import { readBlockConfig } from '../../scripts/aem.js';
 import ffetch from '../../scripts/ffetch.js';
 
 async function fetchItems(config) {
-  // const type = config?.type?.trim().toLowerCase();
+  const type = config?.type?.trim().toLowerCase();
   const limit = parseInt(config?.limit ?? '', 10) || undefined;
 
   const [programData, entriesData, blocksData, eventsData, locationsData] = await Promise.all([
@@ -14,7 +14,7 @@ async function fetchItems(config) {
     ffetch(getIndexPath('INDEX_LOCATIONS')).all(),
   ]);
 
-  const merged = programData.map((item) => {
+  const mergedData = programData.map((item) => {
     const entry = entriesData.find(
       (e) => e.title.toLowerCase() === item.title.toLowerCase(),
     );
@@ -33,6 +33,8 @@ async function fetchItems(config) {
       path: entry?.path || block?.path || event?.path || '',
       title: entry?.title || block?.title || event?.title || 'Entry not found!',
       type: entry?.type || block?.type || event?.type || '',
+      image: entry?.image || block?.image || event?.image || '',
+      description: entry?.description || block?.description || event?.description || '',
       genre: entry?.genre || '',
       languages: entry?.languages || block?.languages || event?.languages || '',
       section: entry?.section || '',
@@ -40,8 +42,8 @@ async function fetchItems(config) {
     };
   });
 
-  return merged
-    // .filter((item) => item.type.toLowerCase() === type)
+  return mergedData
+    .filter((item) => !type || item.type.toLowerCase() === type)
     .sort((a, b) => {
       const dateA = parseInt(a.date || '0', 10);
       const dateB = parseInt(b.date || '0', 10);
@@ -156,6 +158,12 @@ function renderListItems(itemsToRender, container) {
       pDescr.textContent = `Location: ${item.location}`;
       div.append(pDescr);
     }
+    if (item.description) {
+      const pDescr = document.createElement('p');
+      pDescr.classList.add('feed-item-body');
+      pDescr.textContent = `description: ${item.description}`;
+      div.append(pDescr);
+    }
     if (item.languages) {
       const pDescr = document.createElement('p');
       pDescr.classList.add('feed-item-body');
@@ -202,14 +210,14 @@ function createCustomSelect(filter, items, onSelect) {
   selectWrapper.style.alignItems = 'center';
   selectWrapper.style.gap = '10px';
 
-  const label = document.createElement('label');
-  label.textContent = filter;
-  label.classList.add('custom-select-label');
-  selectWrapper.prepend(label);
+  // const label = document.createElement('label');
+  // label.textContent = filter;
+  // label.classList.add('custom-select-label');
+  // selectWrapper.prepend(label);
 
   const select = document.createElement('div');
   select.classList.add('custom-select');
-  select.textContent = 'All';
+  select.textContent = `All ${filter}s`;
 
   const optionsWrapper = document.createElement('div');
   optionsWrapper.classList.add('custom-options');
@@ -223,7 +231,7 @@ function createCustomSelect(filter, items, onSelect) {
       select.textContent = value;
       optionsWrapper.style.display = 'none';
       select.classList.remove('open');
-      const filteredItems = value === 'All'
+      const filteredItems = value.startsWith('All ')
         ? items
         : items.filter((item) => item[filter.toLowerCase()] === value);
       onSelect(filteredItems);
@@ -231,7 +239,7 @@ function createCustomSelect(filter, items, onSelect) {
     return option;
   };
 
-  optionsWrapper.append(createOption('All'));
+  optionsWrapper.append(createOption(`All ${filter}s`));
   uniqueFilterValues.forEach((value) => {
     optionsWrapper.append(createOption(value));
   });
@@ -245,6 +253,21 @@ function createCustomSelect(filter, items, onSelect) {
   selectWrapper.append(select);
   selectWrapper.append(optionsWrapper);
   return selectWrapper;
+}
+
+function renderControls(filters, items, layout) {
+  const container = document.createElement('div');
+  container.classList.add('custom-select-flex');
+
+  filters.forEach((filter) => {
+    const selectWrapper = createCustomSelect(
+      filter,
+      items,
+      (filteredItems) => renderFeed(filteredItems, layout),
+    );
+    container.append(selectWrapper);
+  })
+  return container;
 }
 
 function getFilterMap(container = document) {
@@ -264,7 +287,7 @@ function getFilterMap(container = document) {
 
 function renderItems(container, items, layout) {
   if (layout === 'cards') {
-    container.classList.add('cards', 'block');
+    container.classList.add('cards', 'block', 'feed');
     renderCardItems(items, container);
   } else {
     container.classList.add('feed');
@@ -274,21 +297,19 @@ function renderItems(container, items, layout) {
 }
 
 function renderFeed(items, layout) {
-  const feedBlock = document.querySelector('div.program-feed');
-  const oldBlock = feedBlock.querySelector('div.feed') || document.querySelector('div.cards');
-  if (oldBlock) oldBlock.remove();
-
   const activeFilters = getFilterMap();
-  console.log('Active Filters:', activeFilters);
-  console.log('Example Item:', items[0]);
   const filteredItems = items.filter((item) => {
     return Object.entries(activeFilters).every(([key, value]) => {
-      if (value === 'all') return true;
+      if (value.toLowerCase() === 'all') return true;
       const itemValue = item[key]?.toString().toLowerCase().trim();
       const filterValue = value.toString().toLowerCase().trim();
       return itemValue === filterValue;
     });
   });
+
+  const feedBlock = document.querySelector('div.program-feed');
+  const oldBlock = feedBlock.querySelector('div.feed') || document.querySelector('div.cards');
+  if (oldBlock) oldBlock.remove();
 
   const feedEl = document.createElement('div');
   const container = renderItems(feedEl, filteredItems, layout);
@@ -300,18 +321,9 @@ export default async function decorate(block) {
   const filter = config?.filter?.trim();
   const filterArray = filter ? filter.split(',').map(val => val.trim()) : [];
   const layout = config?.layout?.trim().toLowerCase();
-
   const items = await fetchItems(config);
 
   block.textContent = '';
-
-  filterArray.forEach((filter) => {
-    const selectWrapper = createCustomSelect(
-      filter,
-      items,
-      (filteredItems) => renderFeed(filteredItems, layout),
-    );
-    block.append(selectWrapper);
-  })
+  block.append(renderControls(filterArray, items, layout));
   renderFeed(items, layout);
 }

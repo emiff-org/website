@@ -30,6 +30,7 @@ async function fetchItems(config) {
 
     return {
       ...item,
+      path: entry?.path || block?.path || event?.path || '',
       title: entry?.title || block?.title || event?.title || 'Entry not found!',
       type: entry?.type || block?.type || event?.type || '',
       genre: entry?.genre || '',
@@ -143,6 +144,12 @@ function renderListItems(itemsToRender, container) {
     }
     div.append(h3);
 
+    if (item.type) {
+      const pDescr = document.createElement('p');
+      pDescr.classList.add('feed-item-body');
+      pDescr.textContent = `Type: ${item.type}`;
+      div.append(pDescr);
+    }
     if (item.location) {
       const pDescr = document.createElement('p');
       pDescr.classList.add('feed-item-body');

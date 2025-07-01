@@ -190,6 +190,10 @@ indices:
         select: head > meta[name="description"]
         value: |
           attribute(el, 'content')
+      synopsis:
+        select: head > meta[name="synopsis"]
+        value: |
+          attribute(el, 'content')
       languages:
         select: head > meta[name="languages"]
         value: |

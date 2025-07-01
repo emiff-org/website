@@ -84,6 +84,10 @@ indices:
         select: head > meta[name="type"]
         value: |
           attribute(el, 'content')
+      category:
+        select: head > meta[name="category"]
+        value: |
+          attribute(el, 'content')
       title:
         select: main h1:first-of-type
         value: |
@@ -96,16 +100,12 @@ indices:
         select: head > meta[name="description"]
         value: |
           attribute(el, 'content')
-      genre:
-        select: head > meta[name="genre"]
+      synopsis:
+        select: head > meta[name="synopsis"]
         value: |
           attribute(el, 'content')
       section:
         select: head > meta[name="section"]
-        value: |
-          attribute(el, 'content')
-      subsection:
-        select: head > meta[name="subsection"]
         value: |
           attribute(el, 'content')
       languages:
@@ -114,6 +114,14 @@ indices:
           attribute(el, 'content')
       country:
         select: head > meta[name="country"]
+        value: |
+          attribute(el, 'content')
+      credits:
+        select: head > meta[name="credits"]
+        value: |
+          attribute(el, 'content')
+      year:
+        select: head > meta[name="year"]
         value: |
           attribute(el, 'content')
       premier-status:
@@ -129,6 +137,10 @@ indices:
         select: head > meta[name="type"]
         value: |
           attribute(el, 'content')
+      category:
+        select: head > meta[name="category"]
+        value: |
+          attribute(el, 'content')
       title:
         select: main h1:first-of-type
         value: |
@@ -141,12 +153,12 @@ indices:
         select: head > meta[name="description"]
         value: |
           attribute(el, 'content')
-      section:
-        select: head > meta[name="section"]
+      synopsis:
+        select: head > meta[name="synopsis"]
         value: |
           attribute(el, 'content')
-      subsection:
-        select: head > meta[name="subsection"]
+      section:
+        select: head > meta[name="section"]
         value: |
           attribute(el, 'content')
       languages:
@@ -162,6 +174,10 @@ indices:
         select: head > meta[name="type"]
         value: |
           attribute(el, 'content')
+      category:
+        select: head > meta[name="category"]
+        value: |
+          attribute(el, 'content')
       title:
         select: main h1:first-of-type
         value: |
@@ -176,5 +192,9 @@ indices:
           attribute(el, 'content')
       languages:
         select: head > meta[name="languages"]
+        value: |
+          attribute(el, 'content')
+      credits:
+        select: head > meta[name="credits"]
         value: |
           attribute(el, 'content')

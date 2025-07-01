@@ -1,79 +1,18 @@
 import getIndexPath from '../../scripts/index-utils.js';
 import { readBlockConfig } from '../../scripts/aem.js';
+import {
+  createCustomSelect,
+  parseDateTime,
+  getIcon,
+  getCSFilterMap,
+  getFiltersKvMap,
+} from '../../scripts/components-utils.js';
 import ffetch from '../../scripts/ffetch.js';
 
-function parseDateTime(dateStr, timeStr) {
-  // convert '30.10.2024' to '2024-10-30T22:00'
-  const [day, month, year] = dateStr.split('.');
-  return new Date(`${year}-${month}-${day}T${timeStr || '00:00'}`);
-}
-
-function getIcon(name) {
-  const sEl = document.createElement('span');
-  sEl.classList.add('icon', `icon-${name}`);
-  const iEl = document.createElement('img');
-  iEl.src = `/icons/icon-${name}.svg`;
-  sEl.appendChild(iEl);
-  return sEl;
-}
-
-async function fetchItems(config) {
-  const type = config?.type?.trim().toLowerCase();
-  const limit = parseInt(config?.limit ?? '', 10) || undefined;
-
-  const [programData, entriesData, blocksData, eventsData, locationsData] = await Promise.all([
-    ffetch(getIndexPath('INDEX_PROGRAM')).all(),
-    ffetch(getIndexPath('INDEX_ENTRIES')).all(),
-    ffetch(getIndexPath('INDEX_BLOCKS')).all(),
-    ffetch(getIndexPath('INDEX_EVENTS')).all(),
-    ffetch(getIndexPath('INDEX_LOCATIONS')).all(),
-  ]);
-
-  const mergedData = programData.map((item) => {
-    const entry = entriesData.find(
-      (e) => e.title.toLowerCase() === item.title.toLowerCase(),
-    );
-    const block = blocksData.find(
-      (e) => e.title.toLowerCase() === item.title.toLowerCase(),
-    );
-    const event = eventsData.find(
-      (e) => e.title.toLowerCase() === item.title.toLowerCase(),
-    );
-    const location = locationsData.find(
-      (l) => l.title.toLowerCase() === item.location.toLowerCase(),
-    );
-
-    return {
-      ...item,
-      path: entry?.path || block?.path || event?.path || '',
-      title: entry?.title || block?.title || event?.title || 'Entry not found!',
-      type: entry?.type || block?.type || event?.type || '',
-      image: entry?.image || block?.image || event?.image || '',
-      credits: entry?.credits || block?.credits || event?.credits || '',
-      description: entry?.description || block?.description || event?.description || '',
-      country: entry?.country || block?.country || event?.country || '',
-      genre: entry?.genre || '',
-      languages: entry?.languages || block?.languages || event?.languages || '',
-      section: entry?.section || '',
-      locationMap: location?.map || '',
-      locationPath: location?.path || '',
-    };
-  });
-
-  return mergedData
-    .filter((item) => !type || item.type.toLowerCase() === type)
-    .sort((a, b) => {
-      const dateTimeA = parseDateTime(a.date, a.time);
-      const dateTimeB = parseDateTime(b.date, b.time);
-      return dateTimeA - dateTimeB; // descending
-    })
-    .slice(0, Number.isNaN(limit) ? undefined : limit);
-}
-
-function renderCardItems(itemsToRender, container) {
+function renderCardItems(itemsToRender, limit, container) {
   const ul = document.createElement('ul');
 
-  itemsToRender.forEach((item) => {
+  itemsToRender.slice(0, limit).forEach((item) => {
     const li = document.createElement('li');
 
     // Image section
@@ -161,10 +100,10 @@ function renderCardItems(itemsToRender, container) {
   return container;
 }
 
-function renderListItems(itemsToRender, container) {
+function renderListItems(itemsToRender, limit, container) {
   container.innerHTML = ''; // Clear previous items
 
-  itemsToRender.forEach((item) => {
+  itemsToRender.slice(0, limit).forEach((item) => {
     const div = document.createElement('div');
     div.classList.add('feed-item');
     if (item.type) div.classList.add(item.type.toLowerCase());
@@ -271,113 +210,96 @@ function renderListItems(itemsToRender, container) {
   return container;
 }
 
-function getFilterMap(container = document) {
-  const filterMap = new Map();
-
-  container.querySelectorAll('.custom-select-wrapper').forEach((el) => {
-    const key = el.querySelector('[data-name]')?.dataset.name;
-    const value = el.querySelector('.custom-select')?.textContent?.trim().toLowerCase();
-    if (key && value) {
-      filterMap.set(key, value);
-    }
-  });
-  return filterMap;
+// expects a map with kv pairs as filter
+function filterItems(items, filters) {
+  const filteredItems = (filters.length === 0) ? items : items.filter((item) => filters.entries()
+    .every(([key, value]) => {
+      if (value.length === 0 || value.toLowerCase().startsWith('all ')) return true;
+      const itemValue = item[key.toLowerCase()]?.toString().toLowerCase().trim();
+      const filterValue = value.toString().toLowerCase().trim();
+      return itemValue === filterValue;
+    }));
+  return filteredItems
+    .sort((a, b) => {
+      const dateTimeA = parseDateTime(a.date, a.time);
+      const dateTimeB = parseDateTime(b.date, b.time);
+      return dateTimeA - dateTimeB;
+    });
 }
 
-function renderItems(container, items, layout) {
+async function fetchItems() {
+  const [programData, entriesData, blocksData, eventsData, locationsData] = await Promise.all([
+    ffetch(getIndexPath('INDEX_PROGRAM')).all(),
+    ffetch(getIndexPath('INDEX_ENTRIES')).all(),
+    ffetch(getIndexPath('INDEX_BLOCKS')).all(),
+    ffetch(getIndexPath('INDEX_EVENTS')).all(),
+    ffetch(getIndexPath('INDEX_LOCATIONS')).all(),
+  ]);
+
+  const items = programData.map((item) => {
+    const entry = entriesData.find(
+      (e) => e.title.toLowerCase() === item.title.toLowerCase(),
+    );
+    const block = blocksData.find(
+      (b) => b.title.toLowerCase() === item.title.toLowerCase(),
+    );
+    const event = eventsData.find(
+      (e) => e.title.toLowerCase() === item.title.toLowerCase(),
+    );
+    const location = locationsData.find(
+      (l) => l.title.toLowerCase() === item.location.toLowerCase(),
+    );
+
+    return {
+      ...item,
+      path: entry?.path || block?.path || event?.path || '',
+      title: entry?.title || block?.title || event?.title || 'Entry not found!',
+      type: entry?.type || block?.type || event?.type || '',
+      image: entry?.image || block?.image || event?.image || '',
+      credits: entry?.credits || block?.credits || event?.credits || '',
+      description: entry?.description || block?.description || event?.description || '',
+      country: entry?.country || block?.country || event?.country || '',
+      genre: entry?.genre || '',
+      languages: entry?.languages || block?.languages || event?.languages || '',
+      section: entry?.section || '',
+      locationMap: location?.map || '',
+      locationPath: location?.path || '',
+    };
+  });
+  return items;
+}
+
+function renderFeed(items, layout, limit) {
+  const container = document.createElement('div');
   if (layout === 'cards') {
     container.classList.add('cards', 'block', 'feed');
-    renderCardItems(items, container);
+    renderCardItems(items, limit, container);
   } else {
     container.classList.add('feed');
-    renderListItems(items, container);
+    renderListItems(items, limit, container);
   }
   return container;
 }
 
-function renderFeed(items, block, layout) {
-  const feedEl = document.createElement('div');
-  const activeFilters = getFilterMap(block);
-  if (activeFilters.size !== 0) {
-    const filteredItems = items.filter((item) => activeFilters.entries()
-      .every(([key, value]) => {
-        if (value.startsWith('all ')) return true;
-        const itemValue = item[key]?.toString().toLowerCase().trim();
-        const filterValue = value.toString().toLowerCase().trim();
-        return itemValue === filterValue;
-      }));
-    return renderItems(feedEl, filteredItems, layout);
-  }
-  return renderItems(feedEl, items, layout);
-}
-
-function createCustomSelect(filter, items, onSelect) {
-  const uniqueFilterValues = [...new Set(
-    items.map((item) => item[filter.toLowerCase()]).filter(Boolean),
-  )];
-
-  const selectWrapper = document.createElement('div');
-  selectWrapper.classList.add('custom-select-wrapper');
-  selectWrapper.style.display = 'flex';
-  selectWrapper.style.alignItems = 'center';
-  selectWrapper.style.gap = '10px';
-
-  // const label = document.createElement('label');
-  // label.textContent = filter;
-  // label.classList.add('custom-select-label');
-  // selectWrapper.prepend(label);
-
-  const select = document.createElement('div');
-  select.classList.add('custom-select');
-  select.textContent = `All ${filter}s`;
-  select.dataset.name = filter.toLowerCase();
-
-  const optionsWrapper = document.createElement('div');
-  optionsWrapper.classList.add('custom-options');
-  optionsWrapper.style.display = 'none';
-
-  const createOption = (value) => {
-    const option = document.createElement('div');
-    option.classList.add('custom-option');
-    option.textContent = value;
-    option.addEventListener('click', () => {
-      select.textContent = value;
-      optionsWrapper.style.display = 'none';
-      select.classList.remove('open');
-      const parentBlock = select.closest('.program-feed');
-      const feedBlock = onSelect(items, parentBlock);
-      const oldFeedBlock = parentBlock.querySelector('div.feed');
-      if (oldFeedBlock) parentBlock.replaceChild(feedBlock, oldFeedBlock);
-      else parentBlock.append(feedBlock);
-    });
-    return option;
-  };
-
-  optionsWrapper.append(createOption(`All ${filter}s`));
-  uniqueFilterValues.forEach((value) => {
-    optionsWrapper.append(createOption(value));
-  });
-
-  select.addEventListener('click', () => {
-    const isOpen = optionsWrapper.style.display === 'none';
-    optionsWrapper.style.display = isOpen ? 'block' : 'none';
-    select.classList.toggle('open', isOpen);
-  });
-
-  selectWrapper.append(select);
-  selectWrapper.append(optionsWrapper);
-  return selectWrapper;
-}
-
-function renderControls(filters, items, layout) {
+function renderControls(filters, items, layout, hideFilters) {
   const container = document.createElement('div');
   container.classList.add('custom-select-flex');
 
-  filters.forEach((filter) => {
+  filters.entries().forEach(([key, value]) => {
+    if (hideFilters.includes(key)) return; // skip hidden filters
     const selectWrapper = createCustomSelect(
-      filter,
+      key,
       items,
-      (filteredItems, node) => renderFeed(filteredItems, node, layout),
+      (select) => {
+        const parentBlock = select.closest('.program-feed');
+        const compFilter = getCSFilterMap(parentBlock); // get latest filters from UI components
+        const filteredItems = filterItems(items, compFilter);
+        const feedBlock = renderFeed(filteredItems, layout);
+        const oldFeedBlock = parentBlock.querySelector('div.feed');
+        if (oldFeedBlock) parentBlock.replaceChild(feedBlock, oldFeedBlock);
+        else parentBlock.append(feedBlock);
+      },
+      value,
     );
     container.append(selectWrapper);
   });
@@ -386,14 +308,21 @@ function renderControls(filters, items, layout) {
 
 export default async function decorate(block) {
   const config = readBlockConfig(block);
-  const filter = config?.filter?.trim();
-  const filterArray = filter ? filter.split(',').map((val) => val.trim()) : [];
-  const layout = config?.layout?.trim().toLowerCase();
-  const items = await fetchItems(config);
-
   block.innerHTML = '';
-  if (!Array.isArray(filterArray) || filterArray.length !== 0) {
-    block.append(renderControls(filterArray, items, layout));
+
+  // filters are configured with comma separated key list
+  const filterValue = config?.filter?.trim();
+  const filters = getFiltersKvMap(filterValue);
+  const hideFiltersValue = config?.hidefilters?.trim();
+  const hideFilters = hideFiltersValue ? hideFiltersValue.split(',').map((val) => val.trim()) : [];
+  const limit = config?.limit?.trim().toLowerCase();
+  const items = await fetchItems();
+  const filteredItems = filterItems(items, filters);
+
+  // accepted layouts: feed, cards
+  const layout = config?.layout?.trim().toLowerCase();
+  if (!Array.isArray(filters) || filters.length !== 0) {
+    block.append(renderControls(filters, items, layout, hideFilters));
   }
-  block.append(renderFeed(items, block, layout));
+  block.append(renderFeed(filteredItems, layout, limit));
 }

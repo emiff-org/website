@@ -1,0 +1,88 @@
+export function parseDateTime(dateStr, timeStr) {
+  // convert '30.10.2024' to '2024-10-30T22:00'
+  const [day, month, year] = dateStr.split('.');
+  return new Date(`${year}-${month}-${day}T${timeStr || '00:00'}`);
+}
+
+export function getIcon(name) {
+  const sEl = document.createElement('span');
+  sEl.classList.add('icon', `icon-${name}`);
+  const iEl = document.createElement('img');
+  iEl.src = `/icons/icon-${name}.svg`;
+  sEl.appendChild(iEl);
+  return sEl;
+}
+
+export function createCustomSelect(filter, items, onSelect, value = undefined) {
+  const uniqueFilterValues = [...new Set(
+    items.map((item) => item[filter.toLowerCase()]).filter(Boolean),
+  )];
+
+  const selectWrapper = document.createElement('div');
+  selectWrapper.classList.add('custom-select-wrapper');
+  selectWrapper.style.display = 'flex';
+  selectWrapper.style.alignItems = 'center';
+  selectWrapper.style.gap = '10px';
+
+  const select = document.createElement('div');
+  select.classList.add('custom-select');
+  select.textContent = `All ${filter}s`;
+  select.dataset.name = filter.toLowerCase();
+  if (value) select.textContent = value;
+
+  const optionsWrapper = document.createElement('div');
+  optionsWrapper.classList.add('custom-options');
+  optionsWrapper.style.display = 'none';
+
+  const createOption = (oValue) => {
+    const option = document.createElement('div');
+    option.classList.add('custom-option');
+    option.textContent = oValue;
+    option.addEventListener('click', () => {
+      select.textContent = oValue;
+      optionsWrapper.style.display = 'none';
+      select.classList.remove('open');
+      onSelect(select);
+    });
+    return option;
+  };
+
+  optionsWrapper.append(createOption(`All ${filter}s`));
+  uniqueFilterValues.forEach((fValue) => {
+    optionsWrapper.append(createOption(fValue));
+  });
+
+  select.addEventListener('click', () => {
+    const isOpen = optionsWrapper.style.display === 'none';
+    optionsWrapper.style.display = isOpen ? 'block' : 'none';
+    select.classList.toggle('open', isOpen);
+  });
+
+  selectWrapper.append(select);
+  selectWrapper.append(optionsWrapper);
+  return selectWrapper;
+}
+
+export function getFiltersKvMap(filter) {
+  return new Map(
+    (filter ? filter.split(',') : [])
+      .map((val) => val.trim())
+      .map((entry) => {
+        const [key, value] = entry.split('=').map((s) => s.trim());
+        return [key, value ?? ''];
+      }),
+  );
+}
+
+export function getCSFilterMap(container = document) {
+  const filterMap = new Map();
+
+  container.querySelectorAll('.custom-select-wrapper').forEach((el) => {
+    const key = el.querySelector('[data-name]')?.dataset.name;
+    const value = el.querySelector('.custom-select')?.textContent?.trim();
+    if (key && value) {
+      filterMap.set(key, value);
+    }
+  });
+  return filterMap;
+}

@@ -3,8 +3,6 @@ import { readBlockConfig } from '../../scripts/aem.js';
 import ffetch from '../../scripts/ffetch.js';
 import {
   createCustomSelect,
-  parseDateTime,
-  getIcon,
   getCSFilterMap,
   getFiltersKvMap,
 } from '../../scripts/components-utils.js';

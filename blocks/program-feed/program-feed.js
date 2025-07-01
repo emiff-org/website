@@ -49,6 +49,7 @@ async function fetchItems(config) {
       title: entry?.title || block?.title || event?.title || 'Entry not found!',
       type: entry?.type || block?.type || event?.type || '',
       image: entry?.image || block?.image || event?.image || '',
+      credits: entry?.credits || block?.credits || event?.credits || '',
       description: entry?.description || block?.description || event?.description || '',
       country: entry?.country || block?.country || event?.country || '',
       genre: entry?.genre || '',
@@ -126,10 +127,10 @@ function renderCardItems(itemsToRender, container) {
     }
 
     const divMeta = document.createElement('div');
-    if (item.date) {
+    if (item.credits) {
       const sEl = document.createElement('span');
       sEl.appendChild(getIcon('group'));
-      sEl.append(item.date);
+      sEl.append(item.credits);
       divMeta.append(sEl);
     }
     if (item.time) {
@@ -218,10 +219,10 @@ function renderListItems(itemsToRender, container) {
       divInfo.append(divDescr);
     }
     const divMeta = document.createElement('div');
-    if (item.date) {
+    if (item.credits) {
       const sEl = document.createElement('span');
       sEl.appendChild(getIcon('group'));
-      sEl.append(item.date);
+      sEl.append(item.credits);
       divMeta.append(sEl);
     }
     if (item.time) {

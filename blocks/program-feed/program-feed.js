@@ -8,6 +8,15 @@ function parseDateTime(dateStr, timeStr) {
   return new Date(`${year}-${month}-${day}T${timeStr || '00:00'}`);
 }
 
+function getIcon(name) {
+  const sEl = document.createElement('span');
+  sEl.classList.add('icon', `icon-${name}`);
+  const iEl = document.createElement('img');
+  iEl.src = `/icons/icon-${name}.svg`;
+  sEl.appendChild(iEl);
+  return sEl;
+}
+
 async function fetchItems(config) {
   const type = config?.type?.trim().toLowerCase();
   const limit = parseInt(config?.limit ?? '', 10) || undefined;
@@ -187,17 +196,17 @@ function renderListItems(itemsToRender, container) {
     divBody.classList.add('feed-item-body');
 
     if (item.image) {
-      const div = document.createElement('div');
-      div.classList.add('feed-item-image');
+      const divImg = document.createElement('div');
+      divImg.classList.add('feed-item-image');
       const pDescr = document.createElement('img');
       pDescr.src = item.image;
-      div.append(pDescr);
-      divBody.append(div);
+      divImg.append(pDescr);
+      divBody.append(divImg);
       if (item.section) {
-        const pDescr = document.createElement('p');
-        pDescr.classList.add('feed-item-section');
-        pDescr.textContent = item.section;
-        div.append(pDescr);
+        const pSection = document.createElement('p');
+        pSection.classList.add('feed-item-section');
+        pSection.textContent = item.section;
+        divImg.append(pSection);
       }
     }
     const divInfo = document.createElement('div');
@@ -261,15 +270,6 @@ function renderListItems(itemsToRender, container) {
   return container;
 }
 
-function getIcon(name) {
-  const sEl = document.createElement('span');
-  sEl.classList.add('icon', `icon-${name}`);
-  const iEl = document.createElement('img');
-  iEl.src = `/icons/icon-${name}.svg`;
-  sEl.appendChild(iEl);
-  return sEl;
-}
-
 function getFilterMap(container = document) {
   const filterMap = new Map();
 
@@ -299,17 +299,15 @@ function renderFeed(items, block, layout) {
   const activeFilters = getFilterMap(block);
   if (activeFilters.size !== 0) {
     const filteredItems = items.filter((item) => activeFilters.entries()
-    .every(([key, value]) => {
-      if (value.startsWith('all ')) return true;
-      const itemValue = item[key]?.toString().toLowerCase().trim();
-      const filterValue = value.toString().toLowerCase().trim();
-      return itemValue === filterValue;
-    }));
+      .every(([key, value]) => {
+        if (value.startsWith('all ')) return true;
+        const itemValue = item[key]?.toString().toLowerCase().trim();
+        const filterValue = value.toString().toLowerCase().trim();
+        return itemValue === filterValue;
+      }));
     return renderItems(feedEl, filteredItems, layout);
   }
-  else {
-    return renderItems(feedEl, items, layout);
-  }
+  return renderItems(feedEl, items, layout);
 }
 
 function createCustomSelect(filter, items, onSelect) {

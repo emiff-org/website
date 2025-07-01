@@ -5,6 +5,7 @@ indices:
     exclude:
       - '**/site-howto'
       - '**/templates'
+      - '**/tools'
     properties:
       type:
         select: head > meta[name="type"]

@@ -112,6 +112,10 @@ indices:
         select: head > meta[name="languages"]
         value: |
           attribute(el, 'content')
+      country:
+        select: head > meta[name="country"]
+        value: |
+          attribute(el, 'content')
       premier-status:
         select: head > meta[name="premier-status"]
         value: |

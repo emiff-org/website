@@ -2,6 +2,12 @@ import getIndexPath from '../../scripts/index-utils.js';
 import { readBlockConfig } from '../../scripts/aem.js';
 import ffetch from '../../scripts/ffetch.js';
 
+function parseDateTime(dateStr, timeStr) {
+  // convert '30.10.2024' to '2024-10-30T22:00'
+  const [day, month, year] = dateStr.split('.');
+  return new Date(`${year}-${month}-${day}T${timeStr || '00:00'}`);
+}
+
 async function fetchItems(config) {
   const type = config?.type?.trim().toLowerCase();
   const limit = parseInt(config?.limit ?? '', 10) || undefined;
@@ -35,6 +41,7 @@ async function fetchItems(config) {
       type: entry?.type || block?.type || event?.type || '',
       image: entry?.image || block?.image || event?.image || '',
       description: entry?.description || block?.description || event?.description || '',
+      country: entry?.country || block?.country || event?.country || '',
       genre: entry?.genre || '',
       languages: entry?.languages || block?.languages || event?.languages || '',
       section: entry?.section || '',
@@ -46,9 +53,9 @@ async function fetchItems(config) {
   return mergedData
     .filter((item) => !type || item.type.toLowerCase() === type)
     .sort((a, b) => {
-      const dateA = parseInt(a.date || '0', 10);
-      const dateB = parseInt(b.date || '0', 10);
-      return dateB - dateA; // descending
+      const dateTimeA = parseDateTime(a.date, a.time);
+      const dateTimeB = parseDateTime(b.date, b.time);
+      return dateTimeA - dateTimeB; // descending
     })
     .slice(0, Number.isNaN(limit) ? undefined : limit);
 }
@@ -56,7 +63,7 @@ async function fetchItems(config) {
 function renderCardItems(itemsToRender, container) {
   const ul = document.createElement('ul');
 
-  itemsToRender.forEach((loc) => {
+  itemsToRender.forEach((item) => {
     const li = document.createElement('li');
 
     // Image section
@@ -65,15 +72,15 @@ function renderCardItems(itemsToRender, container) {
 
     const pImage = document.createElement('p');
     const aImage = document.createElement('a');
-    aImage.href = loc.path;
-    aImage.setAttribute('aria-label', loc.title);
+    aImage.href = item.path;
+    aImage.setAttribute('aria-label', item.title);
     aImage.title = '';
 
     const picture = document.createElement('picture');
     const img = document.createElement('img');
     img.loading = 'lazy';
-    img.alt = loc.title;
-    img.src = loc.image;
+    img.alt = item.title;
+    img.src = item.image;
 
     picture.appendChild(img);
     aImage.appendChild(picture);
@@ -84,30 +91,55 @@ function renderCardItems(itemsToRender, container) {
     const bodyDiv = document.createElement('div');
     bodyDiv.className = 'cards-card-body';
 
-    if (loc.events) {
+    if (item.events) {
       const pSub = document.createElement('p');
       pSub.className = 'cards-card-subtitle';
-      pSub.textContent = loc.events;
+      pSub.textContent = item.events;
       bodyDiv.appendChild(pSub);
     }
 
     const h3 = document.createElement('h3');
-    h3.id = loc.title.toLowerCase().replace(/\s+/g, '-');
+    h3.id = item.title.toLowerCase().replace(/\s+/g, '-');
     const aTitle = document.createElement('a');
-    aTitle.href = loc.path;
-    aTitle.title = loc.title;
-    aTitle.textContent = loc.title;
+    aTitle.href = item.path;
+    aTitle.title = item.title;
+    aTitle.textContent = item.title;
     h3.appendChild(aTitle);
     bodyDiv.appendChild(h3);
 
-    if (loc.description) {
+    if (item.description) {
       const pDescr = document.createElement('p');
-      loc.description.split(',').forEach((part, idx) => {
+      item.description.split(',').forEach((part, idx) => {
         if (idx > 0) pDescr.appendChild(document.createElement('br'));
         pDescr.appendChild(document.createTextNode(part.trim()));
       });
       bodyDiv.appendChild(pDescr);
     }
+
+    const divMeta = document.createElement('div');
+    if (item.date) {
+      const sEl = document.createElement('span');
+      sEl.appendChild(getIcon('group'));
+      sEl.append(item.date);
+      divMeta.append(sEl);
+    }
+    if (item.time) {
+      const sEl = document.createElement('span');
+      sEl.appendChild(getIcon('clock'));
+      sEl.append(item.time);
+      divMeta.append(sEl);
+    }
+    if (item.location) {
+      const sEl = document.createElement('span');
+      sEl.appendChild(getIcon('pin'));
+      const pTitle = document.createElement('a');
+      pTitle.href = item.locationPath;
+      pTitle.title = item.location;
+      pTitle.textContent = item.location;
+      sEl.appendChild(pTitle);
+      divMeta.append(sEl);
+    }
+    bodyDiv.appendChild(divMeta);
 
     li.appendChild(imageDiv);
     li.appendChild(bodyDiv);
@@ -125,6 +157,7 @@ function renderListItems(itemsToRender, container) {
   itemsToRender.forEach((item) => {
     const div = document.createElement('div');
     div.classList.add('feed-item');
+    if (item.type) div.classList.add(item.type.toLowerCase());
 
     const subtitle = item.publication ?? item.category;
     if (subtitle) {
@@ -145,76 +178,106 @@ function renderListItems(itemsToRender, container) {
     } else {
       h3.textContent = item.title;
     }
-    div.append(h3);
+    const divHeader = document.createElement('div');
+    divHeader.classList.add('feed-item-header');
+    divHeader.append(h3);
+    div.append(divHeader);
 
-    if (item.type) {
-      const pDescr = document.createElement('p');
-      pDescr.classList.add('feed-item-body');
-      pDescr.textContent = `Type: ${item.type}`;
+    const divBody = document.createElement('div');
+    divBody.classList.add('feed-item-body');
+
+    if (item.image) {
+      const div = document.createElement('div');
+      div.classList.add('feed-item-image');
+      const pDescr = document.createElement('img');
+      pDescr.src = item.image;
       div.append(pDescr);
+      divBody.append(div);
+      if (item.section) {
+        const pDescr = document.createElement('p');
+        pDescr.classList.add('feed-item-section');
+        pDescr.textContent = item.section;
+        div.append(pDescr);
+      }
+    }
+    const divInfo = document.createElement('div');
+    if (item.description) {
+      const divDescr = document.createElement('div');
+      const pEl = document.createElement('p');
+      pEl.textContent = item.description;
+      divDescr.append(pEl);
+      divInfo.append(divDescr);
+    }
+    const divMeta = document.createElement('div');
+    if (item.date) {
+      const sEl = document.createElement('span');
+      sEl.appendChild(getIcon('group'));
+      sEl.append(item.date);
+      divMeta.append(sEl);
+    }
+    if (item.time) {
+      const sEl = document.createElement('span');
+      sEl.appendChild(getIcon('clock'));
+      sEl.append(item.time);
+      divMeta.append(sEl);
     }
     if (item.location) {
-      const pDescr = document.createElement('p');
-      pDescr.textContent = 'Location: ';
+      const sEl = document.createElement('span');
+      sEl.appendChild(getIcon('pin'));
       const pTitle = document.createElement('a');
       pTitle.href = item.locationPath;
       pTitle.title = item.location;
       pTitle.textContent = item.location;
-      pDescr.appendChild(pTitle);
-      pDescr.classList.add('feed-item-body');
-      div.append(pDescr);
-    }
-    if (item.description) {
-      const pDescr = document.createElement('p');
-      pDescr.classList.add('feed-item-body');
-      pDescr.textContent = `description: ${item.description}`;
-      div.append(pDescr);
+      sEl.appendChild(pTitle);
+      divMeta.append(sEl);
     }
     if (item.languages) {
-      const pDescr = document.createElement('p');
-      pDescr.classList.add('feed-item-body');
-      pDescr.textContent = `Languages: ${item.languages}`;
-      div.append(pDescr);
+      const sEl = document.createElement('span');
+      sEl.appendChild(getIcon('flag'));
+      sEl.append(item.languages);
+      divMeta.append(sEl);
     }
-    if (item.section) {
-      const pDescr = document.createElement('p');
-      pDescr.classList.add('feed-item-body');
-      pDescr.textContent = `Section: ${item.section}`;
-      div.append(pDescr);
+    if (item.country) {
+      const sEl = document.createElement('span');
+      sEl.appendChild(getIcon('globe'));
+      sEl.append(item.country);
+      divMeta.append(sEl);
     }
-    if (item.date) {
-      const pDescr = document.createElement('p');
-      pDescr.classList.add('feed-item-body');
-      pDescr.textContent = `Date: ${item.date}`;
-      div.append(pDescr);
+    if (item.ticket) {
+      const sEl = document.createElement('span');
+      sEl.appendChild(getIcon('card'));
+      const aEl = document.createElement('a');
+      aEl.href = item.ticket;
+      aEl.title = 'Ticket';
+      aEl.textContent = 'Ticket';
+      sEl.appendChild(aEl);
+      divMeta.append(sEl);
     }
-    if (item.time) {
-      const pDescr = document.createElement('p');
-      pDescr.classList.add('feed-item-body');
-      pDescr.textContent = `Time: ${item.time}`;
-      div.append(pDescr);
-    }
-    if (item.genre) {
-      const pDescr = document.createElement('p');
-      pDescr.classList.add('feed-item-body');
-      pDescr.textContent = `Genre: ${item.genre}`;
-      div.append(pDescr);
-    }
+    divInfo.append(divMeta);
+    divBody.append(divInfo);
+    div.append(divBody);
     container.append(div);
   });
   return container;
 }
 
-function getFilterMap(container = document) {
-  const filterMap = {};
+function getIcon(name) {
+  const sEl = document.createElement('span');
+  sEl.classList.add('icon', `icon-${name}`);
+  const iEl = document.createElement('img');
+  iEl.src = `/icons/icon-${name}.svg`;
+  sEl.appendChild(iEl);
+  return sEl;
+}
 
-  container.querySelectorAll('.custom-select-wrapper').forEach((wrapper) => {
-    const key = wrapper.querySelector('.custom-select-label')?.textContent?.trim()
-      .toLowerCase();
-    const value = wrapper.querySelector('.custom-select')?.textContent?.trim()
-      .toLowerCase();
+function getFilterMap(container = document) {
+  const filterMap = new Map();
+
+  container.querySelectorAll('.custom-select-wrapper').forEach((el) => {
+    const key = el.querySelector('[data-name]')?.dataset.name;
+    const value = el.querySelector('.custom-select')?.textContent?.trim().toLowerCase();
     if (key && value) {
-      filterMap[key.toLowerCase()] = value;
+      filterMap.set(key, value);
     }
   });
   return filterMap;
@@ -231,23 +294,22 @@ function renderItems(container, items, layout) {
   return container;
 }
 
-function renderFeed(items, layout) {
-  const activeFilters = getFilterMap();
-  const filteredItems = items.filter((item) => Object.entries(activeFilters)
+function renderFeed(items, block, layout) {
+  const feedEl = document.createElement('div');
+  const activeFilters = getFilterMap(block);
+  if (activeFilters.size !== 0) {
+    const filteredItems = items.filter((item) => activeFilters.entries()
     .every(([key, value]) => {
-      if (value.toLowerCase() === 'all') return true;
+      if (value.startsWith('all ')) return true;
       const itemValue = item[key]?.toString().toLowerCase().trim();
       const filterValue = value.toString().toLowerCase().trim();
       return itemValue === filterValue;
     }));
-
-  const feedBlock = document.querySelector('div.program-feed');
-  const oldBlock = feedBlock.querySelector('div.feed') || document.querySelector('div.cards');
-  if (oldBlock) oldBlock.remove();
-
-  const feedEl = document.createElement('div');
-  const container = renderItems(feedEl, filteredItems, layout);
-  feedBlock.append(container);
+    return renderItems(feedEl, filteredItems, layout);
+  }
+  else {
+    return renderItems(feedEl, items, layout);
+  }
 }
 
 function createCustomSelect(filter, items, onSelect) {
@@ -269,6 +331,7 @@ function createCustomSelect(filter, items, onSelect) {
   const select = document.createElement('div');
   select.classList.add('custom-select');
   select.textContent = `All ${filter}s`;
+  select.dataset.name = filter.toLowerCase();
 
   const optionsWrapper = document.createElement('div');
   optionsWrapper.classList.add('custom-options');
@@ -282,10 +345,11 @@ function createCustomSelect(filter, items, onSelect) {
       select.textContent = value;
       optionsWrapper.style.display = 'none';
       select.classList.remove('open');
-      const filteredItems = value.startsWith('All ')
-        ? items
-        : items.filter((item) => item[filter.toLowerCase()] === value);
-      onSelect(filteredItems);
+      const parentBlock = select.closest('.program-feed');
+      const feedBlock = onSelect(items, parentBlock);
+      const oldFeedBlock = parentBlock.querySelector('div.feed');
+      if (oldFeedBlock) parentBlock.replaceChild(feedBlock, oldFeedBlock);
+      else parentBlock.append(feedBlock);
     });
     return option;
   };
@@ -314,7 +378,7 @@ function renderControls(filters, items, layout) {
     const selectWrapper = createCustomSelect(
       filter,
       items,
-      (filteredItems) => renderFeed(filteredItems, layout),
+      (filteredItems, node) => renderFeed(filteredItems, node, layout),
     );
     container.append(selectWrapper);
   });
@@ -328,7 +392,9 @@ export default async function decorate(block) {
   const layout = config?.layout?.trim().toLowerCase();
   const items = await fetchItems(config);
 
-  block.textContent = '';
-  block.append(renderControls(filterArray, items, layout));
-  renderFeed(items, layout);
+  block.innerHTML = '';
+  if (!Array.isArray(filterArray) || filterArray.length !== 0) {
+    block.append(renderControls(filterArray, items, layout));
+  }
+  block.append(renderFeed(items, block, layout));
 }

@@ -6,7 +6,6 @@ import {
   getIcon,
   getCSFilterMap,
   getFiltersKvMap,
-  getOrdinal,
   formatDateVerbose,
 } from '../../scripts/components-utils.js';
 import ffetch from '../../scripts/ffetch.js';

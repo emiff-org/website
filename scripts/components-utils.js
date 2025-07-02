@@ -12,7 +12,7 @@ export function getOrdinal(n) {
 
 export function formatDateVerbose(date) {
   const weekday = date.toLocaleDateString('en-US', { weekday: 'short' }); // e.g. Sat
-  const month = date.toLocaleDateString('en-US', { month: 'short' });     // e.g. Nov
+  const month = date.toLocaleDateString('en-US', { month: 'short' }); // e.g. Nov
   const day = date.getDate();
   const ordinal = getOrdinal(day);
   return `${weekday}, ${month} ${day}${ordinal}`;

@@ -4,6 +4,20 @@ export function parseDateTime(dateStr, timeStr) {
   return new Date(`${year}-${month}-${day}T${timeStr || '00:00'}`);
 }
 
+export function getOrdinal(n) {
+  const s = ['th', 'st', 'nd', 'rd'];
+  const v = n % 100;
+  return s[(v - 20) % 10] || s[v] || s[0];
+}
+
+export function formatDateVerbose(date) {
+  const weekday = date.toLocaleDateString('en-US', { weekday: 'short' }); // e.g. Sat
+  const month = date.toLocaleDateString('en-US', { month: 'short' });     // e.g. Nov
+  const day = date.getDate();
+  const ordinal = getOrdinal(day);
+  return `${weekday}, ${month} ${day}${ordinal}`;
+}
+
 export function getIcon(name) {
   const sEl = document.createElement('span');
   sEl.classList.add('icon', `icon-${name}`);

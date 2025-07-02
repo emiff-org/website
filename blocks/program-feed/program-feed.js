@@ -6,6 +6,8 @@ import {
   getIcon,
   getCSFilterMap,
   getFiltersKvMap,
+  getOrdinal,
+  formatDateVerbose,
 } from '../../scripts/components-utils.js';
 import ffetch from '../../scripts/ffetch.js';
 
@@ -127,9 +129,15 @@ function renderListItems(itemsToRender, limit, container) {
     } else {
       h3.textContent = item.title;
     }
+    const spanDate = document.createElement('span');
+    spanDate.classList.add('feed-item-date');
+    const date = parseDateTime(item.date, item.time);
+    spanDate.textContent = formatDateVerbose(date);
+
     const divHeader = document.createElement('div');
-    divHeader.classList.add('feed-item-header');
+    divHeader.classList.add('feed-item-header', item.type.toLowerCase());
     divHeader.append(h3);
+    divHeader.append(spanDate);
     div.append(divHeader);
 
     const divBody = document.createElement('div');
@@ -150,14 +158,17 @@ function renderListItems(itemsToRender, limit, container) {
       }
     }
     const divInfo = document.createElement('div');
+    divInfo.classList.add('feed-item-info');
     if (item.description) {
       const divDescr = document.createElement('div');
-      const pEl = document.createElement('p');
-      pEl.textContent = item.description;
-      divDescr.append(pEl);
+      divDescr.classList.add('feed-item-description');
+      const sEl = document.createElement('span');
+      sEl.textContent = item.description;
+      divDescr.append(sEl);
       divInfo.append(divDescr);
     }
     const divMeta = document.createElement('div');
+    divMeta.classList.add('feed-item-meta');
     if (item.credits) {
       const sEl = document.createElement('span');
       sEl.appendChild(getIcon('group'));

@@ -269,9 +269,9 @@ async function fetchItems() {
       credits: entry?.credits || block?.credits || event?.credits || '',
       description: entry?.description || block?.description || event?.description || '',
       country: entry?.country || block?.country || event?.country || '',
-      genre: entry?.genre || '',
       languages: entry?.languages || block?.languages || event?.languages || '',
-      section: entry?.section || '',
+      section: entry?.section || block?.section || event?.section || '',
+      genre: entry?.genre || '',
       locationMap: location?.map || '',
       locationPath: location?.path || '',
     };

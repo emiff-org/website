@@ -118,8 +118,9 @@ function renderListItems(itemsToRender, container, limit) {
       const a = document.createElement('a');
       a.href = href;
       a.textContent = item.title;
+
       // external links should open in new window
-      const url = new URL(href, window.location.href);
+      const url = href.startsWith('http') ? url = new URL(href) : new URL(href, window.location.href);
       if (url.hostname !== window.location.hostname) {
         a.target = '_blank';
       }

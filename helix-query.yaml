@@ -1,11 +1,14 @@
 version: 1
 indices:
-  default:
-    target: /query-index
+  english: &default
+    target: /en/query-index
+    include:
+      - /en/**
     exclude:
-      - '**/site-howto'
+      - '**/documentation'
       - '**/templates'
       - '**/tools'
+      - '**/draft'
     properties:
       type:
         select: head > meta[name="type"]
@@ -39,10 +42,17 @@ indices:
         select: head > meta[name="publication-date"]
         value: |
           attribute(el, 'content')
-  locations:
-    target: /locations-index
+  spanish:
+    <<: *default
+    target: /es/query-index
     include:
-      - '/festival/locations/*'
+      - /es/**
+
+  # Locations
+  en-locations: &locations
+    target: /en/festival/locations-index
+    include:
+      - '/en/festival/locations/*'
     properties:
       type:
         select: head > meta[name="type"]
@@ -76,10 +86,17 @@ indices:
         select: head > meta[name="robots"]
         value: |
           attribute(el, 'content')
-  entries:
-    target: /program/entries-index
+  es-locations:
+    <<: *locations
+    target: /es/festival/locations-index
     include:
-      - '/program/entries/*'
+      - '/es/festival/locations/*'
+
+  # Program entries
+  en-entries: &entries
+    target: /en/program/entries-index
+    include:
+      - '/en/program/entries/*'
     properties:
       type:
         select: head > meta[name="type"]
@@ -129,10 +146,16 @@ indices:
         select: head > meta[name="premier-status"]
         value: |
           attribute(el, 'content')
-  blocks:
-    target: /program/blocks-index
+  es-entries:
+    <<: *entries
+    target: /es/festival/entries-index
     include:
-      - '/program/blocks/*'
+      - '/es/festival/entries/*'
+
+  en-blocks: &blocks
+    target: /en/program/blocks-index
+    include:
+      - '/en/program/blocks/*'
     properties:
       type:
         select: head > meta[name="type"]
@@ -166,10 +189,17 @@ indices:
         select: head > meta[name="languages"]
         value: |
           attribute(el, 'content')
-  events:
-    target: /program/events-index
+  es-blocks:
+    <<: *blocks
+    target: /es/program/blocks-index
     include:
-      - '/program/events/*'
+      - '/es/program/blocks/*'
+
+  # Festival events
+  en-events: &events
+    target: /en/program/events-index
+    include:
+      - '/en/program/events/*'
     properties:
       type:
         select: head > meta[name="type"]
@@ -207,3 +237,9 @@ indices:
         select: head > meta[name="credits"]
         value: |
           attribute(el, 'content')
+  es-events:
+    <<: *events
+    target: /es/program/events-index
+    include:
+      - '/es/program/events/*'
+

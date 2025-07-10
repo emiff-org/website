@@ -36,9 +36,8 @@ async function inlineSvg(img) {
  */
 export default async function decorate(block) {
   const footerMeta = getMetadata('footer');
-  let language = getLocale();
-  if (language !== '') language = `/${language}`;
-  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : `${language}/footer`;
+  const language = getLocale();
+  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : `/${language}/footer`;
   const fragment = await loadFragment(footerPath);
 
   // Clear and re-append fragment content

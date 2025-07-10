@@ -126,9 +126,8 @@ export function highlightActiveNav() {
 export default async function decorate(block) {
   // load localised nav as fragment
   const navMeta = getMetadata('nav');
-  let language = getLocale();
-  if (language !== '') language = `/${language}`;
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : `${language}/nav`;
+  const language = getLocale();
+  const navPath = navMeta ? new URL(navMeta, window.location).pathname : `/${language}/nav`;
   const fragment = await loadFragment(navPath);
 
   // decorate nav DOM

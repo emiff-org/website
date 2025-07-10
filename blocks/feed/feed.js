@@ -1,6 +1,10 @@
 import getIndexPath from '../../scripts/index-utils.js';
-import { readBlockConfig } from '../../scripts/aem.js';
 import ffetch from '../../scripts/ffetch.js';
+import { readBlockConfig } from '../../scripts/aem.js';
+import {
+  getHref,
+  getHostname,
+} from '../../scripts/scripts.js';
 import {
   createCustomSelect,
   getCSFilterMap,
@@ -120,8 +124,8 @@ function renderListItems(itemsToRender, container, limit) {
       a.textContent = item.title;
 
       // external links should open in new window
-      const url = href.startsWith('http') ? new URL(href) : new URL(href, window.location.href);
-      if (url.hostname !== window.location.hostname) {
+      const url = href.startsWith('http') ? new URL(href) : new URL(href, getHref());
+      if (url.hostname !== getHostname()) {
         a.target = '_blank';
       }
       h3.append(a);

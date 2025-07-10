@@ -8,9 +8,8 @@ import { getLocale } from '../../scripts/i18n-utils.js';
  */
 export default async function decorate(block) {
   const sponsorsMeta = getMetadata('sponsors');
-  let language = getLocale();
-  if (language !== '') language = `/${language}`;
-  const sponsorsPath = sponsorsMeta ? new URL(sponsorsMeta, window.location).pathname : `${language}/sponsors`;
+  const language = getLocale();
+  const sponsorsPath = sponsorsMeta ? new URL(sponsorsMeta, window.location).pathname : `/${language}/sponsors`;
   const fragment = await loadFragment(sponsorsPath);
 
   // Clear and re-append fragment content

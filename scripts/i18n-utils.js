@@ -1,4 +1,4 @@
-const defaultLanguage = 'en';
+export const defaultLanguage = 'en';
 
 /**
  * Retrieves the locale setting for the application. It first checks any supported language

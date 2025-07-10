@@ -4,6 +4,7 @@ import {
   fetchPlaceholders,
   readBlockConfig,
 } from '../../scripts/aem.js';
+import { getLocale } from '../../scripts/i18n-utils.js';
 
 const searchParams = new URLSearchParams(window.location.search);
 
@@ -262,7 +263,8 @@ export default async function decorate(block) {
   const mode = config?.mode?.trim().toLowerCase();
 
   const placeholders = await fetchPlaceholders();
-  const source = block.querySelector('a[href]') ? block.querySelector('a[href]').href : '/query-index.json';
+  const language = getLocale();
+  const source = block.querySelector('a[href]') ? block.querySelector('a[href]').href : `/${language}/query-index.json`;
   block.innerHTML = '';
   if (mode === 'input') {
     block.append(searchBox(block, { source, placeholders, mode }));

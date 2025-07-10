@@ -1,6 +1,12 @@
 export function parseDateTime(dateStr, timeStr) {
-  // convert '30.10.2024' to '2024-10-30T22:00'
-  const [day, month, year] = dateStr.split('.');
+  // convert '30.10.2024' or '2024-30-10' to '2024-10-30T22:00'
+  if (!dateStr || dateStr.length === 0) return null;
+  if (dateStr.includes('.')) {
+    const [day, month, year] = dateStr.split('.');
+    if (timeStr) return new Date(`${year}-${month}-${day}T${timeStr || '00:00'}`);
+    return new Date(`${year}-${month}-${day}`);
+  }
+  const [year, day, month] = dateStr.split('-');
   if (timeStr) return new Date(`${year}-${month}-${day}T${timeStr || '00:00'}`);
   return new Date(`${year}-${month}-${day}`);
 }

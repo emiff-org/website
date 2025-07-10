@@ -1,5 +1,6 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
+import { getLocale } from '../../scripts/i18n-utils.js';
 
 /**
  * Inlines an external SVG by replacing the <img> tag with the inline <svg>
@@ -35,7 +36,9 @@ async function inlineSvg(img) {
  */
 export default async function decorate(block) {
   const footerMeta = getMetadata('footer');
-  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
+  let language = getLocale();
+  if (language !== '') language = `/${language}`;
+  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : `${language}/footer`;
   const fragment = await loadFragment(footerPath);
 
   // Clear and re-append fragment content

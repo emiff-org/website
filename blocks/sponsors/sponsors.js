@@ -1,5 +1,6 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
+import { getLocale } from '../../scripts/i18n-utils.js';
 
 /**
  * Loads and decorates the sponsors
@@ -7,7 +8,9 @@ import { loadFragment } from '../fragment/fragment.js';
  */
 export default async function decorate(block) {
   const sponsorsMeta = getMetadata('sponsors');
-  const sponsorsPath = sponsorsMeta ? new URL(sponsorsMeta, window.location).pathname : '/sponsors';
+  let language = getLocale();
+  if (language !== '') language = `/${language}`;
+  const sponsorsPath = sponsorsMeta ? new URL(sponsorsMeta, window.location).pathname : `${language}/sponsors`;
   const fragment = await loadFragment(sponsorsPath);
 
   // Clear and re-append fragment content

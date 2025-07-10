@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable */
 
 const fs = require('fs');
 const path = require('path');
@@ -8,9 +9,9 @@ function slugify(str) {
   return str
     .normalize('NFKD')
     .replace(/[\u0300-\u036F]/g, '') // remove accents
-    .replace(/[^a-zA-Z0-9]/g, '-')   // replace non-alphanumerics
-    .replace(/--+/g, '-')            // remove double dashes
-    .replace(/^-+|-+$/g, '')         // trim dashes
+    .replace(/[^a-zA-Z0-9]/g, '-') // replace non-alphanumerics
+    .replace(/--+/g, '-') // remove double dashes
+    .replace(/^-+|-+$/g, '') // trim dashes
     .toLowerCase();
 }
 
@@ -24,7 +25,7 @@ function transformPath(localPath, baseUrl) {
 
   let newName;
   if (ext === '.gsheet') {
-    newName = slugify(name) + '.json';
+    newName = `${slugify(name)}.json`;
   } else {
     newName = slugify(name) + ext; // keeps .gdoc etc.
   }

@@ -14,9 +14,9 @@ function fetchArticlesFactory(block) {
     const entries = rawEntries
       .filter((entry) => entry.type.toLowerCase() === type)
       .sort((a, b) => {
-        const dateA = parseInt(a.publicationDate || '0', 10);
-        const dateB = parseInt(b.publicationDate || '0', 10);
-        return dateB - dateA; // descending
+        const dateTimeA = parseDateTime(a.publicationDate);
+        const dateTimeB = parseDateTime(b.publicationDate);
+        return dateTimeB - dateTimeA;
       })
       .slice(0, Number.isNaN(limit) ? undefined : limit);
     entries.forEach((entry) => {

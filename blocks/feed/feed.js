@@ -9,6 +9,7 @@ import {
   createCustomSelect,
   getCSFilterMap,
   getFiltersKvMap,
+  parseDateTime,
 } from '../../scripts/components-utils.js';
 
 // expects a map with kv pairs as filter
@@ -22,9 +23,9 @@ function filterItems(items, filters) {
     }));
   return filteredItems
     .sort((a, b) => {
-      const dateA = parseInt(a.publicationDate || '0', 10);
-      const dateB = parseInt(b.publicationDate || '0', 10);
-      return dateA - dateB;
+      const dateTimeA = parseDateTime(a.publicationDate);
+      const dateTimeB = parseDateTime(b.publicationDate);
+      return dateTimeB - dateTimeA;
     });
 }
 
@@ -163,7 +164,6 @@ function renderControls(filters, items, layout, hideFilters) {
   container.classList.add('custom-select-flex');
 
   filters.entries().forEach(([key, value]) => {
-    if (hideFilters.includes(key)) return; // skip hidden filters
     const selectWrapper = createCustomSelect(
       key,
       items,
@@ -178,6 +178,7 @@ function renderControls(filters, items, layout, hideFilters) {
       },
       value,
     );
+    if (hideFilters.includes(key)) selectWrapper.style.display = 'none';
     container.append(selectWrapper);
   });
   return container;
@@ -199,7 +200,7 @@ export default async function decorate(block) {
   // accepted layouts: feed, cards
   const layout = config?.layout?.trim().toLowerCase();
   if (!Array.isArray(filters) || filters.length !== 0) {
-    block.append(renderControls(filters, items, layout, hideFilters));
+    block.append(renderControls(filters, filteredItems, layout, hideFilters));
   }
   block.append(renderFeed(filteredItems, layout, limit));
 }

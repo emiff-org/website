@@ -1,7 +1,8 @@
 export function parseDateTime(dateStr, timeStr) {
   // convert '30.10.2024' to '2024-10-30T22:00'
   const [day, month, year] = dateStr.split('.');
-  return new Date(`${year}-${month}-${day}T${timeStr || '00:00'}`);
+  if (timeStr) return new Date(`${year}-${month}-${day}T${timeStr || '00:00'}`);
+  return new Date(`${year}-${month}-${day}`);
 }
 
 export function getOrdinal(n) {

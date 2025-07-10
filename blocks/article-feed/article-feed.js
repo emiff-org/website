@@ -2,6 +2,7 @@ import { renderBlock } from '../../scripts/faintly.js';
 import { readBlockConfig } from '../../scripts/aem.js';
 import getIndexPath from '../../scripts/index-utils.js';
 import ffetch from '../../scripts/ffetch.js';
+import { parseDateTime } from '../../scripts/components-utils.js';
 
 function fetchArticlesFactory(block) {
   return async function fetchArticles() {

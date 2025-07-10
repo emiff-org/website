@@ -1,0 +1,81 @@
+https://main--website--emiff-org.aem.page/en/draft/Demo Page
+https://main--website--emiff-org.aem.page/en/draft/Feed Test
+https://main--website--emiff-org.aem.page/en/festival/about
+https://main--website--emiff-org.aem.page/en/festival/gallery
+https://main--website--emiff-org.aem.page/en/festival/gallery/gallery.json
+https://main--website--emiff-org.aem.page/en/festival/history/2016/EMIFF 5th Edition 2026
+https://main--website--emiff-org.aem.page/en/festival/history/2017/EMIFF 6th Edition 2027
+https://main--website--emiff-org.aem.page/en/festival/history/2019/winners 2019
+https://main--website--emiff-org.aem.page/en/festival/history/2020/winners 2020
+https://main--website--emiff-org.aem.page/en/festival/history/2021/winners 2021
+https://main--website--emiff-org.aem.page/en/festival/history/2022/winners 2022
+https://main--website--emiff-org.aem.page/en/festival/history/2023/winners 2023
+https://main--website--emiff-org.aem.page/en/festival/history/2024/winners 2024
+https://main--website--emiff-org.aem.page/en/festival/history/index
+https://main--website--emiff-org.aem.page/en/festival/locations-index.json
+https://main--website--emiff-org.aem.page/en/festival/locations
+https://main--website--emiff-org.aem.page/en/festival/locations/Cineciutat
+https://main--website--emiff-org.aem.page/en/festival/locations/Palau de Congressos
+https://main--website--emiff-org.aem.page/en/festival/locations/Port Adriano
+https://main--website--emiff-org.aem.page/en/festival/locations/Rialto Living
+https://main--website--emiff-org.aem.page/en/festival/locations/Sala Rívoli Aficine
+https://main--website--emiff-org.aem.page/en/festival/locations/Teatre Principal
+https://main--website--emiff-org.aem.page/en/festival/sponsors
+https://main--website--emiff-org.aem.page/en/festival/submissions/index
+https://main--website--emiff-org.aem.page/en/festival/submissions/rules
+https://main--website--emiff-org.aem.page/en/festival/team
+https://main--website--emiff-org.aem.page/en/festival/visiting
+https://main--website--emiff-org.aem.page/en/footer
+https://main--website--emiff-org.aem.page/en/index
+https://main--website--emiff-org.aem.page/en/legal/privacy
+https://main--website--emiff-org.aem.page/en/legal/tou
+https://main--website--emiff-org.aem.page/en/nav
+https://main--website--emiff-org.aem.page/en/news/2024/Berlin ITB 2024
+https://main--website--emiff-org.aem.page/en/news/2024/Café con Cine: Where Stories Brew and Connections Percolate
+https://main--website--emiff-org.aem.page/en/news/2024/Culinary Cinema: EMIFF’s Movie Show Cooking Serves Up a Feast for the Senses
+https://main--website--emiff-org.aem.page/en/news/2024/EMIFF 2024 Side Awards Spotlight Emerging Talent and Innovation
+https://main--website--emiff-org.aem.page/en/news/2024/EMIFF 2024’s Side Events Enrich the Festival Experience
+https://main--website--emiff-org.aem.page/en/news/2024/EMIFF’s Cinematography Focus Illuminates the Future of Filmmaking
+https://main--website--emiff-org.aem.page/en/news/2024/Los Frikis Triumphs at EMIFF 2024, Celebrating Bold Storytelling
+https://main--website--emiff-org.aem.page/en/news/2024/MovieMaker Magazine 50 Film Festivals
+https://main--website--emiff-org.aem.page/en/news/2024/Wim Wenders receives Mallorca Award in Hollywood
+https://main--website--emiff-org.aem.page/en/news/2025/EMIFF Goes to Berlinale
+https://main--website--emiff-org.aem.page/en/news/2025/Evolution featured in Forbes Magazine
+https://main--website--emiff-org.aem.page/en/news/2025/Latest Article
+https://main--website--emiff-org.aem.page/en/news/2025/New Article
+https://main--website--emiff-org.aem.page/en/news/2025/News  Article
+https://main--website--emiff-org.aem.page/en/news/2025/Test Article
+https://main--website--emiff-org.aem.page/en/news/in-the-news.json
+https://main--website--emiff-org.aem.page/en/news/index
+https://main--website--emiff-org.aem.page/en/news/videos
+https://main--website--emiff-org.aem.page/en/press/Contact
+https://main--website--emiff-org.aem.page/en/press/Press Kit
+https://main--website--emiff-org.aem.page/en/press/Press Releases
+https://main--website--emiff-org.aem.page/en/press/index
+https://main--website--emiff-org.aem.page/en/press/press-releases/Conscious Cinema Series Debuts at EMIFF 2024
+https://main--website--emiff-org.aem.page/en/press/press-releases/EMIFF 2024 Awards Emerging Talent in Film
+https://main--website--emiff-org.aem.page/en/press/press-releases/EMIFF 2024 Awards
+https://main--website--emiff-org.aem.page/en/press/press-releases/EMIFF 2024 Closing
+https://main--website--emiff-org.aem.page/en/press/press-releases/EMIFF 2024 Concludes with Emphasis on Cinematography and Storytelling
+https://main--website--emiff-org.aem.page/en/press/press-releases/EMIFF 2024 Honors Cinematic Luminaries at Opening Gala
+https://main--website--emiff-org.aem.page/en/press/press-releases/EMIFF 2024 Showcases Record Number of Screenings
+https://main--website--emiff-org.aem.page/en/program/blocks-index.json
+https://main--website--emiff-org.aem.page/en/program/blocks/Dark Family
+https://main--website--emiff-org.aem.page/en/program/blocks/Forbidden Love
+https://main--website--emiff-org.aem.page/en/program/blocks/Made in Baleares Short Films
+https://main--website--emiff-org.aem.page/en/program/blocks/Mission: Future
+https://main--website--emiff-org.aem.page/en/program/demo-test
+https://main--website--emiff-org.aem.page/en/program/entries-index.json
+https://main--website--emiff-org.aem.page/en/program/entries/Detour
+https://main--website--emiff-org.aem.page/en/program/entries/His Girl Friday
+https://main--website--emiff-org.aem.page/en/program/entries/Los Frikis
+https://main--website--emiff-org.aem.page/en/program/events-index.json
+https://main--website--emiff-org.aem.page/en/program/events
+https://main--website--emiff-org.aem.page/en/program/events/Cinematography Focus Masterclass
+https://main--website--emiff-org.aem.page/en/program/events/Closing Night
+https://main--website--emiff-org.aem.page/en/program/events/Women in Leadership
+https://main--website--emiff-org.aem.page/en/program/index
+https://main--website--emiff-org.aem.page/en/program/program-index.json
+https://main--website--emiff-org.aem.page/en/query-index.json
+https://main--website--emiff-org.aem.page/en/search
+https://main--website--emiff-org.aem.page/en/sponsors

@@ -290,7 +290,7 @@ header nav .nav-sections ul > li > ul > li.active {
     bottom: 0;
     height: 2px;
     width: 100%;
-    background-color: var(--border-color);
+    background-color: var(--link-color);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease-out;

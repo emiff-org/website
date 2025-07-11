@@ -116,7 +116,6 @@
 .custom-select-flex {
   display: flex;
   position: relative;
-  border-bottom: 2px solid var(--brand-color);
 }
 
 

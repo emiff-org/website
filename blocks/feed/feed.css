@@ -1,7 +1,7 @@
 @import url('/blocks/cards/cards.css');
 
 .feed-item {
-  display: block;
+  display: flex;
   padding: 1rem 0;
   margin: 0;
   border-bottom: 1px solid var(--border-color);
@@ -20,27 +20,32 @@
   margin-top: 0;
 }
 
+.feed-item-image img {
+  max-width: 200px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  margin-right: 1.5em;
+}
+
 .feed-item-body {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
   margin-top: 0;
 }
 
-.feed-item .feed-item-img {
-  grid-column: 1;
-  display: grid;
-  line-height: 0;
+.feed-item-body p.clamp-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Custom Select Flex Wrapper */
 .custom-select-flex {
   display: flex;
   position: relative;
-  border-bottom: 2px solid var(--brand-color);
 }
 
 

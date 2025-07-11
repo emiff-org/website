@@ -101,19 +101,44 @@ function renderCardItems(itemsToRender, container, limit) {
   return container;
 }
 
-function renderListItems(itemsToRender, container, limit) {
+function renderListItems(itemsToRender, container, limit, hideImages = false) {
   container.innerHTML = ''; // Clear previous items
 
   itemsToRender.slice(0, limit).forEach((item) => {
     const div = document.createElement('div');
     div.classList.add('feed-item');
 
+    // Image section
+    if (!hideImages && item.image) {
+      const imageDiv = document.createElement('div');
+      imageDiv.className = 'feed-item-image';
+
+      const aImage = document.createElement('a');
+      aImage.href = item.path;
+      aImage.setAttribute('aria-label', item.title);
+      aImage.title = '';
+
+      const picture = document.createElement('picture');
+      const img = document.createElement('img');
+      img.loading = 'lazy';
+      img.alt = item.title;
+      img.src = item.image;
+
+      picture.appendChild(img);
+      aImage.appendChild(picture);
+      imageDiv.appendChild(aImage);
+      div.appendChild(imageDiv);
+    }
+
+    // Text content section
+    const bodyDiv = document.createElement('div');
+    bodyDiv.className = 'feed-item-body';
     const subtitle = item.publication ?? item.category;
     if (subtitle) {
       const pSub = document.createElement('p');
       pSub.classList.add('feed-item-subtitle');
       pSub.textContent = subtitle;
-      div.append(pSub);
+      bodyDiv.append(pSub);
     }
 
     const h3 = document.createElement('h3');
@@ -133,20 +158,21 @@ function renderListItems(itemsToRender, container, limit) {
     } else {
       h3.textContent = item.title;
     }
-    div.append(h3);
+    bodyDiv.append(h3);
 
     if (item.description) {
       const pDescr = document.createElement('p');
-      pDescr.classList.add('feed-item-body');
+      pDescr.classList.add('clamp-2');
       pDescr.textContent = item.description;
-      div.append(pDescr);
+      bodyDiv.append(pDescr);
     }
+    div.appendChild(bodyDiv);
     container.append(div);
   });
   return container;
 }
 
-function renderFeed(items, layout, limit) {
+function renderFeed(items, layout, limit, hideImages) {
   const container = document.createElement('div');
 
   if (layout === 'cards') {
@@ -154,7 +180,7 @@ function renderFeed(items, layout, limit) {
     renderCardItems(items, container, limit);
   } else {
     container.classList.add('feed');
-    renderListItems(items, container, limit);
+    renderListItems(items, container, limit, hideImages);
   }
   return container;
 }
@@ -191,6 +217,7 @@ export default async function decorate(block) {
   const hideFiltersValue = config?.hidefilters?.trim();
   const hideFilters = hideFiltersValue ? hideFiltersValue.split(',').map((val) => val.trim()) : [];
   const limit = config?.limit?.trim().toLowerCase();
+  const hideImages = (config?.images?.trim().toLowerCase() === 'hide');
 
   const items = await fetchItems(config);
   const filteredItems = filterItems(items, filters);
@@ -202,5 +229,5 @@ export default async function decorate(block) {
   if (!Array.isArray(filters) || filters.length !== 0) {
     block.append(renderControls(filters, filteredItems, layout, hideFilters));
   }
-  block.append(renderFeed(filteredItems, layout, limit));
+  block.append(renderFeed(filteredItems, layout, limit, hideImages));
 }

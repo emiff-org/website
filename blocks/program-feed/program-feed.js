@@ -134,7 +134,7 @@ function renderListItems(itemsToRender, limit, container) {
     spanDate.textContent = formatDateVerbose(date);
 
     const divHeader = document.createElement('div');
-    divHeader.classList.add('feed-item-header', item.type.toLowerCase());
+    divHeader.classList.add('feed-item-header', 'entry');
     divHeader.append(h3);
     divHeader.append(spanDate);
     div.append(divHeader);

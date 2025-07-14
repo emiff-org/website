@@ -68,6 +68,29 @@ function bindEvents(block) {
   block.querySelectorAll('.carousel-slide').forEach((slide) => {
     slideObserver.observe(slide);
   });
+
+  // --- Auto-advance after 10 seconds ---
+  let autoAdvanceInterval;
+
+  const startAutoAdvance = () => {
+    clearInterval(autoAdvanceInterval);
+    autoAdvanceInterval = setInterval(() => {
+      const current = (block.dataset.activeSlide) ? parseInt(block.dataset.activeSlide, 10) : 0;
+      showSlide(block, current + 1);
+    }, 10000);
+  };
+
+  const userInteractionHandler = () => {
+    clearInterval(autoAdvanceInterval);
+  };
+
+  // Attach to navigation and indicators
+  block.querySelectorAll('.slide-prev, .slide-next, .carousel-slide-indicator button')
+    .forEach((btn) => {
+      btn.addEventListener('click', userInteractionHandler);
+    });
+
+  startAutoAdvance();
 }
 
 function createSlide(row, slideIndex, carouselId) {

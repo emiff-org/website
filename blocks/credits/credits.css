@@ -1,3 +1,35 @@
-.credits {
-  display: block;
+.credits-wrapper {
+  margin-top: 2rem;
+}
+
+.credits.block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.credits.block > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+  line-height: 1.5;
+}
+
+.credits.block > div p {
+  margin: 0;
+}
+
+.credits.block > div:last-child {
+  border-bottom: none;
+}
+
+.credits.block > div > div:first-child {
+  flex: 0 0 140px; /* fixed width for labels */
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.credits.block > div > div:last-child {
+  flex: 1;
+  color: var(--text-color);
 }

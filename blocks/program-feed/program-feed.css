@@ -133,12 +133,55 @@
   font-size: var(--body-font-size-xs);
 }
 
-/* Custom Select Flex Wrapper */
-.custom-select-flex {
-  display: flex;
+/* Mobile Filter Button for Select Menu */
+.program-feed {
   position: relative;
 }
 
+.mobile-filter-wrapper {
+  position: absolute;
+  top: -100px;
+  right: 0;
+}
+
+.mobile-filter {
+  display: block;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 5px 10px 1px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+@media (width >= 900px) {
+  .mobile-filter {
+    display: none;
+  }
+}
+
+.mobile-filter:hover,
+.mobile-filter:focus {
+  background-color: unset;
+  color: unset;
+}
+
+.mobile-filter.open {
+  background-color: var(--brand-color);
+  color: var(--textlight-color);
+}
+
+/* Custom Select Flex Wrapper */
+.custom-select-flex {
+  display: none;
+  position: relative;
+  flex-direction: column;
+}
+
+@media (width >= 900px) {
+  .custom-select-flex {
+    display: flex;
+    flex-direction: row;
+  }
+}
 
 /* Custom Select Wrapper */
 .custom-select-wrapper {
@@ -181,7 +224,8 @@
 .custom-select:hover {
   background-color: var(--brand-color);
   color: var(--textlight-color);
-  cursor: pointer;}
+  cursor: pointer;
+}
 
 /* Icon for open/close */
 .custom-select::after {

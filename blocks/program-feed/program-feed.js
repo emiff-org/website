@@ -1,6 +1,7 @@
 import getIndexPath from '../../scripts/index-utils.js';
 import { readBlockConfig } from '../../scripts/aem.js';
 import {
+  createMobileFilter,
   createCustomSelect,
   parseDateTime,
   getIcon,
@@ -332,6 +333,7 @@ export default async function decorate(block) {
   // accepted layouts: feed, cards
   const layout = config?.layout?.trim().toLowerCase();
   if (!Array.isArray(filters) || filters.length !== 0) {
+    block.append(await createMobileFilter());
     block.append(renderControls(filters, items, layout, hideFilters));
   }
   block.append(renderFeed(filteredItems, layout, limit));

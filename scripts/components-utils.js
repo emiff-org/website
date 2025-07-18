@@ -34,6 +34,31 @@ export function getIcon(name) {
   return sEl;
 }
 
+export async function getSVGIcon(name) {
+  const sEl = document.createElement('span');
+  sEl.classList.add('icon', `icon-${name}`);
+
+  try {
+    const res = await fetch(`/icons/icon-${name}.svg`);
+    if (!res.ok) throw new Error(`Icon ${name} not found`);
+    const svgText = await res.text();
+
+    // Parse the SVG and inline it
+    const parser = new DOMParser();
+    const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
+    const svgEl = svgDoc.querySelector('svg');
+    if (svgEl) {
+      // svgEl.setAttribute('fill', 'currentColor'); // Make fill CSS-controllable
+      svgEl.classList.add(`icon-${name}-svg`);
+      sEl.appendChild(svgEl);
+    }
+  } catch (err) {
+    console.error(`Failed to load icon: ${name}`, err);
+  }
+
+  return sEl;
+}
+
 export function createCustomSelect(filter, items, onSelect, value = undefined) {
   const uniqueFilterValues = [...new Set(
     items.map((item) => item[filter.toLowerCase()]).filter(Boolean),
@@ -82,6 +107,26 @@ export function createCustomSelect(filter, items, onSelect, value = undefined) {
   selectWrapper.append(select);
   selectWrapper.append(optionsWrapper);
   return selectWrapper;
+}
+
+export async function createMobileFilter() {
+  const filterWrapper = document.createElement('div');
+  filterWrapper.classList.add('mobile-filter-wrapper');
+
+  const button = document.createElement('button');
+  button.classList.add('mobile-filter');
+  const icon = await getSVGIcon('filter');
+  button.appendChild(icon);
+
+  button.addEventListener('click', () => {
+    const customSelectWrapper = document.querySelector('.custom-select-flex');
+    const isOpen = customSelectWrapper.style.display === 'flex';
+    customSelectWrapper.style.display = isOpen ? 'none' : 'flex';
+    button.classList.toggle('open', !isOpen);
+  });
+
+  filterWrapper.append(button);
+  return filterWrapper;
 }
 
 export function getFiltersKvMap(filter) {

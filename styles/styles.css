@@ -196,7 +196,7 @@ button {
   border: 1px solid transparent;
   border-radius: 0.2em;
   border-color: var(--brand-color);
-  padding: 0.5em 1.2em;
+  padding: 0.3em 0.7em;
   font-family: var(--body-font-family);
   font-style: normal;
   font-weight: 500;

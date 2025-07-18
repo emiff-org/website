@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  padding: 1rem 0;
+  padding-bottom: 3rem;
   margin: 0;
   background-color: var(--background-color);
 }
@@ -56,6 +56,7 @@
 }
 
 .feed-item-image {
+  position: relative;
   height: 100%;
 }
 
@@ -71,7 +72,7 @@
   flex-basis: 100%;
   justify-content: space-between;
   align-self: flex-start;
-  padding: 0.5rem;
+  padding: 0.5rem 0;
   height: 100%;
 }
 
@@ -88,12 +89,16 @@
     width: 300px;
     padding: 0 0.5rem;
   }
+  .feed-item-info {
+    padding: 0.5em;
+  }
 }
 
 .feed-item-meta {
   display: flex;
   flex-flow: row wrap;
   width: 100%;
+  background-color: var(--greylight-color);
   justify-content: flex-start;
   align-self: flex-start;
 }
@@ -122,15 +127,19 @@
 }
 
 .feed-item-meta span:last-child {
-  /* padding-left: 1.5rem; */
   background-color: var(--greylight-color);
 }
 
 .feed-item-section {
-  position: relative;
-  top: -50px;
+  position: absolute;
+  bottom: 8px;
+  right: 0;
+  background-color: var(--brand-color);
   color: var(--textlight-color);
-  font-size: var(--body-font-size-xs);
+  font-size: var(--body-font-size-s);
+  font-weight: 500;
+  padding: 0.2rem 0.5rem;
+  margin: 0;
 }
 
 /* Mobile Filter Button for Select Menu */
@@ -148,7 +157,7 @@
   display: block;
   background-color: var(--background-color);
   color: var(--text-color);
-  padding: 5px 10px 1px;
+  padding: 0.2em 0.7em 0.1em;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -174,6 +183,15 @@
   display: none;
   position: relative;
   flex-direction: column;
+  padding-bottom: 1em;
+}
+
+/* Custom Select Wrapper */
+.custom-select-wrapper {
+  position: relative;
+  max-width: 300px;
+  /* margin-bottom: 1rem; */
+  padding-right: 2rem;
 }
 
 @media (width >= 900px) {
@@ -181,14 +199,6 @@
     display: flex;
     flex-direction: row;
   }
-}
-
-/* Custom Select Wrapper */
-.custom-select-wrapper {
-  position: relative;
-  max-width: 300px;
-  margin-bottom: 1rem;
-  padding-right: 2rem;
 }
 
 .custom-select-label {
@@ -202,10 +212,11 @@
   box-sizing: border-box;
   display: inline-flex;
   max-width: 100%;
+  margin: 12px 0;
   border: 1px solid transparent;
   border-radius: 0.2em;
   border-color: var(--brand-color);
-  padding: 0.5em 1.2em;
+  padding: 0.3em 0.7em;
   font-family: var(--body-font-family);
   font-style: normal;
   font-weight: 500;

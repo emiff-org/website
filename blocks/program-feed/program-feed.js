@@ -146,12 +146,12 @@ function renderListItems(itemsToRender, limit, container) {
     if (item.image) {
       const divImg = document.createElement('div');
       divImg.classList.add('feed-item-image');
-      const pDescr = document.createElement('img');
-      pDescr.src = item.image;
-      divImg.append(pDescr);
+      const img = document.createElement('img');
+      img.src = item.image;
+      divImg.append(img);
       divBody.append(divImg);
       if (item.section) {
-        const pSection = document.createElement('p');
+        const pSection = document.createElement('div');
         pSection.classList.add('feed-item-section');
         pSection.textContent = item.section;
         divImg.append(pSection);

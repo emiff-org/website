@@ -87,9 +87,6 @@
 
   .feed-item-info {
     width: 300px;
-    padding: 0 0.5rem;
-  }
-  .feed-item-info {
     padding: 0.5em;
   }
 }
@@ -190,7 +187,6 @@
 .custom-select-wrapper {
   position: relative;
   max-width: 300px;
-  /* margin-bottom: 1rem; */
   padding-right: 2rem;
 }
 

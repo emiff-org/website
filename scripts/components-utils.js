@@ -53,7 +53,7 @@ export async function getSVGIcon(name) {
       sEl.appendChild(svgEl);
     }
   } catch (err) {
-    console.error(`Failed to load icon: ${name}`, err);
+    console.error(`Failed to load icon: ${name}`, err); // eslint-disable-line no-console
   }
 
   return sEl;
@@ -123,6 +123,17 @@ export async function createMobileFilter() {
     const isOpen = customSelectWrapper.style.display === 'flex';
     customSelectWrapper.style.display = isOpen ? 'none' : 'flex';
     button.classList.toggle('open', !isOpen);
+  });
+
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('.custom-select.open').forEach((select) => {
+      if (select && !select.contains(e.target)) {
+        if (!select.nextElementSibling.contains(e.target)) {
+          select.nextElementSibling.style.display = 'none';
+          select.classList.remove('open');
+        }
+      }
+    });
   });
 
   filterWrapper.append(button);

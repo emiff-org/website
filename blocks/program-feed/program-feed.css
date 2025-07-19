@@ -93,7 +93,7 @@
   margin-bottom: 1em;
 }
 
-@media (min-width: 900px) {
+@media (width >= 900px) {
   .feed-item-body {
     display: flex;
     flex-direction: row;

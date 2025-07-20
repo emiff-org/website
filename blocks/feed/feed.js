@@ -22,16 +22,15 @@ function filterItems(items, filters) {
       return itemValue === filterValue;
     }));
   return filteredItems
-    .sort((a, b) => {
-      const dateTimeA = parseDateTime(a.publicationDate);
-      const dateTimeB = parseDateTime(b.publicationDate);
-      return dateTimeB - dateTimeA;
-    });
+    .sort((a, b) => b.publicationDate - a.publicationDate);
 }
 
 async function fetchItems(config) {
   const index = config?.index?.trim().toUpperCase();
   const items = await ffetch(getIndexPath(`INDEX_${index}`)).all();
+  items.forEach((item) => {
+    item.publicationDate = item.publicationDate ? parseDateTime(item.publicationDate) : '';
+  });
   return items;
 }
 

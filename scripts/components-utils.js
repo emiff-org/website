@@ -1,12 +1,20 @@
 export function parseDateTime(dateStr, timeStr) {
   // convert '30.10.2024' or '2024-30-10' to '2024-10-30T22:00'
   if (!dateStr || dateStr.length === 0) return null;
+  let sDay = '';
+  let year = '';
+  let sMonth = '';
   if (dateStr.includes('.')) {
-    const [day, month, year] = dateStr.split('.');
-    if (timeStr) return new Date(`${year}-${month}-${day}T${timeStr || '00:00'}`);
-    return new Date(`${year}-${month}-${day}`);
+    [sDay, sMonth, year] = dateStr.split('.');
+  } else {
+    [year, sDay, sMonth] = dateStr.split('-');
   }
-  const [year, day, month] = dateStr.split('-');
+  // because Date in Safari doesn't like single digit days/months
+  if (!sDay || !sMonth) return null;
+
+  const day = sDay.padStart(2, '0');
+  const month = sMonth.padStart(2, '0');
+
   if (timeStr) return new Date(`${year}-${month}-${day}T${timeStr || '00:00'}`);
   return new Date(`${year}-${month}-${day}`);
 }

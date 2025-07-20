@@ -2,7 +2,9 @@
 
 .feed-item {
   display: flex;
-  padding: 1rem 0;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 1.5rem 0;
   margin: 0;
   border-bottom: 1px solid var(--border-color);
   background-color: var(--background-color);
@@ -21,7 +23,6 @@
 }
 
 .feed-item-image img {
-  max-width: 200px;
   aspect-ratio: 4 / 3;
   object-fit: cover;
   margin-right: 1.5em;
@@ -40,6 +41,23 @@
   line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+@media (width >= 900px) {
+  .feed-item {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .feed-item-image {
+    padding-right: 1em;
+    flex: 0 0 200px;
+  }
+
+  .feed-item-body {
+    flex: 1;
+    min-width: 0;
+  }
 }
 
 /* Custom Select Flex Wrapper */

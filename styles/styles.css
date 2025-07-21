@@ -118,7 +118,7 @@ a:hover {
   text-decoration: underline;
 }
 
-a[href^="http"]:not(:has(img)):not(:has(svg))::after {
+a[href^="http"]:not(:has(img), :has(svg))::after {
   content: "";
   width: 18px;
   height: 18px;

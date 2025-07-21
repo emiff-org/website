@@ -125,7 +125,7 @@ h4,
 h5,
 h6 {
   margin-top: 0.8em;
-  margin-bottom: 0.25em;
+  margin-bottom: 0.5em;
   font-family: var(--heading-font-family);
   font-weight: 500;
   line-height: 1.25;
@@ -149,7 +149,13 @@ h5 { font-size: var(--heading-font-size-s); }
 h6 { font-size: var(--heading-font-size-xs); }
 
 body h1:first-of-type {
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
+}
+
+@media (width >= 900px) {
+  body h1:first-of-type {
+    margin-bottom: 3rem;
+  }
 }
 
 p,

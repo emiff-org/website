@@ -1,8 +1,8 @@
 import getIndexPath from '../../scripts/index-utils.js';
 import { readBlockConfig } from '../../scripts/aem.js';
 import {
-  createMobileFilter,
   createCustomSelect,
+  createFilterToggle,
   parseDateTime,
   getIcon,
   getCSFilterMap,
@@ -292,7 +292,7 @@ function renderFeed(items, layout, limit) {
   return container;
 }
 
-function renderControls(filters, items, layout, hideFilters) {
+async function renderFilters(filters, items, layout, hideFilters) {
   const container = document.createElement('div');
   container.classList.add('custom-select-flex');
 
@@ -314,7 +314,14 @@ function renderControls(filters, items, layout, hideFilters) {
     );
     container.append(selectWrapper);
   });
-  return container;
+
+  const filterWrapper = document.createElement('div');
+  filterWrapper.classList.add('filter-wrapper');
+
+  filterWrapper.append(container);
+  filterWrapper.append(await createFilterToggle());
+
+  return filterWrapper;
 }
 
 export default async function decorate(block) {
@@ -333,8 +340,7 @@ export default async function decorate(block) {
   // accepted layouts: feed, cards
   const layout = config?.layout?.trim().toLowerCase();
   if (!Array.isArray(filters) || filters.length !== 0) {
-    block.append(await createMobileFilter());
-    block.append(renderControls(filters, items, layout, hideFilters));
+    block.append(await renderFilters(filters, items, layout, hideFilters));
   }
   block.append(renderFeed(filteredItems, layout, limit));
 }

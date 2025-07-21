@@ -117,9 +117,9 @@ export function createCustomSelect(filter, items, onSelect, value = undefined) {
   return selectWrapper;
 }
 
-export async function createMobileFilter() {
-  const filterWrapper = document.createElement('div');
-  filterWrapper.classList.add('mobile-filter-wrapper');
+export async function createFilterToggle() {
+  const toggleWrapper = document.createElement('div');
+  toggleWrapper.classList.add('toggle-wrapper');
 
   const button = document.createElement('button');
   button.classList.add('mobile-filter');
@@ -143,9 +143,8 @@ export async function createMobileFilter() {
       }
     });
   });
-
-  filterWrapper.append(button);
-  return filterWrapper;
+  toggleWrapper.append(button);
+  return toggleWrapper;
 }
 
 export function getFiltersKvMap(filter) {

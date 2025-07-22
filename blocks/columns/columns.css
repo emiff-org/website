@@ -12,6 +12,18 @@
   margin-bottom: auto;
 }
 
+.columns.gap-l > div {
+  margin-bottom: 48px;
+}
+
+.columns.gap-m > div {
+  margin-bottom: 32px;
+}
+
+.columns.gap-s > div {
+  margin-bottom: 16px;
+}
+
 /* Sponsors section */
 .columns.img-size-m img {
   max-height: 200px;

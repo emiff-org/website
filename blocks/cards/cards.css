@@ -36,11 +36,11 @@
   padding-bottom: 0;
 }
 
-@media (width >= 900px) {
+/* @media (width >= 900px) {
   .cards > ul > li {
     padding-bottom: 0;
   }
-}
+} */
 
 .cards .cards-card-body {
   justify-content: center;

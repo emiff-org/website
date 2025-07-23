@@ -1,9 +1,9 @@
 import {
   // createOptimizedPicture,
   decorateIcons,
-  fetchPlaceholders,
   readBlockConfig,
 } from '../../scripts/aem.js';
+import { fetchLocalPlaceholders } from '../../scripts/scripts-ext.js';
 import { getLocale } from '../../scripts/i18n-utils.js';
 
 const searchParams = new URLSearchParams(window.location.search);
@@ -261,13 +261,20 @@ function searchBox(block, config) {
 export default async function decorate(block) {
   const config = readBlockConfig(block);
   const mode = config?.mode?.trim().toLowerCase();
+  const filtersValue = config?.filters?.trim();
+  const filters = filtersValue ? filtersValue.split(',').map((val) => val.trim()) : [];
 
-  const placeholders = await fetchPlaceholders();
+  const placeholders = await fetchLocalPlaceholders();
   const language = getLocale();
   const source = block.querySelector('a[href]') ? block.querySelector('a[href]').href : `/${language}/query-index.json`;
   block.innerHTML = '';
   if (mode === 'input') {
-    block.append(searchBox(block, { source, placeholders, mode }));
+    block.append(searchBox(block, {
+      source,
+      placeholders,
+      mode,
+      filters,
+    }));
 
     if (searchParams.get('q')) {
       const input = block.querySelector('input');

@@ -1,6 +1,5 @@
-/**
- * Custom DOM enhancements for EMIFF.
- */
+import { fetchPlaceholders } from './aem.js';
+import { getLocale } from './i18n-utils.js';
 
 /**
  * Enhances <img> elements inside <p> tags by applying adjacent text nodes as alt attributes.
@@ -46,4 +45,10 @@ export function addLinkAltFromImageText(main) {
       link.title = ''; // Clear title to avoid spammy tooltips
     }
   });
+}
+
+export async function fetchLocalPlaceholders() {
+  const language = getLocale();
+  const placeholders = await fetchPlaceholders(`/${language}`);
+  return placeholders;
 }

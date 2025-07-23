@@ -47,8 +47,33 @@ export function addLinkAltFromImageText(main) {
   });
 }
 
+/**
+ * Fetches the placeholders config from the localized content folder.
+ */
 export async function fetchLocalPlaceholders() {
   const language = getLocale();
   const placeholders = await fetchPlaceholders(`/${language}`);
   return placeholders;
+}
+/**
+ * input: "type=page, source=search"
+ * output: {
+ *           type: ['page'],
+ *           source: ['search']
+ *         }
+ * @param {configValue} comma separated key=value list)
+ */
+export function getConfigAsMap(configValue) {
+  return configValue
+    ? configValue
+      .split(',')
+      .map((pair) => pair.trim().split('='))
+      .reduce((acc, [key, value]) => {
+        const k = key.toLowerCase();
+        const v = value.toLowerCase();
+        if (!acc[k]) acc[k] = [];
+        acc[k].push(v);
+        return acc;
+      }, {})
+    : {};
 }

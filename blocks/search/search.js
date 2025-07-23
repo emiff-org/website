@@ -3,7 +3,10 @@ import {
   decorateIcons,
   readBlockConfig,
 } from '../../scripts/aem.js';
-import { fetchLocalPlaceholders } from '../../scripts/scripts-ext.js';
+import {
+  fetchLocalPlaceholders,
+  getConfigAsMap,
+} from '../../scripts/scripts-ext.js';
 import { getLocale } from '../../scripts/i18n-utils.js';
 
 const searchParams = new URLSearchParams(window.location.search);
@@ -158,12 +161,18 @@ function compareFound(hit1, hit2) {
   return hit1.minIdx - hit2.minIdx;
 }
 
-function filterData(searchTerms, data) {
+function filterData(searchTerms, data, filters) {
   const foundInHeader = [];
   const foundInMeta = [];
 
   data.forEach((result) => {
     let minIdx = -1;
+
+    const fCheck = Object.entries(filters).some(([key, values]) => {
+      const resultValue = result[key]?.toLowerCase();
+      return values.includes(resultValue);
+    });
+    if (fCheck) return;
 
     searchTerms.forEach((term) => {
       const idx = (result.header || result.title).toLowerCase().indexOf(term);
@@ -210,7 +219,7 @@ async function handleSearch(e, block, config) {
   const searchTerms = searchValue.toLowerCase().split(/\s+/).filter((term) => !!term);
 
   const data = await fetchData(config.source);
-  const filteredData = filterData(searchTerms, data);
+  const filteredData = filterData(searchTerms, data, config.filters);
 
   // query the results container outside of current block
   await renderResults(getResultsContainer(), config, filteredData, searchTerms);
@@ -262,7 +271,7 @@ export default async function decorate(block) {
   const config = readBlockConfig(block);
   const mode = config?.mode?.trim().toLowerCase();
   const filtersValue = config?.filters?.trim();
-  const filters = filtersValue ? filtersValue.split(',').map((val) => val.trim()) : [];
+  const filters = getConfigAsMap(filtersValue);
 
   const placeholders = await fetchLocalPlaceholders();
   const language = getLocale();

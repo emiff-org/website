@@ -1,0 +1,15 @@
+sitemaps:
+  emiff:
+    default: en
+    lastmod: YYYY-MM-DD
+    languages:
+      dk:
+        source: /en/query-index.json
+        destination: /sitemap.xml
+        hreflang: en
+        alternate: /en/{path}
+      no:
+        source: /es/query-index.json
+        destination: /sitemap.xml
+        hreflang: es
+        alternate: /es/{path}

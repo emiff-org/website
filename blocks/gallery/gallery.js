@@ -1,5 +1,6 @@
 import { createOptimizedPicture, readBlockConfig } from '../../scripts/aem.js';
 import ffetch from '../../scripts/ffetch.js';
+import { formatDateVerbose, parseDateTime } from '../../scripts/components-utils.js';
 
 /**
  * Builds modal content for data from given element.
@@ -14,7 +15,13 @@ export async function createModalContent(element) {
   const div = document.createElement('div');
   div.classList.add('modal-text');
   const context = document.createElement('p');
-  context.textContent = `${element.dataset.people} at the ${element.dataset.event} (${element.dataset.date})`;
+  let text = element.dataset.people;
+  if (element.dataset.event.length !== 0) text += ` at the ${element.dataset.event}`;
+  if (element.dataset.date) {
+    const date = parseDateTime(element.dataset.date);
+    text += ` (${formatDateVerbose(date, 'gallery')})`;
+  }
+  context.textContent = text;
   div.appendChild(context);
   const description = document.createElement('p');
   description.textContent = element.dataset.description;

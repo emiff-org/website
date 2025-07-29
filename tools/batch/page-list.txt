@@ -1,8 +1,8 @@
 https://main--website--emiff-org.aem.page/en/draft/Demo Page
 https://main--website--emiff-org.aem.page/en/draft/Feed Test
 https://main--website--emiff-org.aem.page/en/festival/about
-https://main--website--emiff-org.aem.page/en/festival/gallery
-https://main--website--emiff-org.aem.page/en/festival/gallery/gallery.json
+https://main--website--emiff-org.aem.page/en/media/gallery
+https://main--website--emiff-org.aem.page/en/media/gallery/gallery.json
 https://main--website--emiff-org.aem.page/en/festival/history/2016/EMIFF 5th Edition 2026
 https://main--website--emiff-org.aem.page/en/festival/history/2017/EMIFF 6th Edition 2027
 https://main--website--emiff-org.aem.page/en/festival/history/2019/winners 2019

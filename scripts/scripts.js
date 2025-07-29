@@ -72,7 +72,7 @@ function buildHeroBlock(main) {
 function autolinkModals(doc) {
   doc.addEventListener('click', async (e) => {
     const origin = e.target.closest('button.js-modal-trigger');
-    if (origin && origin.dataset.date) {
+    if (origin) {
       e.preventDefault();
       const { createModalContent } = await import(`${window.hlx.codeBasePath}/blocks/gallery/gallery.js`);
       const modalContent = await createModalContent(origin);

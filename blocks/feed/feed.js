@@ -7,6 +7,7 @@ import {
 } from '../../scripts/scripts.js';
 import {
   createCustomSelect,
+  formatDateVerbose,
   getCSFilterMap,
   getFiltersKvMap,
   parseDateTime,
@@ -136,7 +137,9 @@ function renderListItems(itemsToRender, container, limit, hideImages = false) {
     if (subtitle) {
       const pSub = document.createElement('p');
       pSub.classList.add('feed-item-subtitle');
-      pSub.textContent = subtitle;
+      // add date for press releases
+      pSub.textContent = (subtitle.toLowerCase().includes('press'))
+        ? `${subtitle} (${formatDateVerbose(item.publicationDate)})` : subtitle;
       bodyDiv.append(pSub);
     }
 

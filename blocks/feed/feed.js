@@ -38,7 +38,7 @@ async function fetchItems(config) {
 function renderCardItems(itemsToRender, container, limit) {
   const ul = document.createElement('ul');
 
-  itemsToRender.slice(0, limit).forEach((loc) => {
+  itemsToRender.slice(0, limit).forEach((item) => {
     const li = document.createElement('li');
 
     // Image section
@@ -47,15 +47,15 @@ function renderCardItems(itemsToRender, container, limit) {
 
     const pImage = document.createElement('p');
     const aImage = document.createElement('a');
-    aImage.href = loc.path;
-    aImage.setAttribute('aria-label', loc.title);
+    aImage.href = item.path;
+    aImage.setAttribute('aria-label', item.title);
     aImage.title = '';
 
     const picture = document.createElement('picture');
     const img = document.createElement('img');
     img.loading = 'lazy';
-    img.alt = loc.title;
-    img.src = loc.image;
+    img.alt = item.title;
+    img.src = item.image;
 
     picture.appendChild(img);
     aImage.appendChild(picture);
@@ -66,25 +66,23 @@ function renderCardItems(itemsToRender, container, limit) {
     const bodyDiv = document.createElement('div');
     bodyDiv.className = 'cards-card-body';
 
-    if (loc.events) {
-      const pSub = document.createElement('p');
-      pSub.className = 'cards-card-subtitle';
-      pSub.textContent = loc.events;
-      bodyDiv.appendChild(pSub);
-    }
+    const pSub = document.createElement('p');
+    pSub.classList.add('cards-card-subtitle');
+    pSub.textContent = `${item.category} - ${formatDateVerbose(item.publicationDate)}`;
+    bodyDiv.appendChild(pSub);
 
     const h3 = document.createElement('h3');
-    h3.id = loc.title.toLowerCase().replace(/\s+/g, '-');
+    h3.id = item.title.toLowerCase().replace(/\s+/g, '-');
     const aTitle = document.createElement('a');
-    aTitle.href = loc.path;
-    aTitle.title = loc.title;
-    aTitle.textContent = loc.title;
+    aTitle.href = item.path;
+    aTitle.title = item.title;
+    aTitle.textContent = item.title;
     h3.appendChild(aTitle);
     bodyDiv.appendChild(h3);
 
-    if (loc.description) {
+    if (item.description) {
       const pDescr = document.createElement('p');
-      loc.description.split(',').forEach((part, idx) => {
+      item.description.split(',').forEach((part, idx) => {
         if (idx > 0) pDescr.appendChild(document.createElement('br'));
         pDescr.appendChild(document.createTextNode(part.trim()));
       });
@@ -130,18 +128,13 @@ function renderListItems(itemsToRender, container, limit, hideImages = false) {
       div.appendChild(imageDiv);
     }
 
-    // Text content section
+    // Body content section
     const bodyDiv = document.createElement('div');
     bodyDiv.className = 'feed-item-body';
-    const subtitle = item.publication ?? item.category;
-    if (subtitle) {
-      const pSub = document.createElement('p');
-      pSub.classList.add('feed-item-subtitle');
-      // add date for press releases
-      pSub.textContent = (subtitle.toLowerCase().includes('press'))
-        ? `${subtitle} (${formatDateVerbose(item.publicationDate)})` : subtitle;
-      bodyDiv.append(pSub);
-    }
+    const pSub = document.createElement('p');
+    pSub.classList.add('feed-item-subtitle');
+    pSub.textContent = `${item.category} - ${formatDateVerbose(item.publicationDate)}`;
+    bodyDiv.append(pSub);
 
     const h3 = document.createElement('h3');
     h3.classList.add('feed-item-title');

@@ -52,6 +52,11 @@ function focusNavSection() {
   document.activeElement.addEventListener('keydown', openOnKeydown);
 }
 
+// keep ARIA in sync with viewport
+function setMenuVisibilityFromViewport(sections) {
+  toggleAllNavSections(sections, isDesktop.matches ? 'true' : 'false');
+}
+
 /**
  * Toggles all nav sections
  * @param {Element} sections The container element
@@ -74,7 +79,7 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   const button = nav.querySelector('.nav-hamburger button');
   document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-  toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
+  toggleAllNavSections(navSections, 'false');
   button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
   // enable nav dropdown keyboard accessibility
   const navDrops = navSections.querySelectorAll('.nav-drop');
@@ -97,7 +102,7 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
     // collapse menu on escape press
     window.addEventListener('keydown', closeOnEscape);
     // collapse menu on focus lost
-    nav.addEventListener('focusout', closeOnFocusLost);
+    // nav.addEventListener('focusout', closeOnFocusLost);
   } else {
     window.removeEventListener('keydown', closeOnEscape);
     nav.removeEventListener('focusout', closeOnFocusLost);
@@ -166,7 +171,7 @@ export default async function decorate(block) {
       let timeoutId;
       let isTimeoutPending = false;
 
-      span.addEventListener('mouseenter', () => {
+      span.addEventListener('pointerenter', () => {
         if (isDesktop.matches) {
           isTimeoutPending = true;
           timeoutId = setTimeout(() => {
@@ -176,14 +181,31 @@ export default async function decorate(block) {
           }, 300);
         }
       });
-      span.addEventListener('mouseleave', () => {
+      span.addEventListener('pointerleave', () => {
         if (isDesktop.matches && isTimeoutPending) {
           clearTimeout(timeoutId);
           // toggleAllNavSections(navSections, false);
           // document.querySelector('header .nav-background')?.classList.remove('is-visible');
         }
       });
+      span.addEventListener('pointerdown', () => {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+          isTimeoutPending = false;
+        }
+        if (!isDesktop.matches) {
+          const li = span.parentElement;
+          const expanded = li.getAttribute('aria-expanded') === 'true';
+          li.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+        }
+      });
+      span.addEventListener('click', () => {
+      });
     });
+
+    // handle nav dropdown visibility on mobile
+    setMenuVisibilityFromViewport(navSections);
+    isDesktop.addEventListener('change', setMenuVisibilityFromViewport);
   }
 
   // highlight active nav items

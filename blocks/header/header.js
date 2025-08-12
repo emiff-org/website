@@ -52,11 +52,6 @@ function focusNavSection() {
   document.activeElement.addEventListener('keydown', openOnKeydown);
 }
 
-// keep ARIA in sync with viewport
-function setMenuVisibilityFromViewport(sections) {
-  toggleAllNavSections(sections, isDesktop.matches ? 'true' : 'false');
-}
-
 /**
  * Toggles all nav sections
  * @param {Element} sections The container element
@@ -66,6 +61,11 @@ function toggleAllNavSections(sections, expanded = false) {
   sections.querySelectorAll('.nav-sections .default-content-wrapper > ul > li').forEach((section) => {
     section.setAttribute('aria-expanded', expanded);
   });
+}
+
+// keep ARIA in sync with viewport
+function setMenuVisibilityFromViewport(sections) {
+  toggleAllNavSections(sections, isDesktop.matches ? 'true' : 'false');
 }
 
 /**

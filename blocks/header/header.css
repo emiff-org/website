@@ -359,7 +359,6 @@ header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded="true"
 /* navigation background */
 header .nav-background {
   display: none;
-  /* pointer-events: none; don’t block clicks */
 }
 
 @media (width >= 900px) {

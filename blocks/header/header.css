@@ -331,7 +331,7 @@ header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded="true"
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul {
-    display: block;
+    display: none;
     position: absolute;
     top: 100%;
     left: -16px;

@@ -217,13 +217,18 @@ header nav .nav-sections ul {
   font-size: var(--heading-font-size-l);
 }
 
+header nav .nav-sections .default-content-wrapper > ul > li {
+  border-bottom: 1px solid var(--grey-color);
+  padding-bottom: 0.5em;
+  margin-bottom: 0.5em;
+}
+
 header nav .nav-sections ul > li {
   border: 0;
 }
 
 header nav .nav-sections ul > li.active {
   color: var(--brand-color);
-  border-bottom: 2px;
 }
 
 header nav .nav-sections ul > li > ul {
@@ -313,6 +318,12 @@ header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded="true"
     width: 100%;
   }
 
+  header nav .nav-sections .default-content-wrapper > ul > li {
+    border: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  
   header nav .nav-sections .default-content-wrapper > ul > li::after {
     content: '';
     position: absolute;

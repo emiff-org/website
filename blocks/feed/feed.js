@@ -133,7 +133,9 @@ function renderListItems(itemsToRender, container, limit, hideImages = false) {
     bodyDiv.className = 'feed-item-body';
     const pSub = document.createElement('p');
     pSub.classList.add('feed-item-subtitle');
-    pSub.textContent = `${item.category} - ${formatDateVerbose(item.publicationDate)}`;
+    const pubCategory = item.category ? `${item.category} - ` : '';
+    const pubDate = item.publicationDate ? formatDateVerbose(item.publicationDate) : '';
+    pSub.textContent = `${pubCategory}${pubDate}`;
     bodyDiv.append(pSub);
 
     const h3 = document.createElement('h3');

@@ -40,4 +40,5 @@ main .section .hero-wrapper {
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
+  text-shadow: 0 0 15px rgba(19 19 19 / 30%);
 }

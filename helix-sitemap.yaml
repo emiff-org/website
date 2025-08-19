@@ -3,12 +3,11 @@ sitemaps:
     default: en
     lastmod: YYYY-MM-DD
     languages:
-      dk:
+      en:
         source: /en/query-index.json
         destination: /sitemap.xml
         hreflang: en
-        alternate: /en/{path}
-      no:
+      es:
         source: /es/query-index.json
         destination: /sitemap.xml
         hreflang: es

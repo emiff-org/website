@@ -48,6 +48,14 @@ function openOnKeydown(e) {
   }
 }
 
+function switchLanguageOnClick(e) {
+  e.preventDefault();
+  const lang = e.currentTarget.querySelector('.icon-spain') ? 'es' : 'en';
+  const u = new URL(window.location.href);
+  u.pathname = u.pathname.replace(/^\/(en|es)(?=\/|$)/, `/${lang}`);
+  window.location.href = u.toString();
+}
+
 function focusNavSection() {
   document.activeElement.addEventListener('keydown', openOnKeydown);
 }
@@ -238,6 +246,12 @@ export default async function decorate(block) {
       toggleAllNavSections(navSections, false);
       navBackground.classList.remove('is-visible');
     }
+  });
+
+  // register language switcher
+  nav.querySelectorAll('.icon-spain, .icon-uk').forEach((icon) => {
+    const link = icon.closest('a');
+    if (link) link.addEventListener('click', switchLanguageOnClick);
   });
 
   // brand logo on nav background

@@ -4,6 +4,7 @@ import { getLocale } from '../../scripts/i18n-utils.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
+const hoverDelay = 100;
 
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
@@ -186,7 +187,7 @@ export default async function decorate(block) {
             isTimeoutPending = false;
             toggleAllNavSections(navSections, true);
             document.querySelector('header .nav-background')?.classList.add('is-visible');
-          }, 300);
+          }, hoverDelay);
         }
       });
       span.addEventListener('pointerleave', () => {

@@ -1,4 +1,5 @@
 import getIndexPath from '../../scripts/index-utils.js';
+import { fetchLocalPlaceholders } from '../../scripts/scripts-ext.js';
 import ffetch from '../../scripts/ffetch.js';
 import { readBlockConfig } from '../../scripts/aem.js';
 import {
@@ -182,7 +183,8 @@ function renderFeed(items, layout, limit, hideImages) {
   return container;
 }
 
-function renderControls(filters, items, layout, hideFilters) {
+async function renderControls(filters, items, layout, hideFilters) {
+  const placeholders = await fetchLocalPlaceholders();
   const container = document.createElement('div');
   container.classList.add('custom-select-flex');
 
@@ -199,6 +201,7 @@ function renderControls(filters, items, layout, hideFilters) {
         if (oldFeedBlock) parentBlock.replaceChild(feedBlock, oldFeedBlock);
         else parentBlock.append(feedBlock);
       },
+      placeholders,
       value,
     );
     if (hideFilters.includes(key)) selectWrapper.style.display = 'none';
@@ -224,7 +227,7 @@ export default async function decorate(block) {
   // accepted layouts: feed, cards
   const layout = config?.layout?.trim().toLowerCase();
   if (!Array.isArray(filters) || filters.length !== 0) {
-    block.append(renderControls(filters, filteredItems, layout, hideFilters));
+    block.append(await renderControls(filters, filteredItems, layout, hideFilters));
   }
   block.append(renderFeed(filteredItems, layout, limit, hideImages));
 }

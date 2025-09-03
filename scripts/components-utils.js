@@ -68,7 +68,7 @@ export async function getSVGIcon(name) {
   return sEl;
 }
 
-export function createCustomSelect(filter, items, onSelect, value = undefined) {
+export function createCustomSelect(filter, items, onSelect, placeholders, value = undefined) {
   const uniqueFilterValues = [...new Set(
     items.map((item) => item[filter.toLowerCase()]).filter(Boolean),
   )];
@@ -81,9 +81,12 @@ export function createCustomSelect(filter, items, onSelect, value = undefined) {
 
   const select = document.createElement('div');
   select.classList.add('custom-select');
-  select.textContent = `All ${filter}s`;
   select.dataset.name = filter.toLowerCase();
   if (value) select.textContent = value;
+
+  // localized text
+  const textKey = `all${filter}s`;
+  select.textContent = placeholders[textKey] || `All ${filter}s`;
 
   const optionsWrapper = document.createElement('div');
   optionsWrapper.classList.add('custom-options');

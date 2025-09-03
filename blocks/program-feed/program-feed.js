@@ -1,4 +1,6 @@
 import getIndexPath from '../../scripts/index-utils.js';
+import { fetchLocalPlaceholders } from '../../scripts/scripts-ext.js';
+import ffetch from '../../scripts/ffetch.js';
 import { readBlockConfig } from '../../scripts/aem.js';
 import {
   createCustomSelect,
@@ -9,7 +11,6 @@ import {
   getFiltersKvMap,
   formatDateVerbose,
 } from '../../scripts/components-utils.js';
-import ffetch from '../../scripts/ffetch.js';
 
 function renderCardItems(itemsToRender, limit, container) {
   const ul = document.createElement('ul');
@@ -293,6 +294,7 @@ function renderFeed(items, layout, limit) {
 }
 
 async function renderFilters(filters, items, layout, hideFilters) {
+  const placeholders = await fetchLocalPlaceholders();
   const container = document.createElement('div');
   container.classList.add('custom-select-flex');
 
@@ -310,6 +312,7 @@ async function renderFilters(filters, items, layout, hideFilters) {
         if (oldFeedBlock) parentBlock.replaceChild(feedBlock, oldFeedBlock);
         else parentBlock.append(feedBlock);
       },
+      placeholders,
       value,
     );
     container.append(selectWrapper);

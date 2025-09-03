@@ -55,6 +55,7 @@ export async function fetchLocalPlaceholders() {
   const placeholders = await fetchPlaceholders(`/${language}`);
   return placeholders;
 }
+
 /**
  * input: "type=page, source=search"
  * output: {

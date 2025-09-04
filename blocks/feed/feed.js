@@ -49,14 +49,15 @@ function renderCardItems(itemsToRender, container, limit) {
     const pImage = document.createElement('p');
     const aImage = document.createElement('a');
     aImage.href = item.path;
-    aImage.setAttribute('aria-label', item.title);
+    const itemTitle = item.title || 'Untitled';
+    aImage.setAttribute('aria-label', itemTitle);
     aImage.title = '';
 
     const picture = document.createElement('picture');
     const img = document.createElement('img');
     img.loading = 'lazy';
-    img.alt = item.title;
-    img.src = item.image;
+    img.alt = itemTitle;
+    img.src = item.image || '';
 
     picture.appendChild(img);
     aImage.appendChild(picture);
@@ -69,15 +70,19 @@ function renderCardItems(itemsToRender, container, limit) {
 
     const pSub = document.createElement('p');
     pSub.classList.add('cards-card-subtitle');
-    pSub.textContent = `${item.category} - ${formatDateVerbose(item.publicationDate)}`;
+    const category = item.category || '';
+    const date = item.publicationDate ? formatDateVerbose(item.publicationDate) : '';
+    const separator = category && date ? ' - ' : '';
+    pSub.textContent = `${category}${separator}${date}`;
     bodyDiv.appendChild(pSub);
 
     const h3 = document.createElement('h3');
-    h3.id = item.title.toLowerCase().replace(/\s+/g, '-');
+    const cardTitle = item.title || 'Untitled';
+    h3.id = cardTitle.toLowerCase().replace(/\s+/g, '-');
     const aTitle = document.createElement('a');
     aTitle.href = item.path;
-    aTitle.title = item.title;
-    aTitle.textContent = item.title;
+    aTitle.title = cardTitle;
+    aTitle.textContent = cardTitle;
     h3.appendChild(aTitle);
     bodyDiv.appendChild(h3);
 
@@ -114,13 +119,14 @@ function renderListItems(itemsToRender, container, limit, hideImages = false) {
 
       const aImage = document.createElement('a');
       aImage.href = item.path;
-      aImage.setAttribute('aria-label', item.title);
+      const listItemTitle = item.title || 'Untitled';
+      aImage.setAttribute('aria-label', listItemTitle);
       aImage.title = '';
 
       const picture = document.createElement('picture');
       const img = document.createElement('img');
       img.loading = 'lazy';
-      img.alt = item.title;
+      img.alt = listItemTitle;
       img.src = item.image;
 
       picture.appendChild(img);
@@ -142,10 +148,11 @@ function renderListItems(itemsToRender, container, limit, hideImages = false) {
     const h3 = document.createElement('h3');
     h3.classList.add('feed-item-title');
     const href = item.path ?? item.url;
+    const itemTitleText = item.title || 'Untitled';
     if (href) {
       const a = document.createElement('a');
       a.href = href;
-      a.textContent = item.title;
+      a.textContent = itemTitleText;
 
       // external links should open in new window
       const url = href.startsWith('http') ? new URL(href) : new URL(href, getHref());
@@ -154,7 +161,7 @@ function renderListItems(itemsToRender, container, limit, hideImages = false) {
       }
       h3.append(a);
     } else {
-      h3.textContent = item.title;
+      h3.textContent = itemTitleText;
     }
     bodyDiv.append(h3);
 

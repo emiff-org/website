@@ -26,12 +26,15 @@ export function getOrdinal(n) {
 }
 
 export function formatDateVerbose(date, format = 'press') {
-  const weekday = date.toLocaleDateString('en-US', { weekday: 'short' }); // e.g. Sat
-  const month = date.toLocaleDateString('en-US', { month: 'short' }); // e.g. Nov
-  const year = date.toLocaleDateString('en-US', { year: 'numeric' }); // e.g. Nov
-  const day = date.getDate();
-  const ordinal = getOrdinal(day);
-  return format === 'press' ? `${month} ${day} ${year}` : `${weekday}, ${month} ${day}${ordinal}`;
+  if (date) {
+    const weekday = date.toLocaleDateString('en-US', { weekday: 'short' }); // e.g. Sat
+    const month = date.toLocaleDateString('en-US', { month: 'short' }); // e.g. Nov
+    const year = date.toLocaleDateString('en-US', { year: 'numeric' }); // e.g. Nov
+    const day = date.getDate();
+    const ordinal = getOrdinal(day);
+    return format === 'press' ? `${month} ${day} ${year}` : `${weekday}, ${month} ${day}${ordinal}`;
+  }
+  return '';
 }
 
 export function getIcon(name) {

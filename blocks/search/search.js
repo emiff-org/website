@@ -71,21 +71,56 @@ function highlightTextElements(terms, elements) {
 }
 
 export async function fetchData(source) {
-  const response = await fetch(source);
-  if (!response.ok) {
-    // eslint-disable-next-line no-console
-    console.error('error loading API response', response);
-    return null;
-  }
+  // Handle comma-separated list of sources
+  const sources = source.split(',').map((s) => s.trim()).filter((s) => s.length > 0);
+  const allData = [];
 
-  const json = await response.json();
-  if (!json) {
-    // eslint-disable-next-line no-console
-    console.error('empty API response', source);
-    return null;
-  }
+  // Fetch data from all sources using Promise.allSettled to avoid await-in-loop
+  const results = await Promise.allSettled(
+    sources.map(async (src) => {
+      const response = await fetch(src);
+      if (!response.ok) {
+        // eslint-disable-next-line no-console
+        console.error('error loading API response', response, 'for source:', src);
+        return null;
+      }
 
-  return json.data;
+      const json = await response.json();
+      if (!json || !json.data) {
+        // eslint-disable-next-line no-console
+        console.error('empty API response', src);
+        return null;
+      }
+
+      return json.data;
+    }),
+  );
+
+  // Process results and collect data
+  results.forEach((result) => {
+    if (result.status === 'fulfilled' && result.value) {
+      allData.push(...result.value);
+    } else if (result.status === 'rejected') {
+      // eslint-disable-next-line no-console
+      console.error('error fetching data:', result.reason);
+    }
+  });
+
+  // Merge and deduplicate by path (merge attributes from all sources)
+  const pathMap = new Map();
+  allData.forEach((item) => {
+    if (item.path) {
+      if (pathMap.has(item.path)) {
+        // Merge attributes from multiple sources for the same path
+        const existing = pathMap.get(item.path);
+        pathMap.set(item.path, { ...existing, ...item });
+      } else {
+        pathMap.set(item.path, item);
+      }
+    }
+  });
+
+  return Array.from(pathMap.values());
 }
 
 function renderResult(result, searchTerms, titleTag) {
@@ -185,7 +220,10 @@ function filterData(searchTerms, data, filters) {
       return;
     }
 
-    const metaContents = `${result.title} ${result.description} ${result.path.split('/').pop()}`.toLowerCase();
+    const metaContents = [
+      result.title, result.description, result.keywords,
+      result.synopsis, result.credits, result.path.split('/').pop(),
+    ].filter(Boolean).join(' ').toLowerCase();
     searchTerms.forEach((term) => {
       const idx = metaContents.indexOf(term);
       if (idx < 0) return;
@@ -219,7 +257,7 @@ async function handleSearch(e, block, config) {
   const searchTerms = searchValue.toLowerCase().split(/\s+/).filter((term) => !!term);
 
   const data = await fetchData(config.source);
-  const filteredData = filterData(searchTerms, data, config.filters);
+  const filteredData = data ? filterData(searchTerms, data, config.filters) : [];
 
   // query the results container outside of current block
   await renderResults(getResultsContainer(), config, filteredData, searchTerms);
@@ -274,8 +312,20 @@ export default async function decorate(block) {
   const filters = getConfigAsMap(filtersValue);
 
   const placeholders = await fetchLocalPlaceholders();
-  const language = getLocale();
-  const source = block.querySelector('a[href]') ? block.querySelector('a[href]').href : `/${language}/query-index.json`;
+
+  // Support multiple sources: either from multiple links in block or comma-separated in config
+  const links = block.querySelectorAll('a[href]');
+  let source = [];
+
+  if (links.length > 0) {
+    source = Array.from(links).map((link) => link.href);
+  } else if (config?.source?.trim()) {
+    source = config.source.trim();
+  } else {
+    // Default source needs language prefix
+    source = [`/${getLocale()}/query-index.json`];
+  }
+
   block.innerHTML = '';
   if (mode === 'input') {
     block.append(searchBox(block, {

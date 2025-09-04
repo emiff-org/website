@@ -30,6 +30,10 @@ indices:
         select: head > meta[name="category"]
         value: |
           attribute(el, 'content')
+      keywords:
+        select: head > meta[name="keywords"]
+        value: |
+          attribute(el, 'content')
       lastModified:
         select: none
         value: |

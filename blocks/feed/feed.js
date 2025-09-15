@@ -1,7 +1,7 @@
 import getIndexPath from '../../scripts/index-utils.js';
 import { fetchLocalPlaceholders } from '../../scripts/scripts-ext.js';
 import ffetch from '../../scripts/ffetch.js';
-import { readBlockConfig } from '../../scripts/aem.js';
+import { readBlockConfig, createOptimizedPicture } from '../../scripts/aem.js';
 import {
   getHref,
   getHostname,
@@ -54,10 +54,11 @@ function renderCardItems(itemsToRender, container, limit) {
     aImage.title = '';
 
     const picture = document.createElement('picture');
-    const img = document.createElement('img');
-    img.loading = 'lazy';
-    img.alt = itemTitle;
-    img.src = item.image || '';
+    const img = createOptimizedPicture(item.image || '', itemTitle, false, [{ width: '750' }]);
+    // const img = document.createElement('img');
+    // img.loading = 'lazy';
+    // img.alt = itemTitle;
+    // img.src = item.image || '';
 
     picture.appendChild(img);
     aImage.appendChild(picture);

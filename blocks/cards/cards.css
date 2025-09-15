@@ -30,6 +30,8 @@
 .cards > ul > li {
   background-color: var(--background-color);
   padding-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .cards > ul > li:last-child {
@@ -48,6 +50,9 @@
 
 .cards .cards-card-image {
   line-height: 0;
+  flex: 1;
+  display: flex;
+  margin-bottom: 1rem;
 }
 
 .cards .cards-card-image p {
@@ -56,7 +61,7 @@
 
 .cards > ul > li img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  height: 100%;
   object-fit: cover;
 }
 

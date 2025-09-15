@@ -30,11 +30,6 @@
   .sponsors > div {
     padding: 32px;
   }
-
-  .sponsors .columns > div:nth-child(2),
-  .sponsors .columns > div:nth-child(4) {
-    margin-left: 2rem;
-  }
 }
 
 .sponsors img {

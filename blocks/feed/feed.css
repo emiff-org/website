@@ -153,8 +153,3 @@
 .custom-options[style*="display: none"] {
   display: none !important;
 }
-
-/* cards - fix for last locations image being oversize */
-.cards > ul > li:last-child {
-  padding-bottom: 2rem;
-}

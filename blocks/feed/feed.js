@@ -53,15 +53,8 @@ function renderCardItems(itemsToRender, container, limit) {
     aImage.setAttribute('aria-label', itemTitle);
     aImage.title = '';
 
-    const picture = document.createElement('picture');
     const img = createOptimizedPicture(item.image || '', itemTitle, false, [{ width: '750' }]);
-    // const img = document.createElement('img');
-    // img.loading = 'lazy';
-    // img.alt = itemTitle;
-    // img.src = item.image || '';
-
-    picture.appendChild(img);
-    aImage.appendChild(picture);
+    aImage.appendChild(img);
     pImage.appendChild(aImage);
     imageDiv.appendChild(pImage);
 

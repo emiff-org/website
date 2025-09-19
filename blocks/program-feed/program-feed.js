@@ -109,7 +109,7 @@ function renderListItems(itemsToRender, limit, container) {
   itemsToRender.slice(0, limit).forEach((item) => {
     const div = document.createElement('div');
     div.classList.add('feed-item');
-    if (item.type) div.classList.add(item.type.toLowerCase());
+    if (item.type) div.classList.add(item.type.toLowerCase().replace(/\s+/g, '-'));
 
     const subtitle = item.publication ?? item.category;
     if (subtitle) {

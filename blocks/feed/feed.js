@@ -12,18 +12,14 @@ import {
   getCSFilterMap,
   getFiltersKvMap,
   parseDateTime,
+  isFirstOption,
 } from '../../scripts/components-utils.js';
 
 // expects a map with kv pairs as filter
 function filterItems(items, filters) {
   const filteredItems = (filters.length === 0) ? items : items.filter((item) => filters.entries()
     .every(([key, value]) => {
-      if (value.length === 0 || 
-        // TODO and we have it twice!
-        value.toLowerCase().startsWith('all ') ||
-        value.toLowerCase().startsWith('todos ') ||
-        value.toLowerCase().startsWith('todas ')
-      ) return true;
+      if (value.length === 0 || isFirstOption(value)) return true;
       const itemValue = item[key.toLowerCase()]?.toString().toLowerCase().trim();
       const filterValue = value.toString().toLowerCase().trim();
       return itemValue === filterValue;

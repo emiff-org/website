@@ -78,7 +78,11 @@ export function createCustomSelect(filter, items, onSelect, placeholders, value 
 
   // localized filter text
   const textKey = `all${filter}s`;
-  const locText = placeholders[textKey] || `All ${filter}s`;
+  const firstOptionText = placeholders[textKey] || `All ${filter}s`;
+
+  let selectText;
+  if (value) selectText = value;
+  else selectText = firstOptionText;
 
   const selectWrapper = document.createElement('div');
   selectWrapper.classList.add('custom-select-wrapper');
@@ -89,7 +93,7 @@ export function createCustomSelect(filter, items, onSelect, placeholders, value 
   const select = document.createElement('div');
   select.classList.add('custom-select');
   select.dataset.name = filter.toLowerCase();
-  select.textContent = locText;
+  select.textContent = selectText;
 
   const optionsWrapper = document.createElement('div');
   optionsWrapper.classList.add('custom-options');
@@ -108,7 +112,7 @@ export function createCustomSelect(filter, items, onSelect, placeholders, value 
     return option;
   };
 
-  optionsWrapper.append(createOption(locText));
+  optionsWrapper.append(createOption(firstOptionText));
   uniqueFilterValues.forEach((fValue) => {
     optionsWrapper.append(createOption(fValue));
   });
@@ -122,6 +126,14 @@ export function createCustomSelect(filter, items, onSelect, placeholders, value 
   selectWrapper.append(select);
   selectWrapper.append(optionsWrapper);
   return selectWrapper;
+}
+
+// TODO this is an ugly hack!
+export function isFirstOption(value) {
+  return (value.toLowerCase().startsWith('all ')
+    || value.toLowerCase().startsWith('todos ')
+    || value.toLowerCase().startsWith('todas ')
+  );
 }
 
 export async function createFilterToggle() {

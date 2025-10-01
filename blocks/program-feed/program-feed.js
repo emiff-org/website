@@ -10,6 +10,7 @@ import {
   getCSFilterMap,
   getFiltersKvMap,
   formatDateVerbose,
+  isFirstOption,
 } from '../../scripts/components-utils.js';
 
 function renderCardItems(itemsToRender, limit, container) {
@@ -226,12 +227,7 @@ function renderListItems(itemsToRender, limit, container) {
 function filterItems(items, filters) {
   const filteredItems = (filters.length === 0) ? items : items.filter((item) => filters.entries()
     .every(([key, value]) => {
-      if (value.length === 0 || 
-        // TODO this is an ugly hack
-        value.toLowerCase().startsWith('all ') ||
-        value.toLowerCase().startsWith('todos ') ||
-        value.toLowerCase().startsWith('todas ')
-      ) return true;
+      if (value.length === 0 || isFirstOption(value)) return true;
       const itemValue = item[key.toLowerCase()]?.toString().toLowerCase().trim();
       const filterValue = value.toString().toLowerCase().trim();
       return itemValue === filterValue;

@@ -18,7 +18,12 @@ import {
 function filterItems(items, filters) {
   const filteredItems = (filters.length === 0) ? items : items.filter((item) => filters.entries()
     .every(([key, value]) => {
-      if (value.length === 0 || value.toLowerCase().startsWith('all ')) return true;
+      if (value.length === 0 || 
+        // TODO and we have it twice!
+        value.toLowerCase().startsWith('all ') ||
+        value.toLowerCase().startsWith('todos ') ||
+        value.toLowerCase().startsWith('todas ')
+      ) return true;
       const itemValue = item[key.toLowerCase()]?.toString().toLowerCase().trim();
       const filterValue = value.toString().toLowerCase().trim();
       return itemValue === filterValue;

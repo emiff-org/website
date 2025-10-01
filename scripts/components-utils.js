@@ -76,6 +76,10 @@ export function createCustomSelect(filter, items, onSelect, placeholders, value 
     items.map((item) => item[filter.toLowerCase()]).filter(Boolean),
   )];
 
+  // localized filter text
+  const textKey = `all${filter}s`;
+  const locText = placeholders[textKey] || `All ${filter}s`;
+
   const selectWrapper = document.createElement('div');
   selectWrapper.classList.add('custom-select-wrapper');
   selectWrapper.style.display = 'flex';
@@ -85,11 +89,7 @@ export function createCustomSelect(filter, items, onSelect, placeholders, value 
   const select = document.createElement('div');
   select.classList.add('custom-select');
   select.dataset.name = filter.toLowerCase();
-  if (value) select.textContent = value;
-
-  // localized text
-  const textKey = `all${filter}s`;
-  select.textContent = placeholders[textKey] || `All ${filter}s`;
+  select.textContent = locText;
 
   const optionsWrapper = document.createElement('div');
   optionsWrapper.classList.add('custom-options');
@@ -108,7 +108,7 @@ export function createCustomSelect(filter, items, onSelect, placeholders, value 
     return option;
   };
 
-  optionsWrapper.append(createOption(`All ${filter}s`));
+  optionsWrapper.append(createOption(locText));
   uniqueFilterValues.forEach((fValue) => {
     optionsWrapper.append(createOption(fValue));
   });

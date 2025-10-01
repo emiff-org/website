@@ -152,9 +152,9 @@ indices:
           attribute(el, 'content')
   es-entries:
     <<: *entries
-    target: /es/festival/entries-index
+    target: /es/program/entries-index
     include:
-      - '/es/festival/entries/*'
+      - '/es/program/entries/*'
 
   en-blocks: &blocks
     target: /en/program/blocks-index

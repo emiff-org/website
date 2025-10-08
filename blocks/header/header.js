@@ -4,7 +4,7 @@ import { getLocale } from '../../scripts/i18n-utils.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
-const hoverDelay = 100;
+const hoverDelay = 10;
 
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
@@ -67,6 +67,8 @@ function focusNavSection() {
  * @param {Boolean} expanded Whether the element should be expanded or collapsed
  */
 function toggleAllNavSections(sections, expanded = false) {
+  if (!sections || typeof sections.querySelectorAll !== 'function') return;
+  
   sections.querySelectorAll('.nav-sections .default-content-wrapper > ul > li').forEach((section) => {
     section.setAttribute('aria-expanded', expanded);
   });
